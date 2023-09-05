@@ -11,4 +11,9 @@
     dotDir = ".config/zsh";
     history.path = config.xdg.cacheHome + "/zsh/history";
   };
+
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+  };
 }

@@ -3,8 +3,8 @@
 {
   imports =
     [
-      ./git.nix
-      ./neovim.nix
-      ./zsh.nix
+      ./git
+      ./neovim
+      ./zsh # TODO: move to sysadmin?
     ];
 }
