@@ -4,7 +4,7 @@
 
 {
   # Specify the location of this configuration file. Very meta.
-  # environment.darwinConfig = inputs.self + "/hosts/muhammed/configuration.nix";
+  environment.darwinConfig = inputs.self + "/hosts/muhammed/configuration.nix";
 
   # Use the Nix daemon.
   services.nix-daemon.enable = true;
@@ -13,7 +13,17 @@
   users.users.linus = {
     description = "Personal user account";
     home = "/Users/linus";
+    shell = pkgs.zsh;
   };
+  my.use-cases.development.enable = true;
+  my.use-cases.sysadmin.enable = true;
+  # Following are recommended when changing the default shell.
+  # https://nixos.wiki/wiki/Command_Shell#Changing_default_shelltrue;
+  programs.zsh.enable = true; # TODO: move to common module
+  environment.shells = [ pkgs.zsh ];
+
+  # Should match containing folder.
+  networking.hostName = "muhammed";
 
   # Don't request password for running pmset.
   environment.etc."sudoers.d/10-unauthenticated-commands".text =
@@ -26,6 +36,7 @@
       %admin ALL=(ALL:ALL) NOPASSWD: ${builtins.concatStringsSep ", " commands}
     '';
 
-  # Backwards compatability. Check `darwin-rebuild changelog` before bumping.
+  # System-specific version info.
+  home-manager.users.linus.home.stateVersion = "22.05";
   system.stateVersion = 4;
 }
