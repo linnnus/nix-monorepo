@@ -7,6 +7,7 @@
 let
   servers = {
     pyright.cmd = [ "${pkgs.pyright}/bin/pyright-langserver" ];
+    rnix.cmd = [ "${pkgs.rnix-lsp}/bin/rnix-lsp" ];
   };
   defaultConfig = {
     flags.debounce_text_changes = 150;
