@@ -10,20 +10,19 @@
       ./ssh.nix
     ];
 
-  # Create the main user
+  # Create the main user.
   users.users.linus = {
     isNormalUser = true;
     hashedPassword = "$y$j9T$kNJ5L50Si0sAhdrHyO19I1$YcwXZ46dI.ApLMgZSj7qImq9FrSL0CEUeoJUS8P1103";
     extraGroups = [ "wheel" ];
     shell = pkgs.zsh;
   };
-  home-manager.users.linus.home.stateVersion = "22.05";
-  my.use-cases.development.enable = true;
-  my.use-cases.sysadmin.enable = true;
   # Following are recommended when changing the default shell.
   # https://nixos.wiki/wiki/Command_Shell#Changing_default_shelltrue;
   programs.zsh.enable = true;
   environment.shells = [ pkgs.zsh ];
+
+  my.use-cases = [ "development" "sysadmin" ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -67,4 +66,5 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
+  home-manager.users.linus.home.stateVersion = "22.05";
 }

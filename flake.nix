@@ -32,7 +32,7 @@
         ahmed = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            { _module.args = { inherit inputs; }; }
+            { _module.args = { flakeInputs = inputs; }; }
             ./hosts/ahmed/configuration.nix
             home-manager.nixosModules.home-manager
 	    ./use-cases/default.nix
