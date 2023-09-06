@@ -10,4 +10,13 @@
     jq
     vim
   ];
+
+  # basic qol shell aliases
+  home.shellAliases = {
+    "mv" = "mv -i";
+    "rm" = "rm -i";
+    "cp" = "cp -i";
+    "ls" = "ls -A --color=auto";
+    "grep" = "grep --color=auto";
+  };
 }
