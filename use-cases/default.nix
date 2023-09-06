@@ -1,9 +1,12 @@
-{ config, lib, flakeInputs, ... }:
+{ config, pkgs, lib, flakeInputs, misc, ... }:
 
 let
   inherit (lib) mkOption types optional elem;
 
   hasUseCase = c: elem c config.my.use-cases;
+  development = hasUseCase "development";
+  sysadmin = hasUseCase "sysadmin";
+  gui = hasUseCase "gui";
 in
 {
   options.my.use-cases = mkOption {
@@ -13,21 +16,21 @@ in
 
   config = {
     home-manager.users.linus = {
-      imports = 
-        (optional (hasUseCase "development") ./neovim) ++
-        (optional (hasUseCase "development") && (hasUseCase "gui" && pkgs.stdenv.isDarwin) ./kitty) ++
-        (optional (hasUseCase "development") && (hasUseCase "gui" && pkgs.stdenv.isLinux) ./st) ++
-        (optional (hasUseCase "sysadmin") || (hasUseCase "development") ./zsh) ++
-        (optional (hasUseCase "sysadmin") || (hasUseCase "development") ./cli-basics.nix);
+      imports = (optional development ./neovim)
+             ++ (optional development ./git)
+            #++ (optional (development && gui && pkgs.stdenv.isDarwin) ./iterm2)
+            #++ (optional (development && gui && pkgs.stdenv.isDarwin) ./st)
+             ++ (optional (development || sysadmin) ./zsh)
+             ++ (optional (development || sysadmin) ./cli-basics.nix);
 
       xdg.enable = true;
     };
 
-    home.extraSpecialArgs = {
+    home-manager.extraSpecialArgs = {
       super = config;
-      inherit flakeInputs;
+      inherit flakeInputs misc;
     };
 
-    home.useGlobalPkgs = true;
+    home-manager.useGlobalPkgs = true;
   };
 }

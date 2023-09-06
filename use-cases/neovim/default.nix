@@ -25,5 +25,3 @@
   # Use neovim as man pager.
   home.sessionVariables.MANPAGER = "nvim +Man!";
 }
-
-# vi: foldmethod=marker
