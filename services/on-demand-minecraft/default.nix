@@ -4,55 +4,57 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 let
+  inherit (lib) mkIf mkOption mkEnableOption types;
+
   cfg = config.my.services.on-demand-minecraft;
 in
 {
   options.my.services.on-demand-minecraft = {
-    enable = lib.mkEnableOption "local minecraft server";
+    enable = mkEnableOption "local minecraft server";
 
-    eula = lib.mkOption {
-      description = lib.mdDoc ''
+    eula = mkOption {
+      description = ''
         Whether you agree to [Mojangs EULA](https://account.mojang.com/documents/minecraft_eula).
         This option must be set to `true` to run a Minecraft™️ server (??).
       '';
-      type = lib.types.bool;
+      type = types.bool;
       default = false;
     };
 
-    frequency-check-players = lib.mkOption {
-      description = lib.mdDoc ''
+    frequency-check-players = mkOption {
+      description = ''
         How often to check the number of players using the server. If
         no players are using the server, it is shut down.
 
         This should be a valid value for systemd's `onCalendar`
         property.
       '';
-      type = lib.types.nonEmptyStr;
+      type = types.nonEmptyStr;
       default = "*-*-* *:*:0/20";
     };
 
-    minimum-server-lifetime = lib.mkOption {
-      description = lib.mdDoc ''
+    minimum-server-lifetime = mkOption {
+      description = ''
         Minimum required time to pass from the server is started
         before it is allowed to be killed. This should ensure the
         server has time to start up before it is killed.
 
         The option is specified as a number of seconds.
       '';
-      type = lib.types.ints.positive;
+      type = types.ints.positive;
       default = 300;
     };
 
-    internal-port = lib.mkOption {
-      description = lib.mdDoc ''
+    internal-port = mkOption {
+      description = ''
         The internal port which the minecraft server will listen to.
         This port does not need to be exposed to the network.
       '';
       default = cfg.external-port + 1;
     };
 
-    external-port = lib.mkOption {
-      description = lib.mdDoc ''
+    external-port = mkOption {
+      description = ''
         The external port of the socket which is forwarded to the
         Minecraft server. This is the one users will connect to. You
         will need to add it to `networking.firewall.allowedTCPPorts`
@@ -64,42 +66,42 @@ in
       default = 25565;
     };
 
-    rcon-password = lib.mkOption {
-      description = lib.mdDoc ''
+    rcon-password = mkOption {
+      description = ''
         The RCON password used for remote control.
 
         Local systemd units use this password to execute commands
         that fetch the current number of players. This number is used
         to shut down the server, when there are no active players.
       '';
-      type = lib.types.nonEmptyStr;
+      type = types.nonEmptyStr;
       default = "260a368f55f4fb4fa"; # XXX: Is this a bad idea?
     };
 
-    openFirewall = lib.mkOption {
-      description = lib.mdDoc ''
+    openFirewall = mkOption {
+      description = ''
         Open holes in the firewall so clients on LAN can connect. You must
         set up port forwarding if you want to play over WAN.
       '';
-      type = lib.types.bool;
+      type = types.bool;
       default = true;
     };
 
-    package = lib.mkOption {
-      description = lib.mdDoc "What Minecraft server to run.";
+    package = mkOption {
+      description = "What Minecraft server to run.";
       default = pkgs.minecraft-server;
-      type = lib.types.package;
+      type = types.package;
     };
 
-    server-properties = lib.mkOption {
-      description = lib.mdDoc ''
+    server-properties = mkOption {
+      description = ''
         Minecraft server properties for the server.properties file. See
         <https://minecraft.gamepedia.com/Server.properties#Java_Edition_3>
         for documentation on these values. Note that some options like
         `enable-rcon` will be forced on because the're required for the
         server to work.
       '';
-      type = with lib.types; attrsOf (oneOf [ bool int str ]);
+      type = with types; attrsOf (oneOf [ bool int str ]);
       default = { };
       example = lib.literalExpression ''
         {
@@ -110,22 +112,23 @@ in
       '';
     };
 
-    jvm-options = lib.mkOption {
-      description = lib.mdDoc "JVM options for the Minecraft server. List of command line arguments.";
-      type = lib.types.listOf lib.types.str;
+    jvm-options = mkOption {
+      description = "JVM options for the Minecraft server. List of command line arguments.";
+      type = types.listOf lib.types.str;
       default = [ "-Xmx2048M" "-Xms2048M" ];
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     # Create a user to run the server under.
     users.users.minecrafter = {
       description = "On-demand minecraft server service user";
       home = "/srv/minecrafter";
       createHome = true;
-      group = "servant";
+      group = "minecrafter";
       isSystemUser = true;
     };
+    users.groups.minecrafter = { };
 
     # Create an internal socket and hook it up to minecraft-server process as
     # stdin. That way we can send commands to it.
@@ -135,7 +138,7 @@ in
         ListenFIFO = "/run/minecraft-server.stdin";
         SocketMode = "0660";
         SocketUser = "minecrafter";
-        SocketGroup = "servant";
+        SocketGroup = "minecrafter";
         RemoveOnStop = true;
         FlushPending = true;
       };
@@ -171,7 +174,7 @@ in
           # Switch to runtime directory.
           export RUNTIME_DIR="${config.users.users.minecrafter.home}/${cfg.package.name}/"
           ${pkgs.busybox}/bin/mkdir -p "$RUNTIME_DIR"
-          ${pkgs.busybox}/bin/chown minecrafter:servant "$RUNTIME_DIR"
+          ${pkgs.busybox}/bin/chown minecrafter:minecrafter "$RUNTIME_DIR"
           cd "$RUNTIME_DIR"
 
           # Set up/update environment for server
@@ -204,7 +207,7 @@ in
           Restart = "always";
 
           User = "minecrafter";
-          Group = "servant";
+          Group = "minecrafter";
 
           StandardInput = "socket";
           StandardOutput = "journal";
@@ -341,7 +344,7 @@ in
         '';
       };
 
-    networking.firewall = lib.mkIf cfg.openFirewall {
+    networking.firewall = mkIf cfg.openFirewall {
       allowedUDPPorts = [ cfg.external-port ];
       allowedTCPPorts = [ cfg.external-port ];
     };
