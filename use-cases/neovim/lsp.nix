@@ -4,35 +4,6 @@
 
 { pkgs, lib, ... }:
 
-let
-  servers = {
-    pyright.cmd = [ "${pkgs.pyright}/bin/pyright-langserver" ];
-    rnix.cmd = [ "${pkgs.rnix-lsp}/bin/rnix-lsp" ];
-  };
-  defaultConfig = {
-    flags.debounce_text_changes = 150;
-  };
-  combinedConfig = lib.mapAttrs (name: value: value // defaultConfig) servers;
-
-  nixToLua = s:
-    if builtins.isAttrs s then
-      let
-        renderAttr = name: value: "[ [==========[" + name + "]==========] ] = " + (nixToLua value);
-        attrsList = map (name: renderAttr name s.${name}) (lib.attrNames s);
-        attrsListStr = lib.concatStringsSep ", " attrsList;
-      in
-      "{ ${attrsListStr} }"
-    else if builtins.isList s then
-      "{ " + (lib.concatStringsSep ", " (map nixToLua s)) + " }"
-    else if builtins.isString s then
-      # Oh boy I sure hope `s` doesn't contain "]==========]".
-      "[==========[" + s + "]==========]"
-    else if builtins.isInt s || builtins.isFloat s then
-      toString s
-    else
-      throw "Cannot convert ${builtins.typeOf s} to Lua value!";
-  combinedConfigStr = nixToLua combinedConfig;
-in
 {
   programs.neovim.plugins = [
     {
@@ -79,12 +50,57 @@ in
 
         -- Use a loop to conveniently call 'setup' on multiple servers and
         -- map buffer local keybindings when the language server attaches
-        local servers = ${combinedConfigStr};
+        local servers = {
+        	pyright = { cmd = { "${pkgs.pyright}/bin/pyright-langserver" } },
+        	rnix = { cmd = { "${pkgs.rnix-lsp}/bin/rnix-lsp" } },
+        	denols = {
+        		init_options = {
+        			enable = true,
+        			unstable = true,
+        			lint = true,
+        		},
+        		cmd = { "${pkgs.deno}/bin/deno", "lsp", "--unstable" },
+        		root_dir = function(startpath)
+        			if util.find_package_json_ancestor(startpath) then
+        				-- This is a Node project; let tsserver handle this one.
+        				return nil
+        			else
+        				-- Otherwise, we try to find the root or
+        				-- default to the current directory.
+        				return util.root_pattern("deno.json", "deno.jsonc", ".git")(startpath)
+        				    or util.path.dirname(startpath)
+        			end
+        		end,
+        	},
+        };
         for server, config in pairs(servers) do
-        	config.on_attach = on_attach; -- inject lua event handler; not elegant!
+                # set common options
+        	config.on_attach = on_attach;
+                config.debounce_text_changes = 150;
+
         	lspconfig[server].setup(config)
         end
       '';
     }
   ];
 }
+
+# I spent like an hour writing this, only to find it was a pretty bad idea.
+#
+#    nixToLua = s:
+#      if builtins.isAttrs s then
+#        let
+#          renderAttr = name: value: "[ [==========[" + name + "]==========] ] = " + (nixToLua value);
+#          attrsList = map (name: renderAttr name s.${name}) (lib.attrNames s);
+#          attrsListStr = lib.concatStringsSep ", " attrsList;
+#        in
+#        "{ ${attrsListStr} }"
+#      else if builtins.isList s then
+#        "{ " + (lib.concatStringsSep ", " (map nixToLua s)) + " }"
+#      else if builtins.isString s then
+#        # Oh boy I sure hope `s` doesn't contain "]==========]".
+#        "[==========[" + s + "]==========]"
+#      else if builtins.isInt s || builtins.isFloat s then
+#        toString s
+#      else
+#        throw "Cannot convert ${builtins.typeOf s} to Lua value!";
