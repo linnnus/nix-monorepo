@@ -74,7 +74,7 @@
         	},
         };
         for server, config in pairs(servers) do
-                # set common options
+                -- set common options
         	config.on_attach = on_attach;
                 config.debounce_text_changes = 150;
 
