@@ -30,7 +30,7 @@ let
 
           fixupPhase = ''
             substituteInPlace ${pname}.zsh \
-              --replace md5 ${pkgs.outils}/bin/md5
+              --replace md5 ${pkgs.hashdeep}/bin/md5deep
 
             mkdir -p $out
             mv * $out

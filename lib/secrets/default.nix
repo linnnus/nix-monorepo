@@ -77,14 +77,16 @@ in
     default = { };
   };
 
-  config.systemd.services =
-    let
-      units = mapAttrs'
-        (name: info: {
-          name = "${name}-key";
-          value = (mkService name info);
-        })
-        cfg;
-    in
-    units;
+  config = mkIf (cfg != []) {
+    systemd.services =
+      let
+        units = mapAttrs'
+          (name: info: {
+            name = "${name}-key";
+            value = (mkService name info);
+          })
+          cfg;
+      in
+      units;
+  };
 }

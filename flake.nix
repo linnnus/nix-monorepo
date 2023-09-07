@@ -31,7 +31,10 @@
             ./hosts/muhammed/configuration.nix
             ./hosts/common.nix
             ./home
-            ./lib
+            # FIXME: Get the following to work without nix-darwin bithcing about unused NixOS options.
+            # ./lib
+            # ./modules
+            # ./services
           ];
         };
       };
@@ -46,8 +49,8 @@
             ./hosts/common.nix
             ./home
             ./lib
-	    ./modules/default.nix
-            ./services/default.nix
+	    ./modules
+            ./services
           ];
         };
       };
