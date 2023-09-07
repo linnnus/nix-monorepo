@@ -15,14 +15,7 @@
     isNormalUser = true;
     hashedPassword = "$y$j9T$kNJ5L50Si0sAhdrHyO19I1$YcwXZ46dI.ApLMgZSj7qImq9FrSL0CEUeoJUS8P1103";
     extraGroups = [ "wheel" ];
-    shell = pkgs.zsh;
   };
-  # Following are recommended when changing the default shell.
-  # https://nixos.wiki/wiki/Command_Shell#Changing_default_shelltrue;
-  programs.zsh.enable = true;
-  environment.shells = [ pkgs.zsh ];
-
-  my.use-cases = [ "development" "sysadmin" ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -56,8 +49,6 @@
   # FIXME: Don't store in plain text.
   networking.wireless.enable = true;
   networking.wireless.networks."Rumpenettet_Guest".psk = "Rumpenerglad"; # NOCOMMIT
-
-  nix.settings.experimental-features = [ "nix-command" ];
 
   # Set up Minecraft server.
   my.services.on-demand-minecraft = {

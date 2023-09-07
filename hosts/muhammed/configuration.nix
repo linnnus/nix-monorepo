@@ -13,14 +13,7 @@
   users.users.linus = {
     description = "Personal user account";
     home = "/Users/linus";
-    shell = pkgs.zsh;
   };
-  # Following are recommended when changing the default shell.
-  # https://nixos.wiki/wiki/Command_Shell#Changing_default_shelltrue;
-  programs.zsh.enable = true; # TODO: move to common module
-  environment.shells = [ pkgs.zsh ];
-
-  my.use-cases = [ "gui" "development" ];
 
   # Should match containing folder.
   networking.hostName = "muhammed";

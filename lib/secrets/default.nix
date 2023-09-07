@@ -1,4 +1,4 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, config, lib, metadata, ... }:
 
 with lib;
 
@@ -36,8 +36,6 @@ let
       };
     };
   };
-
-  metadata = lib.importTOML ./metadata.toml;
 
   mkSecretOnDisk = name:
     { source, ... }:

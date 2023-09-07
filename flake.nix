@@ -17,7 +17,7 @@
     let
       args = {
         flakeInputs = inputs;
-        misc.metadata = nixpkgs.lib.importTOML ./metadata.toml;
+        metadata = nixpkgs.lib.importTOML ./metadata.toml;
       };
     in
     {
@@ -29,8 +29,9 @@
 	    { _module.args = args; }
             home-manager.darwinModules.home-manager
             ./hosts/muhammed/configuration.nix
-	    ./use-cases/default.nix
-	    ./services/default.nix
+            ./hosts/common.nix
+            ./home
+            ./lib
           ];
         };
       };
@@ -42,7 +43,10 @@
             { _module.args = args; }
             home-manager.nixosModules.home-manager
             ./hosts/ahmed/configuration.nix
-	    ./use-cases/default.nix
+            ./hosts/common.nix
+            ./home
+            ./lib
+	    ./modules/default.nix
             ./services/default.nix
           ];
         };

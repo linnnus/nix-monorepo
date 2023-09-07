@@ -1,6 +1,6 @@
 # This file configures openSSH on this host.
 
-{ config, pkgs, lib, misc, ... }:
+{ lib, metadata, ... }:
 
 {
   # Who is allowed/expected to connect to this machine?
@@ -13,7 +13,7 @@
   users.users = lib.genAttrs ["root" "linus"] (_: {
     openssh.authorizedKeys.keys = 
       [
-        misc.metadata.hosts.muhammed.sshPubKey
+        metadata.hosts.muhammed.sshPubKey
       ];
   });
 }
