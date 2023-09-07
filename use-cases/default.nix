@@ -18,6 +18,7 @@ in
     home-manager.users.linus = {
       imports = (optional development ./neovim)
              ++ (optional development ./git)
+             ++ (optional development ./dev-cli-basics.nix)
             #++ (optional (development && gui && pkgs.stdenv.isDarwin) ./iterm2)
             #++ (optional (development && gui && pkgs.stdenv.isDarwin) ./st)
              ++ (optional (development || sysadmin) ./zsh)
