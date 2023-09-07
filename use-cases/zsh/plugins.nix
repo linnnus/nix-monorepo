@@ -17,11 +17,28 @@ let
       }
       {
         name = "zsh-cwd-history";
-        src = pkgs.fetchFromGitHub {
-          owner = "ericfreese";
-          repo = "zsh-cwd-history";
-          rev = "73afed8";
-          hash = "sha256-xW11wPFDuFU80AzgAgLwkvK7Qv58fo3i3kSasE3p0zs=";
+        src = pkgs.stdenvNoCC.mkDerivation rec {
+          pname = "zsh-cwd-history";
+          version = "73afed8";
+
+          src = pkgs.fetchFromGitHub {
+            owner = "ericfreese";
+            repo = pname;
+            rev = version;
+            hash = "sha256-xW11wPFDuFU80AzgAgLwkvK7Qv58fo3i3kSasE3p0zs=";
+          };
+
+          fixupPhase = ''
+            substituteInPlace ${pname}.zsh \
+              --replace md5 ${pkgs.outils}/bin/md5
+
+            mkdir -p $out
+            mv * $out
+          '';
+
+          # This is kind of a weird, useless derivation, so we have to
+          # manually avoid doing lots of the usual stuff.
+          dontInstall = true;
         };
         config = ''
           # Where to but history files
