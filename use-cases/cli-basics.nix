@@ -9,6 +9,7 @@
     jc
     jq
     vim
+    comma
   ];
 
   # basic qol shell aliases

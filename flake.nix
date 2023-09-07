@@ -30,6 +30,7 @@
             home-manager.darwinModules.home-manager
             ./hosts/muhammed/configuration.nix
 	    ./use-cases/default.nix
+	    ./services/default.nix
           ];
         };
       };
@@ -42,6 +43,7 @@
             home-manager.nixosModules.home-manager
             ./hosts/ahmed/configuration.nix
 	    ./use-cases/default.nix
+            ./services/default.nix
           ];
         };
       };
