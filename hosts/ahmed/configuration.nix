@@ -58,6 +58,19 @@
     openFirewall = true;
   };
 
+  # Host <https://linus.onl>.
+  my.modules."linus.onl" = {
+    enable = true;
+    useACME = true;
+    openFirewall = true;
+  };
+
+  # Configure ACME for various HTTPS services.
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = "linusvejlo+${config.networking.hostName}-acme@gmail.com";
+  };
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It's perfectly fine and recommended to leave

@@ -1,5 +1,8 @@
 { ... }:
 
 {
-  # Empty for now
+  imports =
+    [
+      ./linus.onl
+    ];
 }
