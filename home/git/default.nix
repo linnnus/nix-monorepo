@@ -13,6 +13,8 @@
     gs = "git status";
     gd = "git diff";
     gc = "git commit";
+    ga = "git add";
+    gan = "git add -N";
     gap = "git add --patch";
   };
 }
