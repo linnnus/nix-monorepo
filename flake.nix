@@ -31,6 +31,7 @@
             ./hosts/muhammed/configuration.nix
             ./hosts/common.nix
             ./home
+            { nixpkgs.overlays = [ (import ./pkgs/overlay.nix) ]; }
             # FIXME: Get the following to work without nix-darwin bithcing about unused NixOS options.
             # ./lib
             # ./modules
@@ -48,6 +49,7 @@
             ./hosts/ahmed/configuration.nix
             ./hosts/common.nix
             ./home
+            { nixpkgs.overlays = [ (import ./pkgs/overlay.nix) ]; }
             ./lib
 	    ./modules
             ./services
