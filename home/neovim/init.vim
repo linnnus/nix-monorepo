@@ -25,7 +25,7 @@ au FileType * setlocal fo-=o fo+=r
 syn on
 
 " Colorscheme
-au VimEnter * ++nested colorscheme ansi_linus
+" au VimEnter * ++nested colorscheme ansi_linus
 
 " Persistent undo
 set undofile
