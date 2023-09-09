@@ -5,5 +5,6 @@
     [
       ./linus.onl
       ./cloudflare-proxy
+      ./graphics
     ];
 }
