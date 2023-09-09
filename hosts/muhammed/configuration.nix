@@ -18,6 +18,10 @@
   # Should match containing folder.
   networking.hostName = "muhammed";
 
+  # Let's use fingerprint to authenticate sudo. Very useful as an indicator of
+  # when darwin-rebuild is finished...
+  security.pam.enableSudoTouchIdAuth = true;
+
   # Don't request password for running pmset.
   environment.etc."sudoers.d/10-unauthenticated-commands".text =
     let
