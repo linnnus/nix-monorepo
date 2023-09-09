@@ -22,6 +22,8 @@
   boot.loader.grub.device = "/dev/mmcblk0p3"; # FIXME: Do we need to specify GRUB device?
   boot.loader.efi.canTouchEfiVariables = false;
 
+  boot.tmp.cleanOnBoot = true;
+
   # The hostname should match the containing folder.
   networking.hostName = "ahmed";
 
