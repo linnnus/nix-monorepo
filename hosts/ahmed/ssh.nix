@@ -7,7 +7,7 @@
   networking.firewall.allowedTCPPorts = [ 22 ];
   services.openssh = {
     enable = true;
-    passwordAuthentication = false; 
+    settings.PasswordAuthentication = false; 
   };
 
   users.users = lib.genAttrs ["root" "linus"] (_: {
