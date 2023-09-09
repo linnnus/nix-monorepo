@@ -35,15 +35,15 @@
 
   # Disable sleep on lid close.
   # FIXME: Screen does not appear to turn off when closed.
-  services.logind.extraConfig =
+  services.logind =
     let
       lidSwitchAction = "ignore";
     in
-    ''
-      HandleLidSwitch=${lidSwitchAction}
-      HandleLidSwitchDocked=${lidSwitchAction}
-      HandleLidSwitchExternalPower=${lidSwitchAction}
-    '';
+    {
+      lidSwitchExternalPower = lidSwitchAction;
+      lidSwitchDocked = lidSwitchAction;
+      lidSwitch = lidSwitchAction;
+    };
 
   # Configure WiFi at computer's location.
   # FIXME: Don't store in plain text.
