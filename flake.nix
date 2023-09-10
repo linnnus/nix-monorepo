@@ -13,9 +13,10 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, nix-darwin, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nix-darwin, ... }@inputs:
     let
       args = {
+        inherit self;
         flakeInputs = inputs;
         metadata = nixpkgs.lib.importTOML ./metadata.toml;
       };
@@ -31,7 +32,6 @@
             ./hosts/muhammed/configuration.nix
             ./hosts/common.nix
             ./home
-            { nixpkgs.overlays = [ (import ./pkgs/overlay.nix) ]; }
             # FIXME: Get the following to work without nix-darwin bithcing about unused NixOS options.
             # ./lib
             # ./modules
@@ -49,7 +49,6 @@
             ./hosts/ahmed/configuration.nix
             ./hosts/common.nix
             ./home
-            { nixpkgs.overlays = [ (import ./pkgs/overlay.nix) ]; }
             ./lib
 	    ./modules
             ./services
