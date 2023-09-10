@@ -3,6 +3,8 @@ pkgs:
 {
   # duksebot = pkgs.callPackage ./duksebot { };
 
+  still-awake = pkgs.callPackage ./still-awake { };
+
   # Use patched version from Karl.
   smu = (pkgs.smu.overrideAttrs (old: {
     version = "2022-08-01";
