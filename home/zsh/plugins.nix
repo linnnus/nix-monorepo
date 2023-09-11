@@ -58,6 +58,16 @@ let
           hash = "sha256-j73M4bvAoHWt5Wwg47hM0p5Or74x/3btTOPnI22SqG8=";
         };
       }
+      {
+        name = "zsh-nix-shell";
+        file = "nix-shell.plugin.zsh";
+        src = pkgs.fetchFromGitHub {
+          owner = "chisui";
+          repo = "zsh-nix-shell";
+          rev = "v0.7.0";
+          sha256 = "149zh2rm59blr2q458a5irkfh82y3dwdich60s9670kl3cl5h2m1";
+        };
+      }
     ];
 in
 {
