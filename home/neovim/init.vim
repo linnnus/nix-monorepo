@@ -64,10 +64,10 @@ nnoremap <c-h> <c-w><c-h>
 nnoremap <c-j> <c-w><c-j>
 nnoremap <c-k> <c-w><c-k>
 nnoremap <c-l> <c-w><c-l>
-tnoremap <c-h> <c-\><c-n><c-w><c-h>
-tnoremap <c-j> <c-\><c-n><c-w><c-j>
-tnoremap <c-k> <c-\><c-n><c-w><c-k>
-tnoremap <c-l> <c-\><c-n><c-w><c-l>
+" tnoremap <c-h> <c-\><c-n><c-w><c-h>
+" tnoremap <c-j> <c-\><c-n><c-w><c-j>
+" tnoremap <c-k> <c-\><c-n><c-w><c-k>
+" tnoremap <c-l> <c-\><c-n><c-w><c-l>
 
 " Resize windows
 nnoremap + <c-w>+
@@ -110,13 +110,9 @@ nnoremap <silent> <leader>l :set list!<cr>
 " Escape in terminal mode
 tnoremap <esc><esc> <c-\><c-n>
 
-" Replace f and t with vim-sneak's version
-let g:sneak#s_next = 1
-let g:sneak#use_ic_scs = 1
-map f <Plug>Sneak_f
-map F <Plug>Sneak_F
-map t <Plug>Sneak_t
-map T <Plug>Sneak_T
+" Seamlessly enter/leave terminal buffer.
+tnoremap <c-w> <c-\><c-n><c-w>
+au BufEnter term://* norm! i
 
 " Join to end of line below
 " This is already used by the window switching mappings
@@ -183,9 +179,6 @@ augroup END
 
 " Auto-refresh vim config
 " au BufWritePost $XDG_CONFIG_HOME/*.{vim,lua} so %
-
-" Enter insert mode when entering terminals
-au BufEnter term://* norm! i
 
 " Jump to last editing location when opening files
 au BufReadPost *
