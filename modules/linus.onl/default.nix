@@ -60,17 +60,30 @@ in
       };
       startAt = "*-*-* *:00/5:00";
 
-      path = with pkgs; [ git tcl smu rsync ];
+      path = with pkgs; [
+        git
+        rsync
+        coreutils-full
+        tcl-8_5
+        gnumake
+      ];
+      environment.TCLLIBPATH = "$TCLLIBPATH ${pkgs.tcl-cmark}/lib/tclcmark1.0";
       script = ''
         set -ex
-        cd $(mktemp -d -t linus.onl-source.XXXXXXXXXXXX)
+        tmpdir="$(mktemp -d -t linus.onl-source.XXXXXXXXXXXX)"
+        cd "$tmpdir"
+        trap 'rm -rf $tmpdir' EXIT
         # TODO: Only do minimal possible cloning
         git clone https://github.com/linnnus/${domain} .
-        tclsh build.tcl
+        make _build
         rsync --archive --delete _build/ /var/www/${domain}
       '';
 
       # TODO: Harden service
+
+      # Network must be online for us to check.
+      after = [ "network-online.target" ];
+      requires = [ "network-online.target" ];
 
       # We must generate some files for NGINX to serve, so this should be run
       # before NGINX.
