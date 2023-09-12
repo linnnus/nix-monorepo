@@ -27,6 +27,7 @@
     vim
     comma
     curl
+    moreutils
   ];
 
   # Aliases that are burned into my muscle memory.
