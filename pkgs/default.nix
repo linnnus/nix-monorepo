@@ -3,6 +3,8 @@ pkgs:
 {
   # duksebot = pkgs.callPackage ./duksebot { };
 
+  tcl-cmark = pkgs.callPackage ./tcl-cmark { };
+
   still-awake = pkgs.callPackage ./still-awake { };
 
   # Use patched version from Karl.

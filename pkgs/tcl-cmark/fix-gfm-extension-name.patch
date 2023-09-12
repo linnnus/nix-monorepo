@@ -1,0 +1,19 @@
+diff --git a/tclcmark.m4 b/tclcmark.m4
+index e94b746..6b91920 100644
+--- a/tclcmark.m4
++++ b/tclcmark.m4
+@@ -19,10 +19,10 @@ AC_DEFUN(TCLCMARK_LOCATE_CMARK, [
+         AC_MSG_RESULT([found])
+         if test "${TEA_PLATFORM}" = "windows" ; then
+             CMARK_CFLAGS="`pkg-config --cflags libcmark-gfm`"
+-            CMARK_LIBS="-Wl,-Bstatic `pkg-config --static --libs libcmark-gfm` -lcmark-gfmextensions -Wl,-Bdynamic"
++            CMARK_LIBS="-Wl,-Bstatic `pkg-config --static --libs libcmark-gfm` -lcmark-gfm-extensions -Wl,-Bdynamic"
+         else
+             CMARK_CFLAGS="`pkg-config --cflags libcmark-gfm`"
+-            CMARK_LIBS="`pkg-config --libs libcmark-gfm` -lcmark-gfmextensions"
++            CMARK_LIBS="`pkg-config --libs libcmark-gfm` -lcmark-gfm-extensions"
+         fi
+     fi
+
+--
+2.40.1
