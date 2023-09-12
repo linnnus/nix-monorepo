@@ -7,6 +7,7 @@
     [
       ./lsp.nix
       ./filetype.nix
+      ./plugins.nix
     ];
 
   programs.neovim = {
