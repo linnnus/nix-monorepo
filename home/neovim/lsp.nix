@@ -51,7 +51,7 @@
         -- Use a loop to conveniently call 'setup' on multiple servers and
         -- map buffer local keybindings when the language server attaches
         local servers = {
-        	pyright = { cmd = { "${pkgs.pyright}/bin/pyright-langserver" } },
+        	pyright = { cmd = { "${pkgs.pyright}/bin/pyright-langserver", "--stdio" } },
         	rnix = { cmd = { "${pkgs.rnix-lsp}/bin/rnix-lsp" } },
         	denols = {
         		init_options = {
@@ -74,9 +74,9 @@
         	},
         };
         for server, config in pairs(servers) do
-                -- set common options
+        	-- set common options
         	config.on_attach = on_attach;
-                config.debounce_text_changes = 150;
+        	config.debounce_text_changes = 150;
 
         	lspconfig[server].setup(config)
         end
