@@ -7,6 +7,7 @@
     [
       ./lsp.nix
       ./filetype.nix
+      ./completion.nix
       ./plugins.nix
     ];
 
