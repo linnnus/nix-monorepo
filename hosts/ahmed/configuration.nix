@@ -8,6 +8,7 @@
     [
       ./hardware-configuration.nix
       ./ssh.nix
+      ./disable-screen.nix
     ];
 
   # Create the main user.
@@ -34,18 +35,6 @@
     font = "sun12x22"; # This font is pretty readable on the cracked display.
     keyMap = "dk";     # This host has a Danish keyboard layout.
   };
-
-  # Disable sleep on lid close.
-  # FIXME: Screen does not appear to turn off when closed.
-  services.logind =
-    let
-      lidSwitchAction = "ignore";
-    in
-    {
-      lidSwitchExternalPower = lidSwitchAction;
-      lidSwitchDocked = lidSwitchAction;
-      lidSwitch = lidSwitchAction;
-    };
 
   # Configure WiFi at computer's location.
   # FIXME: Don't store in plain text.
