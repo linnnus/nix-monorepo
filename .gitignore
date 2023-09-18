@@ -1,3 +1,6 @@
 # Generated symlink
 result
 */result
+
+# Secret files
+*.env

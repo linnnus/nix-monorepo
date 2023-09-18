@@ -9,6 +9,7 @@
       ./hardware-configuration.nix
       ./ssh.nix
       ./disable-screen.nix
+      ./cloudflare-ddns
     ];
 
   # Create the main user.
