@@ -17,6 +17,7 @@
         ./neovim
         ./zsh
         ./git
+        ./dev-utils
       ];
 
     xdg.enable = true;
