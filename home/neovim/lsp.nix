@@ -72,6 +72,9 @@
         			end
         		end,
         	},
+                clangd = {
+                  cmd = { "${pkgs.clang-tools}/bin/clangd" },
+                },
         };
         for server, config in pairs(servers) do
         	-- set common options
