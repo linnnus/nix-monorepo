@@ -186,12 +186,13 @@ au BufReadPost *
 	\ 	exe "normal! g'\"" |
 	\ endif
 
-" FIXME: disable in insertmode
-augroup HighlightSusWhitespace
+" TODO: Ignore in term:// buffers.
+augroup Sus
 	au!
-	" Whenever a colorscheme clears the highlighting, re-add our own rule
-	au ColorScheme * hi SusWhitespace ctermbg=red guibg=red
-	" Whenever a new window is created, create our matches
-	au VimEnter,WinNew * match SusWhitespace /\s\+$/
-	                \ | 2match SusWhitespace /\%u00A0/
+	au VimEnter,ColorScheme * hi SusWhitespace ctermbg=red guibg=red
+	au BufWinEnter * match SusWhitespace /\s\+$/
+	             \ | 2match SusWhitespace /\%u00A0/
+	au InsertEnter * match SusWhitespace /\s\+\%#\@<!$/
+	au InsertLeave * match SusWhitespace /\s\+$/
+	au BufWinLeave * call clearmatches()
 augroup END
