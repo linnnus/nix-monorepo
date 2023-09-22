@@ -38,5 +38,6 @@
     "ls" = "ls -A --color=auto";
     "grep" = "grep --color=auto";
     "file" = "file --no-dereference";
+    "tree" = "tree --dirsfirst";
   };
 }
