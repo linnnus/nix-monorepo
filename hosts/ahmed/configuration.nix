@@ -37,11 +37,6 @@
     keyMap = "dk";     # This host has a Danish keyboard layout.
   };
 
-  # Configure WiFi at computer's location.
-  # FIXME: Don't store in plain text.
-  # networking.wireless.enable = true;
-  networking.wireless.networks."Rumpenettet_Guest".psk = "Rumpenerglad"; # NOCOMMIT
-
   # Set up Minecraft server.
   my.services.on-demand-minecraft = {
     enable = true;
