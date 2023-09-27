@@ -35,7 +35,7 @@
     "mv" = "mv -i";
     "rm" = "rm -i";
     "cp" = "cp -i";
-    "ls" = "ls -A --color=auto";
+    "ls" = "ls -F -G -A --color=auto";
     "grep" = "grep --color=auto";
     "file" = "file --no-dereference";
     "tree" = "tree --dirsfirst";

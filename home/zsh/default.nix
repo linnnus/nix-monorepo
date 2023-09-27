@@ -16,6 +16,9 @@
     dotDir = ".config/zsh";
     history.path = config.xdg.cacheHome + "/zsh/history";
 
+    initExtra = ''
+      PROMPT='%F{41}->%f %B%(2L.LVL%L .)%b%F{red}%(?..E%? )%f%n@%U%m%u:%15<...<%~%<<%# '
+    '';
   };
 
   programs.fzf = {
