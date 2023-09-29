@@ -19,7 +19,7 @@ pkgs:
       hash = "sha256-Jx7lJ9UTHAOCgPxF2p7ZoZBZ476bLXN5dI0vspusmGo=";
     };
     #hardeningDisable = [ "fortify" ];
-    env.NIX_CFLAGS_COMPILE = (old.env.NIX_CFLAGS_COMPILE or "") + 
+    env.NIX_CFLAGS_COMPILE = (old.env.NIX_CFLAGS_COMPILE or "") +
                              (pkgs.lib.strings.optionalString (pkgs.stdenv.cc.isGNU or false) " -Wno-maybe-uninitialized");
   });
 }
