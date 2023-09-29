@@ -5,6 +5,10 @@
     with pkgs; [
       cling
       deno
+      (python311Full.withPackages (ps: with ps; [
+        virtualenv
+        tkinter
+      ]))
       imagemagick
       nodePackages_latest.nodemon
       rlwrap
