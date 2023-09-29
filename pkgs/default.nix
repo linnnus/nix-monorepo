@@ -7,6 +7,8 @@ pkgs:
 
   still-awake = pkgs.callPackage ./still-awake { };
 
+  trash = pkgs.callPackage ./trash { };
+
   # Use patched version from Karl.
   smu = pkgs.smu.overrideAttrs (old: {
     version = "2022-08-01";
