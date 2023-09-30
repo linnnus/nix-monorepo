@@ -55,10 +55,8 @@ in
     systemd.timers.duksebot = {
       wantedBy = [ "timers.target" ];
       partOf = [ "duksebot.service" ];
-      # Here's where we depend on the deployment secret which
-      # we registered under my.secrets.duksebot!
-      after = [ "duksebot-key.service" "network-online.target" ];
-      wants = [ "duksebot-key.service" "network-online.target" ];
+      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ]; # FIXME: redundant?
       timerConfig = {
         # OnCalendar = "*-*-* 7:00:00";
         OnCalendar = "*:0/1";
