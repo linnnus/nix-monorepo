@@ -8,5 +8,6 @@
   imports =
     [
       ./on-demand-minecraft
+      ./duksebot
     ];
 }

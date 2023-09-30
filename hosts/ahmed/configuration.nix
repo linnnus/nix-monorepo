@@ -45,6 +45,8 @@
     openFirewall = true;
   };
 
+  my.services.duksebot.enable = true;
+
   # Host <https://linus.onl>.
   my.modules."linus.onl" = {
     enable = true;

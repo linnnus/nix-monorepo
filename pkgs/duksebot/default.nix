@@ -35,7 +35,7 @@ let
     owner = "linnnus";
     repo = "duksebot";
     rev = "0092e752610ec00b5080269721666d1b4c258119";
-    hash = "";
+    hash = "sha256-fGVULOdV1EWXMTJor0MqCYQlTFMUw5m7HOwdmqxViEM=";
   };
 in
 writeShellScriptBin "duksebot"

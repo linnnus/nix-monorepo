@@ -1,7 +1,7 @@
 pkgs:
 
 {
-  # duksebot = pkgs.callPackage ./duksebot { };
+  duksebot = pkgs.callPackage ./duksebot { };
 
   tcl-cmark = pkgs.callPackage ./tcl-cmark { };
 

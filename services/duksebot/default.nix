@@ -28,11 +28,9 @@ in
     };
     users.groups.duksebot = { };
 
-    my.secrets.duksebot = {
-      source = ./secrets.env;
-      dest = "/run/keys/duksebot.env";
-      owner = "duksebot";
-      group = "duksebot";
+    age.secrets.duksebot-env = {
+      file = ../../secrets/duksebot.env.age;
+      # TODO: configure permissions
     };
 
     # Create a service which simply runs script. This will be invoked by our timer.
@@ -47,7 +45,7 @@ in
       };
       script = ''
         # Load the secret environment variables.
-        export $(grep -v '^#' /run/keys/duksebot.env | xargs)
+        export $(grep -v '^#' ${config.age.secrets.duksebot-env.path} | xargs)
         # Kick off.
         exec "${cfg.package}"/bin/duksebot
       '';

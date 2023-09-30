@@ -7,4 +7,5 @@ let
 in
 {
   "cloudflare-ddns-token.env.age".publicKeys = publicKeys;
+  "duksebot.env.age".publicKeys = publicKeys;
 }
