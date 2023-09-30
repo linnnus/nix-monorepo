@@ -9,7 +9,6 @@
       ./hardware-configuration.nix
       ./ssh.nix
       ./disable-screen.nix
-      ./cloudflare-ddns.nix
     ];
 
   # Create the main user.
@@ -45,13 +44,18 @@
     openFirewall = true;
   };
 
+  # Set up dukse server. Det er satme hårdt at være overduksepåmindelsesansvarlig.
   my.services.duksebot.enable = true;
 
-  # Host <https://linus.onl>.
+  # Virtual hosts.
+  services.nginx.enable = true;
   my.modules."linus.onl" = {
     enable = true;
     useACME = true;
-    openFirewall = true;
+  };
+  my.modules."notifications.linus.onl" = {
+    enable = true;
+    useACME = true;
   };
 
   # Configure ACME for various HTTPS services.
@@ -59,6 +63,17 @@
     acceptTerms = true;
     defaults.email = "linusvejlo+${config.networking.hostName}-acme@gmail.com";
   };
+
+  # Configure DDNS. The website for each module is responsible for extending `services.cloudflare-dyndns.domains` with its domain.
+  age.secrets.cloudflare-dyndns-api-token.file = ../../secrets/cloudflare-ddns-token.env.age;
+  services.cloudflare-dyndns = {
+    enable = true;
+    apiTokenFile = config.age.secrets.cloudflare-dyndns-api-token.path;
+    proxied = true;
+  };
+
+  # Listen for HTTP connections.
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   # We are running behind CF proxy.
   my.modules.cloudflare-proxy.enable = true;

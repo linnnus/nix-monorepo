@@ -9,5 +9,6 @@
     [
       ./on-demand-minecraft
       ./duksebot
+      ./push-notification-api
     ];
 }

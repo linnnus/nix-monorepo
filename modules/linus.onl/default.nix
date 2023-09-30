@@ -12,15 +12,6 @@ in
     enable = mkEnableOption "${domain} static site";
 
     useACME = mkEnableOption "built-in HTTPS stuff";
-
-    openFirewall = mkOption {
-      description = ''
-        Open holes in the firewall so clients on LAN can connect. You must
-        set up port forwarding if you want to play over WAN.
-      '';
-      type = types.bool;
-      default = false;
-    };
   };
 
   config = mkIf cfg.enable {
@@ -91,16 +82,15 @@ in
       wantedBy = [ "nginx.service" ];
     };
 
-    networking.firewall = mkIf cfg.openFirewall {
-      allowedTCPPorts = [ 80 ] ++ (optional cfg.useACME 443);
-    };
+    # Register domain name with ddns.
+    services.cloudflare-dyndns.domains = [ domain ];
 
-    # Serve the generated page using NGINX.
+    # Register virtual host.
     services.nginx = {
-      enable = true;
-
       virtualHosts."${domain}" = {
+        # NOTE: 'forceSSL' will cause an infite loop, if the cloudflare proxy does NOT connect over HTTPS.
         enableACME = cfg.useACME;
+        forceSSL = cfg.useACME;
         root = "/var/www/${domain}";
       };
     };

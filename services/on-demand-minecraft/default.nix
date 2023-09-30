@@ -50,6 +50,7 @@ in
         The internal port which the minecraft server will listen to.
         This port does not need to be exposed to the network.
       '';
+      type = types.port;
       default = cfg.external-port + 1;
     };
 
@@ -63,6 +64,7 @@ in
         You may also have to set up port forwarding if you want to
         play with friends who are not on the same LAN.
       '';
+      type = types.port;
       default = 25565;
     };
 
