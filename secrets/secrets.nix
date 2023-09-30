@@ -6,5 +6,5 @@ let
   publicKeys = map (builtins.getAttr "sshPubKey") (builtins.attrValues metadata.hosts);
 in
 {
-  "cloudflare-ddns-token.age".publicKeys = publicKeys;
+  "cloudflare-ddns-token.env.age".publicKeys = publicKeys;
 }

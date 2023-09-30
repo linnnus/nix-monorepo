@@ -7,7 +7,7 @@ let
 in
 {
   age.secrets.cloudflare-dyndns-api-token = {
-    file = ../../secrets/cloudflare-ddns-token.age;
+    file = ../../secrets/cloudflare-ddns-token.env.age;
     # TODO: configure permissions
   };
 
