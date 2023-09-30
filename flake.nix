@@ -11,9 +11,13 @@
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, nix-darwin, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nix-darwin, agenix, ... }@inputs:
     let
       args = {
         inherit self;
@@ -33,7 +37,6 @@
             ./hosts/common.nix
             ./home
             # FIXME: Get the following to work without nix-darwin bithcing about unused NixOS options.
-            # ./lib
             # ./modules
             # ./services
           ];
@@ -46,10 +49,10 @@
           modules = [
             { _module.args = args; }
             home-manager.nixosModules.home-manager
+            agenix.nixosModules.default
             ./hosts/ahmed/configuration.nix
             ./hosts/common.nix
             ./home
-            ./lib
 	    ./modules
             ./services
           ];

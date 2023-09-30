@@ -1,19 +1,19 @@
 # This module sets up cloudflare-dyndns for <linus.onl>.
 
-{ lib, ... }:
+{ lib, config, ... }:
 
 let
 
 in
 {
-  my.secrets.cloudflare-ddns = {
-    source = ./secrets.env;
-    dest = "/run/keys/cloudflare-ddns.env";
+  age.secrets.cloudflare-dyndns-api-token = {
+    file = ../../secrets/cloudflare-ddns-token.age;
+    # TODO: configure permissions
   };
 
   services.cloudflare-dyndns = {
     enable = true;
-    apiTokenFile =  "/run/keys/cloudflare-ddns.env";
+    apiTokenFile = config.age.secrets.cloudflare-dyndns-api-token.path;
     proxied = true;
     domains = [ "linus.onl" ];
   };

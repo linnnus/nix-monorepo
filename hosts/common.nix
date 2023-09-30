@@ -1,6 +1,6 @@
 # Shared configuraion regardless of hosts.
 
-{ pkgs, options, self, ... }:
+{ pkgs, options, self, flakeInputs, ... }:
 
 {
   # Enable de facto stable features.
@@ -28,6 +28,7 @@
     comma
     curl
     moreutils
+    flakeInputs.agenix.packages.${system}.default
   ];
 
   # Aliases that are burned into my muscle memory.
