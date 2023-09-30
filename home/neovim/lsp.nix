@@ -52,7 +52,7 @@
         -- map buffer local keybindings when the language server attaches
         local servers = {
         	pyright = { cmd = { "${pkgs.pyright}/bin/pyright-langserver", "--stdio" } },
-        	rnix = { cmd = { "${pkgs.rnix-lsp}/bin/rnix-lsp" } },
+        	nil_ls = { cmd = { "${pkgs.nil}/bin/nil" } },
         	denols = {
         		init_options = {
         			enable = true,
