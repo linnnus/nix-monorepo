@@ -25,12 +25,16 @@ in
       description = "Runs daily dukse reminder";
       group = "duksebot";
       isSystemUser = true;
+      home = "/srv/duksebot";
+      createHome = true;
     };
     users.groups.duksebot = { };
 
     age.secrets.duksebot-env = {
       file = ../../secrets/duksebot.env.age;
-      # TODO: configure permissions
+      owner = config.users.users.duksebot.name;
+      group = config.users.users.duksebot.group;
+      mode = "0440";
     };
 
     # Create a service which simply runs script. This will be invoked by our timer.
