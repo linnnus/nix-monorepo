@@ -24,7 +24,6 @@
   outputs = { self, nixpkgs, home-manager, nix-darwin, agenix, ... }@inputs:
     let
       args = {
-        inherit self;
         flakeInputs = inputs;
         metadata = nixpkgs.lib.importTOML ./metadata.toml;
       };

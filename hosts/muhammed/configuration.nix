@@ -1,6 +1,6 @@
 # This file contains the configuration for my Macbook Pro.
 
-{ pkgs, flakeInputs, lib, ... }:
+{ flakeInputs, ... }:
 
 {
   # Specify the location of this configuration file. Very meta.

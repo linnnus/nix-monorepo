@@ -1,4 +1,4 @@
-{ self, flakeInputs, metadata, ... }:
+{ flakeInputs, metadata, ... }:
 
 {
   # Use the flake input pkgs so Home Manager configuration can share overlays
@@ -7,12 +7,12 @@
 
   # Pass special arguments from flake.nix further down the chain. I really hate
   # this split module system.
-  home-manager.extraSpecialArgs = { inherit self flakeInputs metadata; };
+  home-manager.extraSpecialArgs = { inherit flakeInputs metadata; };
 
   # OKAY FUCK THIS SHIT. THERE IS ONE USER. IT IS ME. LINUS. I WILL ADD
   # MULTIUSER SUPPORT IF IT EVER BECOMES A REQUIREMENT.
   home-manager.users.linus = {
-    imports = 
+    imports =
       [
         ./neovim
         ./zsh
