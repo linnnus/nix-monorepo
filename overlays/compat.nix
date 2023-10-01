@@ -4,4 +4,10 @@
 # See: hosts/common.nix
 # See: https://nixos.org/manual/nixpkgs/stable/#sec-overlays-lookup
 
-[ (self: super: (import ./default.nix) super) ]
+let
+  overlays = import ./default.nix;
+in
+[
+  overlays.additions
+  overlays.modifications
+]

@@ -25,8 +25,21 @@
     let
       args = {
         flakeInputs = inputs;
+        flakeOutputs = self.outputs;
         metadata = nixpkgs.lib.importTOML ./metadata.toml;
       };
+
+      # This is a function that generates an attribute by calling a function
+      # you pass to it, with each system as an argument. `systems` lists all
+      # supported systems.
+      systems = [
+        "aarch64-linux"
+        "i686-linux"
+        "x86_64-linux"
+        "aarch64-darwin"
+        "x86_64-darwin"
+      ];
+      forAllSystems = nixpkgs.lib.genAttrs systems;
     in
     {
       darwinConfigurations = {
@@ -61,5 +74,9 @@
           ];
         };
       };
+
+      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+
+      overlays = import ./overlays;
     };
 }

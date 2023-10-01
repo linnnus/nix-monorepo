@@ -1,6 +1,6 @@
 # Shared configuraion regardless of hosts.
 
-{ pkgs, options, flakeInputs, ... }:
+{ pkgs, options, flakeInputs, flakeOutputs, ... }:
 
 {
   # Enable de facto stable features.
@@ -10,8 +10,8 @@
   # system-wide.
   #
   # See: https://nixos.wiki/wiki/Overlays#Using_nixpkgs.overlays_from_configuration.nix_as_.3Cnixpkgs-overlays.3E_in_your_NIX_PATH
-  nixpkgs.overlays = (import ../pkgs/overlays.nix);
-  nix.nixPath = options.nix.nixPath.default ++ [ "nixpkgs-overlays=${flakeInputs.self}/pkgs/overlays.nix" ];
+  nixpkgs.overlays = [ flakeOutputs.overlays.additions flakeOutputs.overlays.modifications ];
+  nix.nixPath = options.nix.nixPath.default ++ [ "nixpkgs-overlays=${flakeInputs.self}/overlays/compat.nix" ];
 
   # Set ZSH as the shell.
   # https://nixos.wiki/wiki/Command_Shell#Changing_default_shelltrue
