@@ -32,8 +32,8 @@ let
   src = fetchFromGitHub {
     owner = "linnnus";
     repo = "duksebot";
-    rev = "0092e752610ec00b5080269721666d1b4c258119";
-    hash = "sha256-fGVULOdV1EWXMTJor0MqCYQlTFMUw5m7HOwdmqxViEM=";
+    rev = "24634ab7459d913aea00c2e6d77f916607834ee4";
+    hash = "sha256-+tbC7Z3oewBTyE6wTpUocL+6oWjCRAsqauBLTIOVBUY=";
   };
 in
 writeShellScriptBin "duksebot"
