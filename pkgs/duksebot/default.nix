@@ -1,7 +1,5 @@
-{ lib
-, python3
+{ python3
 , fetchFromGitHub
-, fetchPypi
 , writeShellScriptBin
 }:
 

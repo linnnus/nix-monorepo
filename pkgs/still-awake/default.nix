@@ -33,6 +33,7 @@ stdenv.mkDerivation {
 
   meta = with lib; {
     description = "Small program which shuts down Mac, if user is asleep";
+    license = licenses.unlicense;
     platforms = platforms.darwin;
   };
 }

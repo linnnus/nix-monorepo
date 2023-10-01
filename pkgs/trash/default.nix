@@ -2,6 +2,7 @@
 , fetchFromGitHub
 , perl534Packages
 , darwin
+, lib
 }:
 
 stdenv.mkDerivation rec {
@@ -35,4 +36,11 @@ stdenv.mkDerivation rec {
     # I like to alias as del because trash is so hard spell
     ln -s $out/bin/trash $out/bin/del
   '';
+
+  meta = with lib; {
+    description = "This is a small command-line program for OS X that moves files or folders to the trash.";
+    homepage = "https://github.com/ali-rantakari/trash";
+    license = licenses.mit;
+    platforms = platforms.darwin;
+  };
 }

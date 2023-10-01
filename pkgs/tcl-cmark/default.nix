@@ -3,6 +3,7 @@
 , autoreconfHook
 , cmark-gfm
 , fetchFromGitHub
+, lib
 }:
 
 tcl.mkTclDerivation {
@@ -22,4 +23,10 @@ tcl.mkTclDerivation {
 
   nativeBuildInputs = [ pkg-config autoreconfHook ];
   buildInputs = [ cmark-gfm ];
+
+  meta = with lib; {
+    description = "Tcl bindings to the cmark-gfm Github Flavoured CommonMark/Markdown library";
+    homepage = "https://github.com/apnadkarni/tcl-cmark/";
+    license = licenses.bsd3;
+  };
 }
