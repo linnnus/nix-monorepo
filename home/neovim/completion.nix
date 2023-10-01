@@ -1,8 +1,9 @@
 # This module sets up auto completion for Neovim.
-
-{ pkgs, lib, ... }:
-
 {
+  pkgs,
+  lib,
+  ...
+}: {
   programs.neovim.plugins = with pkgs.vimPlugins; [
     # This is the actual completion engine.
     {

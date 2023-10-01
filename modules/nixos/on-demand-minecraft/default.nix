@@ -1,14 +1,16 @@
 # This module defines an on-demand minecraft server service which turns off the
 # server when it's not being used.
-
-{ config, lib, pkgs, modulesPath, ... }:
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  ...
+}: let
   inherit (lib) mkIf mkOption mkEnableOption types;
 
   cfg = config.services.on-demand-minecraft;
-in
-{
+in {
   options.services.on-demand-minecraft = {
     enable = mkEnableOption "local minecraft server";
 
@@ -103,8 +105,8 @@ in
         `enable-rcon` will be forced on because the're required for the
         server to work.
       '';
-      type = with types; attrsOf (oneOf [ bool int str ]);
-      default = { };
+      type = with types; attrsOf (oneOf [bool int str]);
+      default = {};
       example = lib.literalExpression ''
         {
           difficulty = 3;
@@ -117,7 +119,7 @@ in
     jvm-options = mkOption {
       description = "JVM options for the Minecraft server. List of command line arguments.";
       type = types.listOf lib.types.str;
-      default = [ "-Xmx2048M" "-Xms2048M" ];
+      default = ["-Xmx2048M" "-Xms2048M"];
     };
   };
 
@@ -130,12 +132,12 @@ in
       group = "minecrafter";
       isSystemUser = true;
     };
-    users.groups.minecrafter = { };
+    users.groups.minecrafter = {};
 
     # Create an internal socket and hook it up to minecraft-server process as
     # stdin. That way we can send commands to it.
     systemd.sockets.minecraft-server = {
-      bindsTo = [ "minecraft-server.service" ];
+      bindsTo = ["minecraft-server.service"];
       socketConfig = {
         ListenFIFO = "/run/minecraft-server.stdin";
         SocketMode = "0660";
@@ -147,105 +149,111 @@ in
     };
 
     # Create a service which runs the server.
-    systemd.services.minecraft-server =
-      let
-        server-properties = cfg.server-properties // {
+    systemd.services.minecraft-server = let
+      server-properties =
+        cfg.server-properties
+        // {
           server-port = cfg.internal-port;
           enable-rcon = true;
           "rcon.password" = cfg.rcon-password;
         };
-        cfg-to-str = v:
-          if builtins.isBool v
-          then (if v then "true" else "false")
-          else toString v;
-        server-properties-file = pkgs.writeText "server.properties" (''
+      cfg-to-str = v:
+        if builtins.isBool v
+        then
+          (
+            if v
+            then "true"
+            else "false"
+          )
+        else toString v;
+      server-properties-file = pkgs.writeText "server.properties" (''
           # server.properties managed by NixOS configuration.
-        '' + lib.concatStringsSep "\n" (lib.mapAttrsToList
+        ''
+        + lib.concatStringsSep "\n" (lib.mapAttrsToList
           (n: v: "${n}=${cfg-to-str v}")
           server-properties));
 
-        # We don't allow eula=false anyways
-        eula-file = builtins.toFile "eula.txt" ''
-          # eula.txt managed by NixOS Configuration
-          eula=true
-        '';
+      # We don't allow eula=false anyways
+      eula-file = builtins.toFile "eula.txt" ''
+        # eula.txt managed by NixOS Configuration
+        eula=true
+      '';
 
-        # HACK: Each server is given its own subdirectory so
-        #       incompatabilities between servers don't cause complaints.
-        start-server = pkgs.writeShellScript "minecraft-server-start" ''
-          # Switch to runtime directory.
-          export RUNTIME_DIR="${config.users.users.minecrafter.home}/${cfg.package.name}/"
-          ${pkgs.busybox}/bin/mkdir -p "$RUNTIME_DIR"
-          ${pkgs.busybox}/bin/chown minecrafter:minecrafter "$RUNTIME_DIR"
-          cd "$RUNTIME_DIR"
+      # HACK: Each server is given its own subdirectory so
+      #       incompatabilities between servers don't cause complaints.
+      start-server = pkgs.writeShellScript "minecraft-server-start" ''
+        # Switch to runtime directory.
+        export RUNTIME_DIR="${config.users.users.minecrafter.home}/${cfg.package.name}/"
+        ${pkgs.busybox}/bin/mkdir -p "$RUNTIME_DIR"
+        ${pkgs.busybox}/bin/chown minecrafter:minecrafter "$RUNTIME_DIR"
+        cd "$RUNTIME_DIR"
 
-          # Set up/update environment for server
-          ln -sf ${eula-file} eula.txt
-          cp -f ${server-properties-file} server.properties
-          chmod u+w server.properties # Must be writable because server regenerates it.
+        # Set up/update environment for server
+        ln -sf ${eula-file} eula.txt
+        cp -f ${server-properties-file} server.properties
+        chmod u+w server.properties # Must be writable because server regenerates it.
 
-          exec ${cfg.package}/bin/minecraft-server "$@"
-        '';
+        exec ${cfg.package}/bin/minecraft-server "$@"
+      '';
 
-        stop-server = pkgs.writeShellScript "minecraft-server-stop" ''
-          # Send the 'stop' command to the server. It listens for commands on stdin.
-          echo stop > ${config.systemd.sockets.minecraft-server.socketConfig.ListenFIFO}
-          # Wait for the PID of the minecraft server to disappear before
-          # returning, so systemd doesn't attempt to SIGKILL it.
-          while kill -0 "$1" 2> /dev/null; do
-            sleep 1s
-          done
-        '';
-      in
-      {
-        description = "Actually runs the Minecraft server";
-        requires = [ "minecraft-server.socket" ];
-        after = [ "networking.target" "minecraft-server.socket" ];
-        wantedBy = [ ]; # TEMP: Does this do anything?
+      stop-server = pkgs.writeShellScript "minecraft-server-stop" ''
+        # Send the 'stop' command to the server. It listens for commands on stdin.
+        echo stop > ${config.systemd.sockets.minecraft-server.socketConfig.ListenFIFO}
+        # Wait for the PID of the minecraft server to disappear before
+        # returning, so systemd doesn't attempt to SIGKILL it.
+        while kill -0 "$1" 2> /dev/null; do
+          sleep 1s
+        done
+      '';
+    in {
+      description = "Actually runs the Minecraft server";
+      requires = ["minecraft-server.socket"];
+      after = ["networking.target" "minecraft-server.socket"];
+      wantedBy = []; # TEMP: Does this do anything?
 
-        serviceConfig = {
-          ExecStart = "${start-server} ${lib.escapeShellArgs cfg.jvm-options}";
-          ExecStop = "${stop-server} $MAINPID";
-          Restart = "always";
+      serviceConfig = {
+        ExecStart = "${start-server} ${lib.escapeShellArgs cfg.jvm-options}";
+        ExecStop = "${stop-server} $MAINPID";
+        Restart = "always";
 
-          User = "minecrafter";
-          Group = "minecrafter";
+        User = "minecrafter";
+        Group = "minecrafter";
 
-          StandardInput = "socket";
-          StandardOutput = "journal";
-          StandardError = "journal";
+        StandardInput = "socket";
+        StandardOutput = "journal";
+        StandardError = "journal";
 
-          # Hardening
-          CapabilityBoundingSet = [ "" ];
-          DeviceAllow = [ "" ];
-          LockPersonality = true;
-          PrivateDevices = true;
-          PrivateTmp = true;
-          PrivateUsers = true;
-          ProtectClock = true;
-          ProtectControlGroups = true;
-          ProtectHome = true;
-          ProtectHostname = true;
-          ProtectKernelLogs = true;
-          ProtectKernelModules = true;
-          ProtectKernelTunables = true;
-          ProtectProc = "invisible";
-          RestrictAddressFamilies = [ "AF_INET" "AF_INET6" ];
-          RestrictNamespaces = true;
-          RestrictRealtime = true;
-          RestrictSUIDSGID = true;
-          SystemCallArchitectures = "native";
-          UMask = "0077";
-        };
+        # Hardening
+        CapabilityBoundingSet = [""];
+        DeviceAllow = [""];
+        LockPersonality = true;
+        PrivateDevices = true;
+        PrivateTmp = true;
+        PrivateUsers = true;
+        ProtectClock = true;
+        ProtectControlGroups = true;
+        ProtectHome = true;
+        ProtectHostname = true;
+        ProtectKernelLogs = true;
+        ProtectKernelModules = true;
+        ProtectKernelTunables = true;
+        ProtectProc = "invisible";
+        RestrictAddressFamilies = ["AF_INET" "AF_INET6"];
+        RestrictNamespaces = true;
+        RestrictRealtime = true;
+        RestrictSUIDSGID = true;
+        SystemCallArchitectures = "native";
+        UMask = "0077";
       };
+    };
 
     # This socket listens for connections on the public port and
     # triggers `listen-minecraft.service` when a connection is made.
     systemd.sockets.listen-minecraft = {
       enable = true;
-      wantedBy = [ "sockets.target" ];
-      requires = [ "network.target" ];
-      listenStreams = [ (toString cfg.external-port) ];
+      wantedBy = ["sockets.target"];
+      requires = ["network.target"];
+      listenStreams = [(toString cfg.external-port)];
     };
 
     # This service is triggerd by a TCP connection on the public
@@ -254,9 +262,9 @@ in
     # connection to the real (local) Minecraft port.
     systemd.services.listen-minecraft = {
       enable = true;
-      path = with pkgs; [ systemd ];
-      requires = [ "hook-minecraft.service" "listen-minecraft.socket" ];
-      after = [ "hook-minecraft.service" "listen-minecraft.socket" ];
+      path = with pkgs; [systemd];
+      requires = ["hook-minecraft.service" "listen-minecraft.socket"];
+      after = ["hook-minecraft.service" "listen-minecraft.socket"];
       serviceConfig.ExecStart = ''
         ${pkgs.systemd.out}/lib/systemd/systemd-socket-proxyd 127.0.0.1:${toString cfg.internal-port}
       '';
@@ -268,36 +276,34 @@ in
     systemd.services.hook-minecraft = {
       enable = true;
       # Add tools used by scripts to path.
-      path = with pkgs; [ systemd libressl busybox ];
-      serviceConfig =
-        let
-          # Start the Minecraft server and the timer regularly
-          # checking whether it should stop.
-          start-mc = pkgs.writeShellScriptBin "start-mc" ''
-            echo "Starting server and stop-timer..."
-            systemctl start minecraft-server.service
-            systemctl start stop-minecraft.timer
-          '';
-          # Wait for the internal port to be accessible for max.
-          # 60 seconds before complaining.
-          wait-tcp = pkgs.writeShellScriptBin "wait-tcp" ''
-            echo "Waiting for server to start listening on port ${toString cfg.internal-port}..."
-            for i in `seq 60`; do
-              if nc -z 127.0.0.1 ${toString cfg.internal-port} >/dev/null; then
-                echo "Yay! ${toString cfg.internal-port} is not available. hook-minecraft is finished."
-                exit 0
-              fi
-              sleep 1
-            done
-            echo "${toString cfg.internal-port} did not become available in time."
-            exit 1
-          '';
-        in
-        {
-          # First we start the server, then we wait for it to become available.
-          ExecStart = "${start-mc}/bin/start-mc";
-          ExecStartPost = "${wait-tcp}/bin/wait-tcp";
-        };
+      path = with pkgs; [systemd libressl busybox];
+      serviceConfig = let
+        # Start the Minecraft server and the timer regularly
+        # checking whether it should stop.
+        start-mc = pkgs.writeShellScriptBin "start-mc" ''
+          echo "Starting server and stop-timer..."
+          systemctl start minecraft-server.service
+          systemctl start stop-minecraft.timer
+        '';
+        # Wait for the internal port to be accessible for max.
+        # 60 seconds before complaining.
+        wait-tcp = pkgs.writeShellScriptBin "wait-tcp" ''
+          echo "Waiting for server to start listening on port ${toString cfg.internal-port}..."
+          for i in `seq 60`; do
+            if nc -z 127.0.0.1 ${toString cfg.internal-port} >/dev/null; then
+              echo "Yay! ${toString cfg.internal-port} is not available. hook-minecraft is finished."
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "${toString cfg.internal-port} did not become available in time."
+          exit 1
+        '';
+      in {
+        # First we start the server, then we wait for it to become available.
+        ExecStart = "${start-mc}/bin/start-mc";
+        ExecStartPost = "${wait-tcp}/bin/wait-tcp";
+      };
     };
 
     # This timer runs the service of the same name, that checks if
@@ -310,50 +316,50 @@ in
       };
     };
 
-    systemd.services.stop-minecraft =
-      let
-        # Script that returns true (exit code 1) if the server can be shut
-        # down. It uses RCON to get the player list. It does not continue if
-        # the server was started less than `minimum-server-lifetime` seconds
-        # ago.
-        no-player-connected = pkgs.writeShellScriptBin "no-player-connected" ''
-          servicestartsec="$(date -d "$(systemctl show --property=ActiveEnterTimestamp minecraft-server.service | cut -d= -f2)" +%s)"
-          serviceelapsedsec="$(( $(date +%s) - servicestartsec))"
+    systemd.services.stop-minecraft = let
+      # Script that returns true (exit code 1) if the server can be shut
+      # down. It uses RCON to get the player list. It does not continue if
+      # the server was started less than `minimum-server-lifetime` seconds
+      # ago.
+      no-player-connected = pkgs.writeShellScriptBin "no-player-connected" ''
+        servicestartsec="$(date -d "$(systemctl show --property=ActiveEnterTimestamp minecraft-server.service | cut -d= -f2)" +%s)"
+        serviceelapsedsec="$(( $(date +%s) - servicestartsec))"
 
-          if [ $serviceelapsedsec -lt ${toString cfg.minimum-server-lifetime} ]; then
-            echo "Server is too young to be stopped (minimum lifetime is ${toString cfg.minimum-server-lifetime}s)"
-            exit 1
-          fi
+        if [ $serviceelapsedsec -lt ${toString cfg.minimum-server-lifetime} ]; then
+          echo "Server is too young to be stopped (minimum lifetime is ${toString cfg.minimum-server-lifetime}s)"
+          exit 1
+        fi
 
-          PLAYERS="$(printf "list\n" | ${pkgs.rcon.out}/bin/rcon -m -H 127.0.0.1 -p 25575 -P ${cfg.rcon-password})"
-          if echo "$PLAYERS" | grep "are 0 of a"; then
-            exit 0
-          else
-            exit 1
-          fi
-        '';
-      in
-      {
-        enable = true;
-        serviceConfig.Type = "oneshot";
-        script = ''
-          if ${no-player-connected}/bin/no-player-connected; then
-            echo "Stopping minecraft server..."
-            systemctl stop minecraft-server.service
-            systemctl stop hook-minecraft.service
-            systemctl stop stop-minecraft.timer
-          fi
-        '';
-      };
-
-    networking.firewall = mkIf cfg.openFirewall {
-      allowedUDPPorts = [ cfg.external-port ];
-      allowedTCPPorts = [ cfg.external-port ];
+        PLAYERS="$(printf "list\n" | ${pkgs.rcon.out}/bin/rcon -m -H 127.0.0.1 -p 25575 -P ${cfg.rcon-password})"
+        if echo "$PLAYERS" | grep "are 0 of a"; then
+          exit 0
+        else
+          exit 1
+        fi
+      '';
+    in {
+      enable = true;
+      serviceConfig.Type = "oneshot";
+      script = ''
+        if ${no-player-connected}/bin/no-player-connected; then
+          echo "Stopping minecraft server..."
+          systemctl stop minecraft-server.service
+          systemctl stop hook-minecraft.service
+          systemctl stop stop-minecraft.timer
+        fi
+      '';
     };
 
-    assertions = [{
-      assertion = cfg.eula;
-      message = "You must agree to Mojangs EULA to run minecraft-server. Read https://account.mojang.com/documents/minecraft_eula and set `services.minecraft-server.eula` to `true` if you agree.";
-    }];
+    networking.firewall = mkIf cfg.openFirewall {
+      allowedUDPPorts = [cfg.external-port];
+      allowedTCPPorts = [cfg.external-port];
+    };
+
+    assertions = [
+      {
+        assertion = cfg.eula;
+        message = "You must agree to Mojangs EULA to run minecraft-server. Read https://account.mojang.com/documents/minecraft_eula and set `services.minecraft-server.eula` to `true` if you agree.";
+      }
+    ];
   };
 }

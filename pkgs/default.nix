@@ -1,11 +1,9 @@
-pkgs:
+pkgs: {
+  duksebot = pkgs.callPackage ./duksebot {};
 
-{
-  duksebot = pkgs.callPackage ./duksebot { };
+  tcl-cmark = pkgs.callPackage ./tcl-cmark {};
 
-  tcl-cmark = pkgs.callPackage ./tcl-cmark { };
+  still-awake = pkgs.callPackage ./still-awake {};
 
-  still-awake = pkgs.callPackage ./still-awake { };
-
-  trash = pkgs.callPackage ./trash { };
+  trash = pkgs.callPackage ./trash {};
 }

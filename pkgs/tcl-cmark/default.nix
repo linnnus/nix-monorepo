@@ -1,11 +1,11 @@
-{ tcl
-, pkg-config
-, autoreconfHook
-, cmark-gfm
-, fetchFromGitHub
-, lib
+{
+  tcl,
+  pkg-config,
+  autoreconfHook,
+  cmark-gfm,
+  fetchFromGitHub,
+  lib,
 }:
-
 tcl.mkTclDerivation {
   pname = "tcl-cmark";
   version = "2022-03-15";
@@ -21,8 +21,8 @@ tcl.mkTclDerivation {
     ./fix-gfm-extension-name.patch
   ];
 
-  nativeBuildInputs = [ pkg-config autoreconfHook ];
-  buildInputs = [ cmark-gfm ];
+  nativeBuildInputs = [pkg-config autoreconfHook];
+  buildInputs = [cmark-gfm];
 
   meta = with lib; {
     description = "Tcl bindings to the cmark-gfm Github Flavoured CommonMark/Markdown library";

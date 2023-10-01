@@ -1,10 +1,12 @@
-{ pkgs, config, lib, ... }:
-
 {
-  imports =
-    [
-      ./plugins.nix
-    ];
+  pkgs,
+  config,
+  lib,
+  ...
+}: {
+  imports = [
+    ./plugins.nix
+  ];
 
   programs.zsh = {
     enable = true;

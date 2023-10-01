@@ -1,22 +1,25 @@
 # Shared configuraion regardless of hosts.
-
-{ pkgs, options, flakeInputs, flakeOutputs, ... }:
-
 {
+  pkgs,
+  options,
+  flakeInputs,
+  flakeOutputs,
+  ...
+}: {
   # Enable de facto stable features.
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
 
   # Use overlays from this repo for building system configuration as well as
   # system-wide.
   #
   # See: https://nixos.wiki/wiki/Overlays#Using_nixpkgs.overlays_from_configuration.nix_as_.3Cnixpkgs-overlays.3E_in_your_NIX_PATH
-  nixpkgs.overlays = [ flakeOutputs.overlays.additions flakeOutputs.overlays.modifications ];
-  nix.nixPath = options.nix.nixPath.default ++ [ "nixpkgs-overlays=${flakeInputs.self}/overlays/compat.nix" ];
+  nixpkgs.overlays = [flakeOutputs.overlays.additions flakeOutputs.overlays.modifications];
+  nix.nixPath = options.nix.nixPath.default ++ ["nixpkgs-overlays=${flakeInputs.self}/overlays/compat.nix"];
 
   # Set ZSH as the shell.
   # https://nixos.wiki/wiki/Command_Shell#Changing_default_shelltrue
   programs.zsh.enable = true;
-  environment.shells = [ pkgs.zsh ];
+  environment.shells = [pkgs.zsh];
   users.users.linus.shell = pkgs.zsh;
 
   # Very basic system administration tools.

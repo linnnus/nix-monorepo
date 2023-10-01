@@ -1,8 +1,9 @@
 # This module sets up and configures various miscellaneous plugins.
-
-{ pkgs, lib, ... }:
-
 {
+  pkgs,
+  lib,
+  ...
+}: {
   programs.neovim.plugins = [
     {
       plugin = pkgs.vimPlugins.vim-localvimrc;

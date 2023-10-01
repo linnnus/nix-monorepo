@@ -21,64 +21,79 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nix-darwin, agenix, push-notification-api, ... }@inputs:
-    let
-      args = {
-        flakeInputs = inputs;
-        flakeOutputs = self.outputs;
-        metadata = nixpkgs.lib.importTOML ./metadata.toml;
-      };
+  outputs = {
+    self,
+    nixpkgs,
+    home-manager,
+    nix-darwin,
+    agenix,
+    push-notification-api,
+    ...
+  } @ inputs: let
+    args = {
+      flakeInputs = inputs;
+      flakeOutputs = self.outputs;
+      metadata = nixpkgs.lib.importTOML ./metadata.toml;
+    };
 
-      darwinModules = builtins.attrValues (import ./modules/darwin);
-      nixosModules  = builtins.attrValues (import ./modules/nixos);
+    darwinModules = builtins.attrValues (import ./modules/darwin);
+    nixosModules = builtins.attrValues (import ./modules/nixos);
 
-      # This is a function that generates an attribute by calling a function
-      # you pass to it, with each system as an argument. `systems` lists all
-      # supported systems.
-      systems = [
-        "aarch64-linux"
-        "i686-linux"
-        "x86_64-linux"
-        "aarch64-darwin"
-        "x86_64-darwin"
-      ];
-      forAllSystems = nixpkgs.lib.genAttrs systems;
-    in
-    {
-      darwinConfigurations = {
-        muhammed = nix-darwin.lib.darwinSystem {
-          inherit inputs;
-          system = "aarch64-darwin";
-          modules = [
-	    { _module.args = args; }
+    # This is a function that generates an attribute by calling a function
+    # you pass to it, with each system as an argument. `systems` lists all
+    # supported systems.
+    systems = [
+      "aarch64-linux"
+      "i686-linux"
+      "x86_64-linux"
+      "aarch64-darwin"
+      "x86_64-darwin"
+    ];
+    forAllSystems = nixpkgs.lib.genAttrs systems;
+  in {
+    darwinConfigurations = {
+      muhammed = nix-darwin.lib.darwinSystem {
+        inherit inputs;
+        system = "aarch64-darwin";
+        modules =
+          [
+            {_module.args = args;}
             home-manager.darwinModules.home-manager
             ./hosts/muhammed/configuration.nix
             ./hosts/common.nix
             ./home
-          ] ++ darwinModules;
-        };
+          ]
+          ++ darwinModules;
       };
+    };
 
-      nixosConfigurations = {
-        ahmed = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            { _module.args = args; }
+    nixosConfigurations = {
+      ahmed = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules =
+          [
+            {_module.args = args;}
             home-manager.nixosModules.home-manager
             agenix.nixosModules.default
             push-notification-api.nixosModules.default
             ./hosts/ahmed/configuration.nix
             ./hosts/common.nix
             ./home
-          ] ++ nixosModules;
-        };
+          ]
+          ++ nixosModules;
       };
-
-      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
-
-      overlays = import ./overlays;
-
-      darwinModules = import ./modules/darwin;
-      nixosModules = import ./modules/nixos;
     };
+
+    # Formatter to be run when `nix fmt` is executed.
+    formatter =
+      forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+
+    packages =
+      forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+
+    overlays = import ./overlays;
+
+    darwinModules = import ./modules/darwin;
+    nixosModules = import ./modules/nixos;
+  };
 }

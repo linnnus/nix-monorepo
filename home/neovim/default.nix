@@ -1,15 +1,15 @@
 # This file contains the HM configuration options for Neovim.
-
-{ pkgs, lib, ... }:
-
 {
-  imports =
-    [
-      ./lsp.nix
-      ./filetype.nix
-      ./completion.nix
-      ./plugins.nix
-    ];
+  pkgs,
+  lib,
+  ...
+}: {
+  imports = [
+    ./lsp.nix
+    ./filetype.nix
+    ./completion.nix
+    ./plugins.nix
+  ];
 
   programs.neovim = {
     enable = true;

@@ -1,14 +1,15 @@
 # This module configures a basic graphical environment. I use this sometimes for
 # ahmed when muhammed is being repaired.
-
-{ config, lib, pkgs, ... }:
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (lib) mkEnableOption mkIf;
 
   cfg = config.modules.graphics;
-in
-{
+in {
   options.modules.graphics.enable = mkEnableOption "basic graphical environment";
 
   config = mkIf cfg.enable {
@@ -29,7 +30,7 @@ in
     hardware.pulseaudio.enable = true;
 
     environment.systemPackages = with pkgs; [
-      st    # suckless terminal - dwm is pretty sucky without this
+      st # suckless terminal - dwm is pretty sucky without this
       dmenu # application launcher
     ];
   };

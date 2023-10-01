@@ -1,10 +1,10 @@
-{ stdenv
-, fetchFromGitHub
-, perl534Packages
-, darwin
-, lib
+{
+  stdenv,
+  fetchFromGitHub,
+  perl534Packages,
+  darwin,
+  lib,
 }:
-
 stdenv.mkDerivation rec {
   name = "trash";
   version = "0.9.2";
@@ -15,7 +15,7 @@ stdenv.mkDerivation rec {
     rev = "v${version}";
     sha256 = "sha256-vibUimY15KTulGVqmmTGtO/+XowoRHykcmL8twdgebQ=";
   };
-  patches = [ ./trash-dont-hardcode-arch.patch ];
+  patches = [./trash-dont-hardcode-arch.patch];
   buildInputs = [
     darwin.apple_sdk.frameworks.Cocoa
     darwin.apple_sdk.frameworks.AppKit
@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
     perl534Packages.podlators
   ];
 
-  outputs = [ "out" "man" ];
+  outputs = ["out" "man"];
 
   buildPhase = ''
     make trash trash.1

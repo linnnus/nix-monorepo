@@ -1,10 +1,11 @@
 # This module sets up LSP server configurations for Neovim. It is waaay
 # overcomplicated as it kind of turned into an experiment in generating Lua
 # code from a Nix attrset.
-
-{ pkgs, lib, ... }:
-
 {
+  pkgs,
+  lib,
+  ...
+}: {
   programs.neovim.plugins = [
     {
       plugin = pkgs.vimPlugins.nvim-lspconfig;
@@ -87,7 +88,6 @@
     }
   ];
 }
-
 # I spent like an hour writing this, only to find it was a pretty bad idea.
 #
 #    nixToLua = s:
@@ -107,3 +107,4 @@
 #        toString s
 #      else
 #        throw "Cannot convert ${builtins.typeOf s} to Lua value!";
+

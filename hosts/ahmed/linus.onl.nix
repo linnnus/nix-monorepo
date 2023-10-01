@@ -1,13 +1,15 @@
-{ pkgs, lib, config, ... }:
-
-let
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: let
   inherit (lib) mkEnableOption mkOption types mkIf optional;
 
   domain = "linus.onl";
 
   cfg = config.modules."${domain}";
-in
-{
+in {
   options.modules."${domain}" = {
     enable = mkEnableOption "${domain} static site";
 
@@ -21,10 +23,10 @@ in
       group = "${domain}-builder";
       isSystemUser = true;
     };
-    users.groups."${domain}-builder" = { };
+    users.groups."${domain}-builder" = {};
 
     # Create the output directory.
-    system.activationScripts."${domain}-create-www" = lib.stringAfter [ "var" ] ''
+    system.activationScripts."${domain}-create-www" = lib.stringAfter ["var"] ''
       mkdir -p /var/www/${domain}
       chown ${domain}-builder /var/www/${domain}
       chgrp ${domain}-builder /var/www/${domain}
@@ -73,17 +75,17 @@ in
       # TODO: Harden service
 
       # Network must be online for us to check.
-      after = [ "network-online.target" ];
-      requires = [ "network-online.target" ];
+      after = ["network-online.target"];
+      requires = ["network-online.target"];
 
       # We must generate some files for NGINX to serve, so this should be run
       # before NGINX.
-      before = [ "nginx.service" ];
-      wantedBy = [ "nginx.service" ];
+      before = ["nginx.service"];
+      wantedBy = ["nginx.service"];
     };
 
     # Register domain name with ddns.
-    services.cloudflare-dyndns.domains = [ domain ];
+    services.cloudflare-dyndns.domains = [domain];
 
     # Register virtual host.
     services.nginx = {

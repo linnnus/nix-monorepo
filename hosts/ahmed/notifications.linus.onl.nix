@@ -1,6 +1,9 @@
-{ pkgs, lib, config, ... }:
-
-let
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: let
   inherit (lib) mkEnableOption mkOption types mkIf optional;
 
   domain = "notifications.linus.onl";
@@ -9,8 +12,7 @@ let
   internal-port = 13082;
 
   cfg = config.modules."notifications.linus.onl";
-in
-{
+in {
   options.modules."notifications.linus.onl" = {
     enable = mkEnableOption "notifications.linus.onl static site";
 
@@ -27,7 +29,7 @@ in
     };
 
     # Register domain name.
-    services.cloudflare-dyndns.domains = [ "notifications.linus.onl" ];
+    services.cloudflare-dyndns.domains = ["notifications.linus.onl"];
 
     # Serve the generated page using NGINX.
     services.nginx.virtualHosts."notifications.linus.onl" = {

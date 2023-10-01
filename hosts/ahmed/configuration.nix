@@ -1,23 +1,24 @@
 # This file conatins the host-specific configuration for a shitty webserver in
 # my closet.
-
-{ config, pkgs, lib, ... }:
-
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ./ssh.nix
-      ./linus.onl.nix
-      ./notifications.linus.onl.nix
-      ./graphics.nix
-    ];
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
+  imports = [
+    ./hardware-configuration.nix
+    ./ssh.nix
+    ./linus.onl.nix
+    ./notifications.linus.onl.nix
+    ./graphics.nix
+  ];
 
   # Create the main user.
   users.users.linus = {
     isNormalUser = true;
     hashedPassword = "$y$j9T$kNJ5L50Si0sAhdrHyO19I1$YcwXZ46dI.ApLMgZSj7qImq9FrSL0CEUeoJUS8P1103";
-    extraGroups = [ "wheel" ];
+    extraGroups = ["wheel"];
   };
 
   # Use the systemd-boot EFI boot loader.
@@ -35,7 +36,7 @@
 
   console = {
     font = "sun12x22"; # This font is pretty readable on the cracked display.
-    keyMap = "dk";     # This host has a Danish keyboard layout.
+    keyMap = "dk"; # This host has a Danish keyboard layout.
   };
 
   # Set up Minecraft server.
@@ -75,7 +76,7 @@
   };
 
   # Listen for HTTP connections.
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [80 443];
 
   # We are running behind CF proxy.
   modules.cloudflare-proxy.enable = true;

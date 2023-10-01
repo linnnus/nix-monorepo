@@ -1,8 +1,5 @@
 # This file contains the configuration for my Macbook Pro.
-
-{ flakeInputs, ... }:
-
-{
+{flakeInputs, ...}: {
   # Specify the location of this configuration file. Very meta.
   environment.darwinConfig = flakeInputs.self + "/hosts/muhammed/configuration.nix";
 
@@ -23,15 +20,13 @@
   security.pam.enableSudoTouchIdAuth = true;
 
   # Don't request password for running pmset.
-  environment.etc."sudoers.d/10-unauthenticated-commands".text =
-    let
-      commands = [
-        "/usr/bin/pmset"
-      ];
-    in
-    ''
-      %admin ALL=(ALL:ALL) NOPASSWD: ${builtins.concatStringsSep ", " commands}
-    '';
+  environment.etc."sudoers.d/10-unauthenticated-commands".text = let
+    commands = [
+      "/usr/bin/pmset"
+    ];
+  in ''
+    %admin ALL=(ALL:ALL) NOPASSWD: ${builtins.concatStringsSep ", " commands}
+  '';
 
   services.still-awake.enable = true;
 
