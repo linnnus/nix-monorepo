@@ -18,7 +18,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    my.services.push-notification-api = {
+    services.push-notification-api = {
       enable = true;
       # host = "notifications.linus.onl";
       host = "0.0.0.0";
