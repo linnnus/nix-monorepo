@@ -6,10 +6,10 @@
 let
   inherit (lib) mkIf mkOption mkEnableOption types;
 
-  cfg = config.my.services.on-demand-minecraft;
+  cfg = config.services.on-demand-minecraft;
 in
 {
-  options.my.services.on-demand-minecraft = {
+  options.services.on-demand-minecraft = {
     enable = mkEnableOption "local minecraft server";
 
     eula = mkOption {

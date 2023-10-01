@@ -6,10 +6,10 @@
 let
   inherit (lib) mkIf mkOption mkEnableOption types;
 
-  cfg = config.my.services.duksebot;
+  cfg = config.services.duksebot;
 in
 {
-  options.my.services.duksebot = {
+  options.services.duksebot = {
     enable = mkEnableOption "duksebot daily reminder";
 
     package = mkOption {

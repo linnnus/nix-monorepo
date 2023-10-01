@@ -39,7 +39,7 @@
   };
 
   # Set up Minecraft server.
-  my.services.on-demand-minecraft = {
+  services.on-demand-minecraft = {
     enable = true;
     eula = true;
     package = pkgs.papermc;
@@ -47,15 +47,15 @@
   };
 
   # Set up dukse server. Det er satme hårdt at være overduksepåmindelsesansvarlig.
-  my.services.duksebot.enable = true;
+  services.duksebot.enable = true;
 
   # Virtual hosts.
   services.nginx.enable = true;
-  my.modules."linus.onl" = {
+  modules."linus.onl" = {
     enable = true;
     useACME = true;
   };
-  my.modules."notifications.linus.onl" = {
+  modules."notifications.linus.onl" = {
     enable = true;
     useACME = true;
   };
@@ -78,10 +78,10 @@
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   # We are running behind CF proxy.
-  my.modules.cloudflare-proxy.enable = true;
+  modules.cloudflare-proxy.enable = true;
 
   # Use as main driver temporarily.
-  # my.modules.graphics.enable = true;
+  # modules.graphics.enable = true;
 
   disable-screen = {
     enable = true;

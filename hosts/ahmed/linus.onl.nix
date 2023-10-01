@@ -5,10 +5,10 @@ let
 
   domain = "linus.onl";
 
-  cfg = config.my.modules."${domain}";
+  cfg = config.modules."${domain}";
 in
 {
-  options.my.modules."${domain}" = {
+  options.modules."${domain}" = {
     enable = mkEnableOption "${domain} static site";
 
     useACME = mkEnableOption "built-in HTTPS stuff";

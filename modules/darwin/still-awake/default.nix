@@ -3,10 +3,10 @@
 let
   inherit (lib) mkIf mkEnableOption;
 
-  cfg = config.my.services.still-awake;
+  cfg = config.services.still-awake;
 in
 {
-  options.my.services.still-awake.enable = mkEnableOption "still-awake launchd job";
+  options.services.still-awake.enable = mkEnableOption "still-awake launchd job";
 
   config = mkIf cfg.enable {
     launchd.agents."still-awake" =

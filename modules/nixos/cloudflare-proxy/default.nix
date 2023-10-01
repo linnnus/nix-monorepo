@@ -6,10 +6,10 @@
 let
   inherit (lib) mkEnableOption mkIf;
 
-  cfg = config.my.modules.cloudflare-proxy;
+  cfg = config.modules.cloudflare-proxy;
 in
 {
-  options.my.modules.cloudflare-proxy.enable = mkEnableOption "Cloudflare proxy IP extraction for NGINX";
+  options.modules.cloudflare-proxy.enable = mkEnableOption "Cloudflare proxy IP extraction for NGINX";
 
   config = mkIf cfg.enable {
     # Teach NGINX how to extract the proxied IP from proxied requests.

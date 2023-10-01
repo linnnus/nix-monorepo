@@ -8,10 +8,10 @@ let
   # TODO: Make option internal-port.
   internal-port = 13082;
 
-  cfg = config.my.modules."notifications.linus.onl";
+  cfg = config.modules."notifications.linus.onl";
 in
 {
-  options.my.modules."notifications.linus.onl" = {
+  options.modules."notifications.linus.onl" = {
     enable = mkEnableOption "notifications.linus.onl static site";
 
     useACME = mkEnableOption "built-in HTTPS stuff";

@@ -6,10 +6,10 @@
 let
   inherit (lib) mkEnableOption mkIf;
 
-  cfg = config.my.modules.graphics;
+  cfg = config.modules.graphics;
 in
 {
-  options.my.modules.graphics.enable = mkEnableOption "basic graphical environment";
+  options.modules.graphics.enable = mkEnableOption "basic graphical environment";
 
   config = mkIf cfg.enable {
     services.xserver.enable = true;
