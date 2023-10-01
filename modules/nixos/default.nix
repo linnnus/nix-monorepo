@@ -7,4 +7,6 @@
   ## Other miscellaneous configuration bits. These may be useful to other you.
 
   cloudflare-proxy = import ./cloudflare-proxy;
+
+  disable-screen = import ./disable-screen;
 }

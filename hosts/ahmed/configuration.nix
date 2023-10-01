@@ -8,7 +8,6 @@
     [
       ./hardware-configuration.nix
       ./ssh.nix
-      ./disable-screen.nix
       ./linus.onl.nix
       ./notifications.linus.onl.nix
       ./graphics.nix
@@ -83,6 +82,15 @@
 
   # Use as main driver temporarily.
   # my.modules.graphics.enable = true;
+
+  disable-screen = {
+    enable = true;
+    # The path to the device.
+    device-path = "/sys/class/backlight/intel_backlight";
+
+    # The systemd device unit which corresponds to `device-path`.
+    device-unit = "sys-devices-pci0000:00-0000:00:02.0-drm-card0-card0\\x2deDP\\x2d1-intel_backlight.device";
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
