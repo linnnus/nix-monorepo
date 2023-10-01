@@ -33,6 +33,8 @@
       %admin ALL=(ALL:ALL) NOPASSWD: ${builtins.concatStringsSep ", " commands}
     '';
 
+  services.still-awake.enable = true;
+
   # System-specific version info.
   home-manager.users.linus.home.stateVersion = "22.05";
   system.stateVersion = 4;

@@ -15,8 +15,7 @@ in
         log-file = "/tmp/still-awake.log";
       in
       {
-        enable = true;
-        config = {
+        serviceConfig = {
           ProgramArguments = [ "${pkgs.still-awake}/bin/still-awake" ];
           ProcessType = "Interactive";
 
