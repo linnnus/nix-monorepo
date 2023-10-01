@@ -21,7 +21,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nix-darwin, agenix, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nix-darwin, agenix, push-notification-api, ... }@inputs:
     let
       args = {
         flakeInputs = inputs;
@@ -66,6 +66,7 @@
             { _module.args = args; }
             home-manager.nixosModules.home-manager
             agenix.nixosModules.default
+            push-notification-api.nixosModules.default
             ./hosts/ahmed/configuration.nix
             ./hosts/common.nix
             ./home
