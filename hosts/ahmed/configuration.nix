@@ -9,6 +9,9 @@
       ./hardware-configuration.nix
       ./ssh.nix
       ./disable-screen.nix
+      ./linus.onl.nix
+      ./notifications.linus.onl.nix
+      ./graphics.nix
     ];
 
   # Create the main user.

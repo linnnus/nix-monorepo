@@ -29,6 +29,9 @@
         metadata = nixpkgs.lib.importTOML ./metadata.toml;
       };
 
+      darwinModules = builtins.attrValues (import ./modules/darwin);
+      nixosModules  = builtins.attrValues (import ./modules/nixos);
+
       # This is a function that generates an attribute by calling a function
       # you pass to it, with each system as an argument. `systems` lists all
       # supported systems.
@@ -52,10 +55,7 @@
             ./hosts/muhammed/configuration.nix
             ./hosts/common.nix
             ./home
-            # FIXME: Get the following to work without nix-darwin bithcing about unused NixOS options.
-            # ./modules
-            # ./services
-          ];
+          ] ++ darwinModules;
         };
       };
 
@@ -70,14 +70,15 @@
             ./hosts/ahmed/configuration.nix
             ./hosts/common.nix
             ./home
-	    ./modules
-            ./services
-          ];
+          ] ++ nixosModules;
         };
       };
 
       packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
 
       overlays = import ./overlays;
+
+      darwinModules = import ./modules/darwin;
+      nixosModules = import ./modules/nixos;
     };
 }

@@ -31,7 +31,7 @@ in
     users.groups.duksebot = { };
 
     age.secrets.duksebot-env = {
-      file = ../../secrets/duksebot.env.age;
+      file = ../../../secrets/duksebot.env.age;
       owner = config.users.users.duksebot.name;
       group = config.users.users.duksebot.group;
       mode = "0440";
