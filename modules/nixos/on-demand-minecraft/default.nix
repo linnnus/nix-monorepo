@@ -4,7 +4,6 @@
   config,
   lib,
   pkgs,
-  modulesPath,
   ...
 }: let
   inherit (lib) mkIf mkOption mkEnableOption types;
@@ -102,7 +101,7 @@ in {
         Minecraft server properties for the server.properties file. See
         <https://minecraft.gamepedia.com/Server.properties#Java_Edition_3>
         for documentation on these values. Note that some options like
-        `enable-rcon` will be forced on because the're required for the
+        `enable-rcon` will be forced on because they are required for the
         server to work.
       '';
       type = with types; attrsOf (oneOf [bool int str]);
@@ -180,7 +179,7 @@ in {
       '';
 
       # HACK: Each server is given its own subdirectory so
-      #       incompatabilities between servers don't cause complaints.
+      #       incompatibilities between servers don't cause complaints.
       start-server = pkgs.writeShellScript "minecraft-server-start" ''
         # Switch to runtime directory.
         export RUNTIME_DIR="${config.users.users.minecrafter.home}/${cfg.package.name}/"
@@ -256,7 +255,7 @@ in {
       listenStreams = [(toString cfg.external-port)];
     };
 
-    # This service is triggerd by a TCP connection on the public
+    # This service is triggered by a TCP connection on the public
     # port. It starts hook-minecraft.service if it is not running
     # already and waits for it to return (using `after`). Then it proxifies the TCP
     # connection to the real (local) Minecraft port.
@@ -291,7 +290,7 @@ in {
           echo "Waiting for server to start listening on port ${toString cfg.internal-port}..."
           for i in `seq 60`; do
             if nc -z 127.0.0.1 ${toString cfg.internal-port} >/dev/null; then
-              echo "Yay! ${toString cfg.internal-port} is not available. hook-minecraft is finished."
+              echo "Yay! ${toString cfg.internal-port} is now available. hook-minecraft is finished."
               exit 0
             fi
             sleep 1
