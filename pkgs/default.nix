@@ -6,4 +6,6 @@ pkgs: {
   still-awake = pkgs.callPackage ./still-awake {};
 
   trash = pkgs.callPackage ./trash {};
+
+  mcping = pkgs.callPackage ./mcping {};
 }
