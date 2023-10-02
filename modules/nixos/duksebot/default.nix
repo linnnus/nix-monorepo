@@ -62,10 +62,9 @@ in {
       wantedBy = ["timers.target"];
       partOf = ["duksebot.service"];
       after = ["network-online.target"];
-      wants = ["network-online.target"]; # FIXME: redundant?
+      wants = ["network-online.target"];
       timerConfig = {
-        # OnCalendar = "*-*-* 7:00:00";
-        OnCalendar = "*:0/1";
+        OnCalendar = "*-*-* 7:00:00";
         Unit = "duksebot.service";
       };
     };
