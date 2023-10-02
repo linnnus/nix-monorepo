@@ -3,7 +3,6 @@
 {
   config,
   pkgs,
-  lib,
   ...
 }: {
   imports = [
@@ -46,6 +45,7 @@
     package = pkgs.papermc;
     openFirewall = true;
   };
+  services.cloudflare-dyndns.domains = ["minecraft.linus.onl"];
 
   # Set up dukse server. Det er satme hårdt at være overduksepåmindelsesansvarlig.
   services.duksebot.enable = true;
