@@ -69,18 +69,6 @@ in {
       default = 25565;
     };
 
-    rcon-password = mkOption {
-      description = ''
-        The RCON password used for remote control.
-
-        Local systemd units use this password to execute commands
-        that fetch the current number of players. This number is used
-        to shut down the server, when there are no active players.
-      '';
-      type = types.nonEmptyStr;
-      default = "260a368f55f4fb4fa"; # XXX: Is this a bad idea?
-    };
-
     openFirewall = mkOption {
       description = ''
         Open holes in the firewall so clients on LAN can connect. You must
@@ -101,7 +89,7 @@ in {
         Minecraft server properties for the server.properties file. See
         <https://minecraft.gamepedia.com/Server.properties#Java_Edition_3>
         for documentation on these values. Note that some options like
-        `enable-rcon` will be forced on because they are required for the
+        `server-port` will be forced on because they are required for the
         server to work.
       '';
       type = with types; attrsOf (oneOf [bool int str]);
@@ -153,8 +141,6 @@ in {
         cfg.server-properties
         // {
           server-port = cfg.internal-port;
-          enable-rcon = true;
-          "rcon.password" = cfg.rcon-password;
         };
       cfg-to-str = v:
         if builtins.isBool v
@@ -289,7 +275,7 @@ in {
         wait-tcp = pkgs.writeShellScriptBin "wait-tcp" ''
           echo "Waiting for server to start listening on port ${toString cfg.internal-port}..."
           for i in `seq 60`; do
-            if nc -z 127.0.0.1 ${toString cfg.internal-port} >/dev/null; then
+            if ${pkgs.netcat.nc}/bin/nc -z 127.0.0.1 ${toString cfg.internal-port} >/dev/null; then
               echo "Yay! ${toString cfg.internal-port} is now available. hook-minecraft is finished."
               exit 0
             fi
@@ -316,10 +302,13 @@ in {
     };
 
     systemd.services.stop-minecraft = let
-      # Script that returns true (exit code 1) if the server can be shut
-      # down. It uses RCON to get the player list. It does not continue if
+      # Script that returns true (exit code 0) if the server can be shut
+      # down. It uses mcping to get the player list. It does not continue if
       # the server was started less than `minimum-server-lifetime` seconds
       # ago.
+      # NOTE: `pkgs.mcping` is declared my personal monorepo. Hopefully
+      # everything just works out through the magic of flakes, but if you are
+      # getting errors like "missing attribute 'mcping'" that's probably why.
       no-player-connected = pkgs.writeShellScriptBin "no-player-connected" ''
         servicestartsec="$(date -d "$(systemctl show --property=ActiveEnterTimestamp minecraft-server.service | cut -d= -f2)" +%s)"
         serviceelapsedsec="$(( $(date +%s) - servicestartsec))"
@@ -329,8 +318,9 @@ in {
           exit 1
         fi
 
-        PLAYERS="$(printf "list\n" | ${pkgs.rcon.out}/bin/rcon -m -H 127.0.0.1 -p 25575 -P ${cfg.rcon-password})"
-        if echo "$PLAYERS" | grep "are 0 of a"; then
+        PLAYERS="$(${pkgs.mcping}/bin/mcping 127.0.0.1 ${toString cfg.internal-port} | ${pkgs.jq}/bin/jq .players.online)"
+        echo "There are $PLAYERS active players"
+        if [ $PLAYERS -eq 0 ]; then
           exit 0
         else
           exit 1
