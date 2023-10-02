@@ -84,7 +84,7 @@
   # Use as main driver temporarily.
   # modules.graphics.enable = true;
 
-  disable-screen = {
+  services.disable-screen = {
     enable = true;
     # The path to the device.
     device-path = "/sys/class/backlight/intel_backlight";

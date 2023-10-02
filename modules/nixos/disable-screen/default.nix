@@ -7,9 +7,9 @@
 }: let
   inherit (lib) mkEnableOption mkOption types;
 
-  cfg = config.disable-screen;
+  cfg = config.services.disable-screen;
 in {
-  options.disable-screen = {
+  options.services.disable-screen = {
     enable = mkEnableOption "disable screen";
 
     device-path = mkOption {
