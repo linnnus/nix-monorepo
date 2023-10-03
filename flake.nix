@@ -36,8 +36,12 @@
       metadata = nixpkgs.lib.importTOML ./metadata.toml;
     };
 
-    darwinModules = builtins.attrValues (import ./modules/darwin);
-    nixosModules = builtins.attrValues (import ./modules/nixos);
+    darwinModules =
+      builtins.attrValues (import ./modules/darwin).general
+      ++ builtins.attrValues (import ./modules/darwin).personal;
+    nixosModules =
+      builtins.attrValues (import ./modules/nixos).general
+      ++ builtins.attrValues (import ./modules/nixos).personal;
 
     # This is a function that generates an attribute by calling a function
     # you pass to it, with each system as an argument. `systems` lists all
@@ -93,7 +97,8 @@
 
     overlays = import ./overlays;
 
-    darwinModules = import ./modules/darwin;
-    nixosModules = import ./modules/nixos;
+    # We export the generally applicable modules.
+    darwinModules = (import ./modules/darwin).geneal;
+    nixosModules = (import ./modules/nixos).general;
   };
 }

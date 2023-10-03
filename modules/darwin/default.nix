@@ -1,3 +1,4 @@
 {
-  still-awake = import ./still-awake;
+  general.still-awake = import ./still-awake;
+  personal = {};
 }

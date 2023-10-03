@@ -1,12 +1,12 @@
 {
-  ## Reusable services.
+  # These components are
+  general = {
+    on-demand-minecraft = import ./on-demand-minecraft;
+    cloudflare-proxy = import ./cloudflare-proxy;
+    disable-screen = import ./disable-screen;
+  };
 
-  on-demand-minecraft = import ./on-demand-minecraft;
-  duksebot = import ./duksebot;
-
-  ## Other miscellaneous configuration bits. These may be useful to other you.
-
-  cloudflare-proxy = import ./cloudflare-proxy;
-
-  disable-screen = import ./disable-screen;
+  personal = {
+    duksebot = import ./duksebot;
+  };
 }
