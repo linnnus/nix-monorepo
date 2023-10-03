@@ -8,9 +8,6 @@
   imports = [
     ./hardware-configuration.nix
     ./ssh.nix
-    ./linus.onl.nix
-    ./notifications.linus.onl.nix
-    ./graphics.nix
   ];
 
   # Create the main user.

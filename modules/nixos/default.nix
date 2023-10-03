@@ -8,5 +8,8 @@
 
   personal = {
     duksebot = import ./duksebot;
+    graphics = import ./graphics;
+    "linus.onl" = import ./linus.onl;
+    "notifications.linus.onl" = import ./nofitications.linus.onl;
   };
 }
