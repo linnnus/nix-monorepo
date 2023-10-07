@@ -3,4 +3,5 @@
 # goes in home/ instead.
 {
   iterm2 = import ./iterm2;
+  git-credential-lastpass = import ./git-credential-lastpass;
 }
