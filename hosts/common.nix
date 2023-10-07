@@ -29,6 +29,7 @@
     jq
     vim
     comma
+    nix-index
     curl
     moreutils
     flakeInputs.agenix.packages.${system}.default
