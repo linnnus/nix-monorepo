@@ -15,12 +15,15 @@
   # OKAY FUCK THIS SHIT. THERE IS ONE USER. IT IS ME. LINUS. I WILL ADD
   # MULTIUSER SUPPORT IF IT EVER BECOMES A REQUIREMENT.
   home-manager.users.linus = {
-    imports = [
-      ./neovim
-      ./zsh
-      ./git
-      ./dev-utils
-    ];
+    imports =
+      [
+        ./neovim
+        ./zsh
+        ./git
+        ./dev-utils
+        ./iterm2
+      ]
+      ++ builtins.attrValues flakeOutputs.homeModules;
 
     xdg.enable = true;
   };

@@ -100,5 +100,6 @@
     # We export the generally applicable modules.
     darwinModules = (import ./modules/darwin).geneal;
     nixosModules = (import ./modules/nixos).general;
+    homeModules = import ./modules/home-manager;
   };
 }
