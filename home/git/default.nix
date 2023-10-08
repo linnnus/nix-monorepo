@@ -1,5 +1,10 @@
-{pkgs,lib,...}: let inherit (lib.modules) mkIf;
-inherit (pkgs.stdenv.hostPlatform) isDarwin;
+{
+  pkgs,
+  lib,
+  ...
+}: let
+  inherit (lib.modules) mkIf;
+  inherit (pkgs.stdenv.hostPlatform) isDarwin;
 in {
   programs.git = {
     enable = true;
@@ -8,7 +13,7 @@ in {
     userName = "Linnnus";
     userEmail = "linnnus@users.noreply.github.com";
 
-    extraConfig.credential.helper = mkIf isDarwin [ "osxkeychain" ];
+    extraConfig.credential.helper = mkIf isDarwin ["osxkeychain"];
   };
 
   programs.git-credential-lastpass.enable = !isDarwin;

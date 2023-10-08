@@ -1,12 +1,9 @@
 {
-  pkgs,
   lib,
   config,
   ...
 }: let
-  inherit (lib) mkEnableOption mkOption types mkIf optional;
-
-  domain = "notifications.linus.onl";
+  inherit (lib) mkEnableOption mkIf;
 
   cfg = config.modules."notifications.linus.onl";
 in {
