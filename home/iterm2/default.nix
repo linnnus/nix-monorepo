@@ -12,9 +12,13 @@ in {
   config = mkIf isDarwin {
     programs.iterm2 = {
       enable = true;
-      config = {
-        SoundForEsc = false;
-      };
+      # config = {
+      #   # Use the minimal tab style.
+      #   # See: https://github.com/gnachman/iTerm2/blob/bd40fba0611fa94684dadf2478625f2a93eb6e47/sources/iTermPreferences.h#L29
+      #   TabStyleWithAutomaticOption = 5;
+      # };
+
+      shellIntegration.enableZshIntegration = true;
     };
   };
 }

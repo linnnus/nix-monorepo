@@ -23,6 +23,9 @@ in {
     };
 
     config = mkOption {
+      # FIXME: This breaks iTerm2 too much. Create a patch for iTerm2 that
+      # loads `$XDG_CONFIG_HOME/iterm2/iterm2.plist` in addition to the usual
+      # `~/Library/Preferences/com.googlecode.iterm2.plist`.
       description = ''
         Application preferences. If these are specified, they are serialized to
         PLIST and stored in `~/Library/Preferences/com.googlecode.iterm2.plist`.
