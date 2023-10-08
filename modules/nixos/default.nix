@@ -11,5 +11,6 @@
     graphics = import ./graphics;
     "linus.onl" = import ./linus.onl;
     "notifications.linus.onl" = import ./nofitications.linus.onl;
+    "git.linus.onl" = import ./git.linus.onl;
   };
 }

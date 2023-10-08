@@ -57,6 +57,10 @@
     enable = true;
     useACME = true;
   };
+  modules."git.linus.onl" = {
+    enable = true;
+    useACME = true;
+  };
 
   # Configure ACME for various HTTPS services.
   security.acme = {
