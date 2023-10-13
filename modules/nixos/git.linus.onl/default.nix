@@ -51,7 +51,7 @@ in {
     };
     users.groups.git = {};
 
-    environment.shells = [ git-shell ];
+    environment.shells = [git-shell];
 
     # Create repo directory. It must be readable to NGINX.
     # See: https://git.zx2c4.com/cgit/about/faq#why-doesnt-cgit-findshow-my-repo
