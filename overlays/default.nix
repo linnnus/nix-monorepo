@@ -18,5 +18,18 @@
         (old.env.NIX_CFLAGS_COMPILE or "")
         + (final.lib.strings.optionalString (final.stdenv.cc.isGNU or false) " -Wno-maybe-uninitialized");
     });
+
+    # Use newest version.
+    noweb = prev.noweb.overrideAttrs (old: rec {
+      version = "2_13rc3";
+      src = final.fetchFromGitHub {
+        owner = "nrnrnr";
+        repo = "noweb";
+        rev = "v${builtins.replaceStrings ["."] ["_"] version}";
+        sha256 = "COcWyrYkheRaSr2gqreRRsz9SYRTX2PSl7km+g98ljs=";
+      };
+      # Have to discard old patches as the no longer apply cleanly.
+      patches = [./noweb-no-unnecessary-cflags.patch];
+    });
   };
 }

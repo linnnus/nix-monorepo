@@ -1,0 +1,33 @@
+diff --git a/src/c/Makefile b/src/c/Makefile
+index 5d06b69..ee975d0 100644
+--- a/c/Makefile
++++ b/c/Makefile
+@@ -45,22 +45,22 @@ CPIF=>
+ all: nt markup mnt finduses nwmktemp
+ 
+ nt: $(TANGLEOBJS)
+-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(TANGLEOBJS)
++	$(CC) $(LDFLAGS) -o $@ $(TANGLEOBJS)
+ 
+ markup: $(MARKUPOBJS)
+-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(MARKUPOBJS)
++	$(CC) $(LDFLAGS) -o $@ $(MARKUPOBJS)
+ 
+ mnt: $(MNTOBJS)
+-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(MNTOBJS)
++	$(CC) $(LDFLAGS) -o $@ $(MNTOBJS)
+ 
+ finduses: $(FINDUSESOBJS)
+-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(FINDUSESOBJS)
++	$(CC) $(LDFLAGS) -o $@ $(FINDUSESOBJS)
+ 
+ nwmktemp: $(NWMKTEMPOBJS)
+-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(NWMKTEMPOBJS)
++	$(CC) $(LDFLAGS) -o $@ $(NWMKTEMPOBJS)
+ 
+ fakepretty: $(FPOBJS)
+-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(FPOBJS)
++	$(CC) $(LDFLAGS) -o $@ $(FPOBJS)
+ 
+ source: $(SRCS)
+ touch: $(SRCS)
