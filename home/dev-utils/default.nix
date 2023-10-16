@@ -16,6 +16,7 @@
       nodePackages_latest.nodemon
       rlwrap
       tcl-8_6
+      ffmpeg_6-full
     ]
     ++ lib.optional pkgs.stdenv.isDarwin trash;
 
