@@ -10,6 +10,8 @@
   inherit (pkgs.stdenv) isDarwin;
 in {
   config = mkIf isDarwin {
+    home.packages = with pkgs; [imgcat];
+
     programs.iterm2 = {
       enable = true;
       # config = {
