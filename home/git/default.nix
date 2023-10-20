@@ -6,7 +6,7 @@
   inherit (lib.modules) mkIf;
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
 in {
-  imports = [./ignore.nix];
+  imports = [./ignore.nix ./aliases.nix];
 
   programs.git = {
     enable = true;
@@ -19,13 +19,4 @@ in {
   };
 
   programs.git-credential-lastpass.enable = !isDarwin;
-
-  home.shellAliases = {
-    gs = "git status";
-    gd = "git diff";
-    gc = "git commit";
-    ga = "git add";
-    gan = "git add -N";
-    gap = "git add --patch";
-  };
 }
