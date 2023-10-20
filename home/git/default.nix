@@ -6,6 +6,8 @@
   inherit (lib.modules) mkIf;
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
 in {
+  imports = [./ignore.nix];
+
   programs.git = {
     enable = true;
 
