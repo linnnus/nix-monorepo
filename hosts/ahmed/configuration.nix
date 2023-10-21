@@ -3,6 +3,7 @@
 {
   config,
   pkgs,
+  metadata,
   ...
 }: {
   imports = [
@@ -82,7 +83,10 @@
   networking.firewall.allowedTCPPorts = [80 443];
 
   # We are running behind CF proxy.
-  modules.cloudflare-proxy.enable = true;
+  modules.cloudflare-proxy = {
+    enable = true;
+    firewall.IPv4Whitelist = [metadata.hosts.muhammed.ipAddress];
+  };
 
   # Use as main driver temporarily.
   # modules.graphics.enable = true;

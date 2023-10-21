@@ -6,11 +6,40 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib.options) mkEnableOption mkOption;
+  inherit (lib.modules) mkIf;
+  inherit (lib.types) listOf nonEmptyStr port;
+
+  # TODO: What happens when these get out of date??? Huh??? You little pissbaby
+  fileToList = x: lib.strings.splitString "\n" (builtins.readFile x);
+  cfipv4 = fileToList (pkgs.fetchurl {
+    url = "https://www.cloudflare.com/ips-v4";
+    hash = "sha256-8Cxtg7wBqwroV3Fg4DbXAMdFU1m84FTfiE5dfZ5Onns=";
+  });
+  cfipv6 = fileToList (pkgs.fetchurl {
+    url = "https://www.cloudflare.com/ips-v6";
+    hash = "sha256-np054+g7rQDE3sr9U8Y/piAp89ldto3pN9K+KCNMoKk=";
+  });
 
   cfg = config.modules.cloudflare-proxy;
 in {
-  options.modules.cloudflare-proxy.enable = mkEnableOption "Cloudflare proxy IP extraction for NGINX";
+  options.modules.cloudflare-proxy = {
+    enable = mkEnableOption "Cloudflare proxy IP extraction for NGINX";
+
+    firewall = {
+      IPv4Whitelist = mkOption {
+        description = "List of IPv4 addresses (or ranges) added to the whitelist.";
+        type = listOf nonEmptyStr;
+        default = [];
+      };
+
+      IPv6Whitelist = mkOption {
+        description = "List of IPv6 addresses (or ranges) added to the whitelist.";
+        type = listOf nonEmptyStr;
+        default = [];
+      };
+    };
+  };
 
   config = mkIf cfg.enable {
     # Teach NGINX how to extract the proxied IP from proxied requests.
@@ -18,21 +47,63 @@ in {
     # See: https://nixos.wiki/wiki/Nginx#Using_realIP_when_behind_CloudFlare_or_other_CDN
     services.nginx.commonHttpConfig = let
       realIpsFromList = lib.strings.concatMapStringsSep "\n" (x: "set_real_ip_from  ${x};");
-      fileToList = x: lib.strings.splitString "\n" (builtins.readFile x);
-      cfipv4 = fileToList (pkgs.fetchurl {
-        url = "https://www.cloudflare.com/ips-v4";
-        sha256 = "0ywy9sg7spafi3gm9q5wb59lbiq0swvf0q3iazl0maq1pj1nsb7h";
-      });
-      cfipv6 = fileToList (pkgs.fetchurl {
-        url = "https://www.cloudflare.com/ips-v6";
-        sha256 = "1ad09hijignj6zlqvdjxv7rjj8567z357zfavv201b9vx3ikk7cy";
-      });
     in ''
       ${realIpsFromList cfipv4}
       ${realIpsFromList cfipv6}
       real_ip_header CF-Connecting-IP;
     '';
 
-    # TODO: Only allow incomming HTTP{,S} requests from non-Cloudflare IPs.
+    # Block non-Cloudflare IP addresses.
+    networking.firewall = let
+      chain = "cloudflare-whitelist";
+    in {
+      extraCommands = let
+        allow-interface = lib.strings.concatMapStringsSep "\n" (i: ''ip46tables --append ${chain} --in-interface ${i} --jump RETURN'');
+        allow-ip = cmd: lib.strings.concatMapStringsSep "\n" (r: ''${cmd} --append ${chain} --source ${r} --jump RETURN'');
+      in ''
+        # Flush the old firewall rules. This behavior mirrors the default firewall service.
+        # See: https://github.com/NixOS/nixpkgs/blob/ac911bf685eecc17c2df5b21bdf32678b9f88c92/nixos/modules/services/networking/firewall-iptables.nix#L59-L66
+        # TEMP: Removed 2>/dev/null
+        ip46tables --delete INPUT --protocol tcp --destination-port 80 --syn --jump ${chain} || true
+        ip46tables --delete INPUT --protocol tcp --destination-port 443 --syn --jump ${chain} || true
+        ip46tables --flush ${chain} || true
+        ip46tables --delete-chain ${chain} || true
+
+        # Create a chain that only allows whitelisted IPs through.
+        ip46tables --new-chain ${chain}
+
+        # Allow trusted interfaces through.
+        ${allow-interface config.networking.firewall.trustedInterfaces}
+
+        # Allow local whitelisted IPs through
+        ${allow-ip "iptables" cfg.firewall.IPv4Whitelist}
+        ${allow-ip "ip6tables" cfg.firewall.IPv6Whitelist}
+
+        # Allow Cloudflare's IP ranges through.
+        ${allow-ip "iptables" cfipv4}
+        ${allow-ip "ip6tables" cfipv6}
+
+        # Everything else is dropped.
+        #
+        # TODO: I would like to use `nixos-fw-log-refuse` here, but I keep
+        #       running into weird issues when reloading the firewall.
+        #       Something about the table not being deleted properly.
+        ip46tables --append ${chain} --jump DROP
+
+        # Inject our chain as the first check in INPUT (before nixos-fw).
+        # We want to capture any new incomming TCP connections.
+        ip46tables --insert INPUT 1 --protocol tcp --destination-port 80 --syn --jump ${chain}
+        ip46tables --insert INPUT 1 --protocol tcp --destination-port 443 --syn --jump ${chain}
+      '';
+      extraStopCommands = ''
+        # Clean up added rulesets (${chain}). This mirrors the behavior of the
+        # default firewall at the time of writing.
+        #
+        # See: https://github.com/NixOS/nixpkgs/blob/ac911bf685eecc17c2df5b21bdf32678b9f88c92/nixos/modules/services/networking/firewall-iptables.nix#L218-L219
+        # TEMP: Removed 2>/dev/null
+        ip46tables --delete INPUT --protocol tcp --destination-port 80 --syn --jump ${chain}  || true
+        ip46tables --delete INPUT --protocol tcp --destination-port 443 --syn --jump ${chain} || true
+      '';
+    };
   };
 }
