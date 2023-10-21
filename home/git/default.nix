@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  inherit (lib.modules) mkIf;
+  inherit (lib) optional;
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
 in {
   imports = [./ignore.nix ./aliases.nix];
@@ -15,8 +15,10 @@ in {
     userName = "Linnnus";
     userEmail = "linnnus@users.noreply.github.com";
 
-    extraConfig.credential.helper = mkIf isDarwin ["osxkeychain"];
-  };
+    extraConfig.credential = {
+      "https://github.com/".username = "linnnus";
 
-  programs.git-credential-lastpass.enable = !isDarwin;
+      helper = (optional isDarwin ["osxkeychain"]) ++ ["cache"];
+    };
+  };
 }
