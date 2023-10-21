@@ -1,3 +1,4 @@
+# This module manages behavioral plugins – plugins that alter how ZSH acts (e.g. autovenv, direnv).
 {
   pkgs,
   lib,
