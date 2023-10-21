@@ -41,6 +41,8 @@
     eula = true;
     package = pkgs.papermc;
     openFirewall = true;
+    # Try shutting down every 10 minutes.
+    frequency-check-players = "*-*-* *:00/10:00";
   };
   services.cloudflare-dyndns.domains = ["minecraft.linus.onl"];
 
@@ -87,6 +89,7 @@
 
   services.disable-screen = {
     enable = true;
+
     # The path to the device.
     device-path = "/sys/class/backlight/intel_backlight";
 
