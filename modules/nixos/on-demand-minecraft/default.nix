@@ -306,6 +306,7 @@ in {
       # down. It uses mcping to get the player list. It does not continue if
       # the server was started less than `minimum-server-lifetime` seconds
       # ago.
+      #
       # NOTE: `pkgs.mcping` is declared my personal monorepo. Hopefully
       # everything just works out through the magic of flakes, but if you are
       # getting errors like "missing attribute 'mcping'" that's probably why.
@@ -314,7 +315,7 @@ in {
         serviceelapsedsec="$(( $(date +%s) - servicestartsec))"
 
         if [ $serviceelapsedsec -lt ${toString cfg.minimum-server-lifetime} ]; then
-          echo "Server is too young to be stopped (minimum lifetime is ${toString cfg.minimum-server-lifetime}s)"
+          echo "Server is too young to be stopped (minimum lifetime is ${toString cfg.minimum-server-lifetime}s, current is ''${serviceelapsedsec}s)"
           exit 1
         fi
 
