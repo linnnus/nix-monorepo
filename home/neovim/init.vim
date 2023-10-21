@@ -42,8 +42,12 @@ set matchtime=2
 
 set listchars=tab:>-,eol:$,space:.,trail:@,nbsp:%
 
-" Enable mouse input
-set mouse=a
+" Enable mouse input for all modes but visual.
+"
+" I disable mouse in visual mode so I can select text in the terminal using
+" the mouse. This is useful when copying text from a remote instance of vim
+" SSH session where "* doesn't work.
+set mouse=nicr
 
 " sussy sus the sussy sus
 set nowrap
