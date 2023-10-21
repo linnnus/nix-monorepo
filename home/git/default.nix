@@ -18,7 +18,7 @@ in {
     extraConfig.credential = {
       "https://github.com/".username = "linnnus";
 
-      helper = (optional isDarwin ["osxkeychain"]) ++ ["cache"];
+      helper = (optional isDarwin "osxkeychain") ++ ["cache"];
     };
   };
 }
