@@ -66,6 +66,21 @@ in {
     services.cgit."git.linus.onl" = {
       enable = true;
       scanPath = cfg.location;
+      settings = {
+        root-title = "Linus' public projects";
+        root-desc = "hello yes this is the git server";
+        root-readme = toString ./about.html;
+      };
+      extraConfig = ''
+        readme=:README.md
+        readme=:README.rst
+        readme=:README.text
+        readme=:README.txt
+        readme=:readme.md
+        readme=:readme.rst
+        readme=:readme.text
+        readme=:readme.txt
+      '';
     };
 
     # Register domain name.
