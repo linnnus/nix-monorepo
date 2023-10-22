@@ -209,7 +209,8 @@ augroup Sus
 
 			" Any characters beyond the maximum width of the text.
 			if &tw > 0
-				exe 'syn match SusWhitespace /\%' . &tw . 'v.\+/ containedin=ALL'
+				let reg = '\%' . (&tw + 1) . 'v.\+'
+				exe 'syn match SusWhitespace /'.reg.'/ containedin=ALL'
 			endif
 		endif
 	endfun
