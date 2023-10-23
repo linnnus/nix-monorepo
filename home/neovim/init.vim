@@ -231,6 +231,10 @@ augroup Sus
 	" Create some persistent syntax highlighting groups.
 	au Syntax * call s:AddSyntax()
 
+	" When 'textwidth' changes, we may need to recalculate.
+	au OptionSet textwidth call s:RemoveSyntax()
+	                   \ | call s:AddSyntax()
+
 	" Temporarily remove the groups when in insert mode.
 	au InsertEnter * call s:RemoveSyntax()
 	au InsertLeave * call s:AddSyntax()
