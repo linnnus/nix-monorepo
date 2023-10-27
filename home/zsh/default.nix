@@ -13,7 +13,15 @@
     history.path = config.xdg.cacheHome + "/zsh/history";
 
     initExtra = ''
-      PROMPT='%F{41}->%f %B%(2L.LVL%L .)%b%F{red}%(?..E%? )%f%n@%U%m%u:%15<...<%~%<<%# '
+      set -o PROMPTSUBST
+      if [ -v NVIM -o -v VIM ]; then
+        # smol prompt
+        PROMPT='%# '
+      else
+        # loong looooong prooooompt – Nagāi Sakeru Gumi
+        PROMPT='%B%(2L.LVL%L .)%b%F{red}%(?..E%? )%f%F{93}%n%f@%F{35}%m%f%# '
+      fi
+      RPROMPT='%F{green}%$((COLUMNS/4))<...<%~%<<%f'
     '';
   };
 }
