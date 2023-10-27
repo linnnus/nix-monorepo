@@ -45,6 +45,9 @@
     "file" = "file --no-dereference";
     "tree" = "tree --dirsfirst";
 
+    # See: https://github.com/NixOS/nix/issues/5858
+    "nix" = "nix --print-build-logs";
+
     ".." = "cd ../";
     "..." = "cd ../../";
     "...." = "cd ../../../";
