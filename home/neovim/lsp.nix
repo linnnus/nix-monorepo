@@ -1,11 +1,7 @@
 # This module sets up LSP server configurations for Neovim. It is waaay
 # overcomplicated as it kind of turned into an experiment in generating Lua
 # code from a Nix attrset.
-{
-  pkgs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   programs.neovim.plugins = [
     {
       plugin = pkgs.vimPlugins.nvim-lspconfig;
@@ -53,7 +49,24 @@
         -- map buffer local keybindings when the language server attaches
         local servers = {
         	pyright = { cmd = { "${pkgs.pyright}/bin/pyright-langserver", "--stdio" } },
-        	nil_ls = { cmd = { "${pkgs.nil}/bin/nil" } },
+        	nil_ls = {
+        		cmd = { "${pkgs.nil}/bin/nil" },
+        		settings = {
+        			["nil"] = {
+        				formatting = {
+        					command = {"nix", "run", "nixpkgs#alejandra"},
+        				},
+        				nix = {
+        					flake = {
+        						-- calls `nix flake archive` to put a flake and its output to store
+        						autoArchive = true,
+        						-- auto eval flake inputs for improved completion
+        						autoEvalInputs = true,
+        					},
+        				},
+        			},
+        		},
+        	},
         	denols = {
         		init_options = {
         			enable = true,
@@ -73,9 +86,9 @@
         			end
         		end,
         	},
-                clangd = {
-                  cmd = { "${pkgs.clang-tools}/bin/clangd" },
-                },
+        	clangd = {
+        		cmd = { "${pkgs.clang-tools}/bin/clangd" },
+        	},
         };
         for server, config in pairs(servers) do
         	-- set common options
