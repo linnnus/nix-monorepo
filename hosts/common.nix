@@ -9,11 +9,19 @@
   # Enable de facto stable features.
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
+  nixpkgs.overlays = [
+    # Use local overlays.
+    flakeOutputs.overlays.additions
+    flakeOutputs.overlays.modifications
+
+    # Add unstable nixpkgs.
+    (final: prev: {unstable = flakeInputs.unstable-nixpkgs.legacyPackages.${pkgs.system};})
+  ];
+
   # Use overlays from this repo for building system configuration as well as
   # system-wide.
   #
   # See: https://nixos.wiki/wiki/Overlays#Using_nixpkgs.overlays_from_configuration.nix_as_.3Cnixpkgs-overlays.3E_in_your_NIX_PATH
-  nixpkgs.overlays = [flakeOutputs.overlays.additions flakeOutputs.overlays.modifications];
   nix.nixPath = options.nix.nixPath.default ++ ["nixpkgs-overlays=${flakeInputs.self}/overlays/compat.nix"];
 
   # Set ZSH as the shell.
