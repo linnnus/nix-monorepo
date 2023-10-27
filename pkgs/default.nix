@@ -8,4 +8,13 @@ pkgs: {
   trash = pkgs.callPackage ./trash {};
 
   mcping = pkgs.callPackage ./mcping {};
+
+  # TODO: These should be contained in the 'vimPlugins' attrset. This turns out
+  # to be non-trivial because this module is both consumed in a flake output
+  # context and an overlay context.
+  #
+  # See: https://nixos.wiki/wiki/Overlays#Overriding_a_package_inside_an_extensible_attribute_set
+  vim-crystal = pkgs.callPackage ./vim-crystal {};
+  vim-noweb = pkgs.callPackage ./vim-noweb {};
+  vim-janet = pkgs.callPackage ./vim-janet {};
 }
