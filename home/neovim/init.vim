@@ -64,10 +64,10 @@ nnoremap Æ 0
 
 " Switching windows
 " TODO: make this work with iTerm2 panes
-nnoremap <c-h> <c-w><c-h>
-nnoremap <c-j> <c-w><c-j>
-nnoremap <c-k> <c-w><c-k>
-nnoremap <c-l> <c-w><c-l>
+# nnoremap <c-h> <c-w><c-h>
+# nnoremap <c-j> <c-w><c-j>
+# nnoremap <c-k> <c-w><c-k>
+# nnoremap <c-l> <c-w><c-l>
 " tnoremap <c-h> <c-\><c-n><c-w><c-h>
 " tnoremap <c-j> <c-\><c-n><c-w><c-j>
 " tnoremap <c-k> <c-\><c-n><c-w><c-k>
@@ -120,7 +120,11 @@ au BufEnter term://* norm! i
 
 " Join to end of line below
 " This is already used by the window switching mappings
-" nnoremap <c-j> ddpkJ
+nnoremap <c-j> ddpkJ
+
+" Move window to the left and switch to the eastern window.
+" I do this move pretty frequently.
+nnoremap <c-w><c-w> <c-w>L<c-w>h
 
 " Commands
 """""""""""""""""""""""""""
