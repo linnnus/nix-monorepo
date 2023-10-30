@@ -5,6 +5,15 @@
 }: {
   home.packages = with pkgs;
     [
+      # smol utils
+      nodePackages_latest.nodemon
+      rlwrap
+
+      # heavy hitters
+      imagemagick
+      ffmpeg_6-full
+
+      # interpreaters
       cling
       deno
       (python311Full.withPackages (ps:
@@ -12,11 +21,9 @@
           virtualenv
           tkinter
         ]))
-      imagemagick
-      nodePackages_latest.nodemon
-      rlwrap
       tcl-8_6
-      ffmpeg_6-full
+      crystal
+      clojure
     ]
     ++ lib.optional pkgs.stdenv.isDarwin trash;
 
