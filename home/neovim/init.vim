@@ -30,6 +30,9 @@ syn on
 " Persistent undo
 set undofile
 
+" Give me some thinking time, jesus!
+set timeout timeoutlen=2000
+
 " Line numbers
 set number relativenumber
 
@@ -56,6 +59,7 @@ set nowrap
 """""""""""""""""""""""""""
 
 let g:mapleader = "\<space>"
+let g:maplocalleader = "\<space>"
 
 " Some keys are hard to press with the Danish layout. Luckily, we have some
 " spare keys! Note that ctrl and esc are swapped at the OS level.

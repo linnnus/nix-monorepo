@@ -1,9 +1,5 @@
 # This file contains the HM configuration options for Neovim.
-{
-  pkgs,
-  lib,
-  ...
-}: {
+{...}: {
   imports = [
     ./lsp.nix
     ./filetype.nix

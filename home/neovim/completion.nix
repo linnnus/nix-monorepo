@@ -1,9 +1,5 @@
 # This module sets up auto completion for Neovim.
-{
-  pkgs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   programs.neovim.plugins = with pkgs.vimPlugins; [
     # This is the actual completion engine.
     {
@@ -47,5 +43,6 @@
     cmp-calc
     cmp-buffer
     cmp-path
+    cmp-conjure
   ];
 }
