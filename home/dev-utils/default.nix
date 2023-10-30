@@ -23,7 +23,10 @@
         ]))
       tcl-8_6
       crystal
+
+      # Clojure ecosystem
       clojure
+      leiningen
     ]
     ++ lib.optional pkgs.stdenv.isDarwin trash;
 

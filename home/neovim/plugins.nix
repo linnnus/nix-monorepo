@@ -29,9 +29,12 @@
       plugin = pkgs.vimPlugins.conjure;
       type = "lua";
       config = ''
-        -- Create a command to launch NRepl for Clojure support.
+        local start_clj_repl = "StartCljRepl";
+        local start_lein_repl = "StartLeinRepl";
+
+        -- Create a command to launch nRepl for Clojure support.
         -- See: https://github.com/Olical/conjure/wiki/Quick-start:-Clojure
-        vim.api.nvim_create_user_command("NRepl", function()
+        vim.api.nvim_create_user_command(start_clj_repl, function()
           local id = vim.fn.jobstart({
             "${pkgs.clojure}/bin/clj",
             "-Sdeps",
@@ -42,9 +45,30 @@
             '["cider.nrepl/cider-middleware"]',
             "--interactive",
           })
+          print("Started nRepl job #" .. id)
         end, {
-          desc = "Starts an NRepl session in the current directory (for use w/ conjure).",
+          desc = "Starts an nRepl session in the current directory using clj.",
         })
+
+        vim.api.nvim_create_user_command(start_lein_repl, function()
+          local id = vim.fn.jobstart({
+            "${pkgs.leiningen}/bin/lein",
+            "repl",
+          })
+          print("Started nRepl job #" .. id)
+        end, {
+          desc = "Starts an nRepl session in the current directory using Lein.",
+        })
+
+        -- Launch nRepl when any clojure file is started.
+        -- vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
+        --   pattern = "*.clj",
+        --   command = start_clj_repl,
+        -- });
+
+        -- Jump to bottom of log when new evaluation happens
+        -- See: https://github.com/Olical/conjure/blob/58c46d1f4999679659a5918284b574c266a7ac83/doc/conjure.txt#L872
+        vim.cmd [[autocmd User ConjureEval if expand("%:t") =~ "^conjure-log-" | exec "normal G" | endif]]
       '';
     }
   ];
