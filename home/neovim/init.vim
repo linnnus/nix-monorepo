@@ -68,10 +68,10 @@ nnoremap Æ 0
 
 " Switching windows
 " TODO: make this work with iTerm2 panes
-# nnoremap <c-h> <c-w><c-h>
-# nnoremap <c-j> <c-w><c-j>
-# nnoremap <c-k> <c-w><c-k>
-# nnoremap <c-l> <c-w><c-l>
+" nnoremap <c-h> <c-w><c-h>
+" nnoremap <c-j> <c-w><c-j>
+" nnoremap <c-k> <c-w><c-k>
+" nnoremap <c-l> <c-w><c-l>
 " tnoremap <c-h> <c-\><c-n><c-w><c-h>
 " tnoremap <c-j> <c-\><c-n><c-w><c-j>
 " tnoremap <c-k> <c-\><c-n><c-w><c-k>
