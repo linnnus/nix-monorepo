@@ -4,7 +4,6 @@
 {...}: {
   programs.git.aliases = {
     unstage = "restore --staged";
-    forgor = "commit --amend --no-edit --";
   };
 
   home.shellAliases = {
@@ -14,7 +13,8 @@
 
     gc = "git commit";
     gcp = "git commit --patch";
-    gf = "git forgor";
+    gf = "git commit --amend --no-edit --";
+    gfp = "git commit --amend --no-edit --patch --";
 
     ga = "git add --";
     gan = "git add -N";
