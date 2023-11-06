@@ -8,6 +8,7 @@
       # smol utils
       nodePackages_latest.nodemon
       rlwrap
+      socat
 
       # heavy hitters
       imagemagick
