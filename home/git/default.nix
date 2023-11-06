@@ -15,10 +15,13 @@ in {
     userName = "Linnnus";
     userEmail = "linnnus@users.noreply.github.com";
 
-    extraConfig.credential = {
-      "https://github.com/".username = "linnnus";
+    extraConfig = {
+      init.defaultBranch = "master";
 
-      helper = (optional isDarwin "osxkeychain") ++ ["cache"];
+      credential = {
+        "https://github.com/".username = "linnnus";
+        helper = (optional isDarwin "osxkeychain") ++ ["cache"];
+      };
     };
   };
 }
