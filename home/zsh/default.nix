@@ -2,6 +2,7 @@
   imports = [
     ./plugins.nix
     ./editing.nix
+    ./watch-while.nix
   ];
 
   programs.zsh = {
