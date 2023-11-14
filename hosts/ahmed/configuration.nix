@@ -20,8 +20,7 @@
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
-  boot.loader.grub.device = "/dev/mmcblk0p3"; # FIXME: Do we need to specify GRUB device?
-  boot.loader.efi.canTouchEfiVariables = false;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   boot.tmp.cleanOnBoot = true;
 
@@ -86,19 +85,6 @@
   modules.cloudflare-proxy = {
     enable = true;
     firewall.IPv4Whitelist = [metadata.hosts.muhammed.ipAddress];
-  };
-
-  # Use as main driver temporarily.
-  # modules.graphics.enable = true;
-
-  services.disable-screen = {
-    enable = true;
-
-    # The path to the device.
-    device-path = "/sys/class/backlight/intel_backlight";
-
-    # The systemd device unit which corresponds to `device-path`.
-    device-unit = "sys-devices-pci0000:00-0000:00:02.0-drm-card0-card0\\x2deDP\\x2d1-intel_backlight.device";
   };
 
   # This value determines the NixOS release from which the default

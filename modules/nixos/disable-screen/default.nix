@@ -5,7 +5,7 @@
   config,
   ...
 }: let
-  inherit (lib) mkEnableOption mkOption types;
+  inherit (lib) mkEnableOption mkOption mkIf types;
 
   cfg = config.services.disable-screen;
 in {
@@ -25,7 +25,7 @@ in {
     };
   };
 
-  config = {
+  config = mkIf cfg.enable {
     # Disable sleep on lid close.
     services.logind = let
       lidSwitchAction = "ignore";
