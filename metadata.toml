@@ -2,7 +2,7 @@
 
 [hosts.ahmed]
 ipAddress = "192.168.68.222"
-sshPubKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL3/DjOuKMN18fs/0ZHI3kKLHGytXOFEDBbx+09ZrS3G"
+sshPubKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOodiSwTcZcaZxqLyHjI2MGe1CpIBvIzzbjpXrwAyiYO root@ahmed"
 
 [hosts.muhammed]
 ipAddress = "192.168.68.108"
