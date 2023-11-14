@@ -70,13 +70,19 @@
     defaults.email = "linusvejlo+${config.networking.hostName}-acme@gmail.com";
   };
 
-  # Configure DDNS. The website for each module is responsible for extending `services.cloudflare-dyndns.domains` with its domain.
+  # Configure DDNS. The website for each module is responsible for extending
+  # `services.cloudflare-dyndns.domains` with its domain.
   age.secrets.cloudflare-dyndns-api-token.file = ../../secrets/cloudflare-ddns-token.env.age;
   services.cloudflare-dyndns = {
     enable = true;
     apiTokenFile = config.age.secrets.cloudflare-dyndns-api-token.path;
     proxied = true;
   };
+  # We also have to overwrite the dependencies of the DYNDNS client service to
+  # make sure we are *actually* online.
+  #
+  # See: https://www.freedesktop.org/wiki/Software/systemd/NetworkTarget
+  systemd.services.cloudflare-dyndns.after = [ "network-online.target" ];
 
   # Listen for HTTP connections.
   networking.firewall.allowedTCPPorts = [80 443];
