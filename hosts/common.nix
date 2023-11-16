@@ -33,8 +33,7 @@
   # Very basic system administration tools.
   environment.systemPackages = with pkgs; [
     tree
-    jc
-    jq
+    gh
     vim
     comma
     nix-index

@@ -19,7 +19,10 @@ in {
       init.defaultBranch = "master";
 
       credential = {
-        "https://github.com/".username = "linnnus";
+        "https://github.com/" = {
+          username = "linnnus";
+          helper = "${pkgs.gh}/bin/gh auth git-credential";
+        };
         helper = (optional isDarwin "osxkeychain") ++ ["cache"];
       };
     };
