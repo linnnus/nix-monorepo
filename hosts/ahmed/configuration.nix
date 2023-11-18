@@ -14,7 +14,7 @@
   # Create the main user.
   users.users.linus = {
     isNormalUser = true;
-    hashedPassword = "$y$j9T$kNJ5L50Si0sAhdrHyO19I1$YcwXZ46dI.ApLMgZSj7qImq9FrSL0CEUeoJUS8P1103";
+    hashedPassword = "$y$j9T$UmZES4WC8FWrjBvdazq2e/$rzneAKZeySwSVKiSZJfXC.fciiQdGqxB5uyRaPQ6OF.";
     extraGroups = ["wheel"];
   };
   users.mutableUsers = false;
