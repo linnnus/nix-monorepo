@@ -35,7 +35,7 @@
     tree
     gh
     vim
-    comma
+    flakeInputs.comma.packages.${system}.default
     nix-index
     curl
     moreutils

@@ -23,6 +23,10 @@
       # url = "path:/home/linus/code/push-notification-api";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    comma = {
+      url = "github:linnnus/comma-zsh";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
