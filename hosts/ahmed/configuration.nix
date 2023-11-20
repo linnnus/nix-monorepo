@@ -83,7 +83,7 @@
   # make sure we are *actually* online.
   #
   # See: https://www.freedesktop.org/wiki/Software/systemd/NetworkTarget
-  systemd.services.cloudflare-dyndns.after = [ "network-online.target" ];
+  systemd.services.cloudflare-dyndns.after = ["network-online.target"];
 
   # Listen for HTTP connections.
   networking.firewall.allowedTCPPorts = [80 443];
