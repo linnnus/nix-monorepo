@@ -6,15 +6,14 @@
 }: let
   # Program to invoke for long-running commands.
   pkg = pkgs.watch-while;
-  exec = "${pkg}/bin/watch-while";
 
   # Prorams to wrap with watch-while.
-  toWrap = ["nixos-rebuild" "darwin-rebuild"];
+  toWrap = ["nixos-rebuild" "darwin-rebuild" "nmap"];
 in {
   # Alias long-running commands to their prefixed versions. These aliases are
   # only loaded for interactive use, so they won't mess with scripts.
   programs.zsh.shellAliases =
-    lib.genAttrs toWrap (p: "${exec} ${p}")
+    lib.genAttrs toWrap (p: "${pkg}/bin/${pkg.pname} ${p}")
     # Enable alias expansion after sudo with this trick.
     // {
       "sudo" = "sudo ";

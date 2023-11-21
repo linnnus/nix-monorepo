@@ -1,3 +1,4 @@
+# This part (module) of my home manager configuration adds some random utilities.
 {
   pkgs,
   lib,
@@ -8,7 +9,6 @@
       # smol utils
       nodePackages_latest.nodemon
       rlwrap
-      socat
 
       # heavy hitters
       imagemagick
