@@ -3,6 +3,7 @@
   programs.neovim.plugins = with pkgs;
   with vimPlugins; [
     # Filetype plugins
+    nim-vim
     vim-nix
     vim-noweb
     vim-janet

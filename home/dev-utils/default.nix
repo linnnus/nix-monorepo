@@ -24,6 +24,7 @@
         ]))
       tcl-8_6
       crystal
+      nim
 
       # Clojure ecosystem
       clojure

@@ -89,6 +89,9 @@
         	clangd = {
         		cmd = { "${pkgs.clang-tools}/bin/clangd" },
         	},
+        	nimls = {
+        		cmd = { "${pkgs.nimlsp}/bin/nimlsp" },
+        	},
         };
         for server, config in pairs(servers) do
         	-- set common options
