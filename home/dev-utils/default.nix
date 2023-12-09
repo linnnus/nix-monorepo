@@ -9,6 +9,8 @@
       # smol utils
       nodePackages_latest.nodemon
       rlwrap
+      jc
+      jq
 
       # heavy hitters
       imagemagick
