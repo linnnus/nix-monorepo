@@ -1,7 +1,7 @@
 {
   stdenv,
   fetchFromGitHub,
-  perl534Packages,
+  perl536Packages,
   darwin,
   lib,
 }:
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
     darwin.apple_sdk.frameworks.Cocoa
     darwin.apple_sdk.frameworks.AppKit
     darwin.apple_sdk.frameworks.ScriptingBridge
-    perl534Packages.podlators
+    perl536Packages.podlators
   ];
 
   outputs = ["out" "man"];
