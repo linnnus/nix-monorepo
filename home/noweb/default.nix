@@ -1,5 +1,9 @@
 {pkgs, ...}: {
-  home.packages = with pkgs; [noweb texlive.combined.scheme-small];
+  home.packages = with pkgs; [
+    noweb
+    texliveFull
+    yalafi-shell
+  ];
 
   # Prepend nowebs STY files to the search path. I chose to do it globally,
   # rather than using `makeWrapper` because I sometimes want to manually invoke
