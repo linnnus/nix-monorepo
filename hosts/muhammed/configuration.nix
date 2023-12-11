@@ -3,6 +3,10 @@
   # Specify the location of this configuration file. Very meta.
   environment.darwinConfig = flakeInputs.self + "/hosts/muhammed/configuration.nix";
 
+  # Avoid downloading the nixpkgs tarball every hour.
+  # See: https://cohost.org/fullmoon/post/1728807-nix-s-tarball-ttl-op
+  nix.settings.tarball-ttl = 604800;
+
   # Use the Nix daemon.
   services.nix-daemon.enable = true;
 
