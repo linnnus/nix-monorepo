@@ -48,7 +48,8 @@
   services.cloudflare-dyndns.domains = ["minecraft.linus.onl"];
 
   # Set up dukse server. Det er satme hårdt at være overduksepåmindelsesansvarlig.
-  services.duksebot.enable = true;
+  # TEMP: Closed for SOP.
+  # services.duksebot.enable = true;
 
   # Virtual hosts.
   services.nginx.enable = true;
