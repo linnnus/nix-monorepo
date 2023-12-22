@@ -2,6 +2,7 @@
   python3,
   fetchFromGitHub,
   writeShellScriptBin,
+  symlinkJoin,
   languagetool,
 }: let
   yalafi = python3.pkgs.buildPythonPackage rec {
@@ -23,6 +24,14 @@
 
   python3-with-yalafi = python3.withPackages (ps: [yalafi]);
 in
-  writeShellScriptBin "yalafi-shell" ''
-    ${python3-with-yalafi.interpreter} -m yalafi.shell --lt-command "${languagetool}"/bin/languagetool-commandline "$@"
-  ''
+  symlinkJoin {
+    name = "yalafi-utils";
+    paths = [
+      (writeShellScriptBin "yalafi-shell" ''
+        ${python3-with-yalafi.interpreter} -m yalafi.shell --lt-command "${languagetool}"/bin/languagetool-commandline "$@"
+      '')
+      (writeShellScriptBin "yalafi-extract" ''
+        ${python3-with-yalafi.interpreter} -m yalafi "$@"
+      '')
+    ];
+  }
