@@ -66,6 +66,21 @@
         --   command = start_clj_repl,
         -- });
 
+        -- Use Guile to evaluate scheme buffers.
+        local start_guile_repl = "StartGuileRepl";
+        local sock_path = "/tmp/guile-repl.sock"
+        vim.g["conjure#filetype#scheme"] = "conjure.client.guile.socket"
+        vim.g["conjure#client#guile#socket#pipename"] = sock_path
+        vim.api.nvim_create_user_command(start_guile_repl, function()
+          local id = vim.fn.jobstart({
+            "${pkgs.guile}/bin/guile",
+            "--listen=" .. sock_path,
+          })
+          print("Started Guile job #" .. id)
+        end, {
+          desc = "Starts an Guile repl session listening on " .. sock_path,
+        })
+
         -- Jump to bottom of log when new evaluation happens
         -- See: https://github.com/Olical/conjure/blob/58c46d1f4999679659a5918284b574c266a7ac83/doc/conjure.txt#L872
         vim.cmd [[autocmd User ConjureEval if expand("%:t") =~ "^conjure-log-" | exec "normal G" | endif]]
