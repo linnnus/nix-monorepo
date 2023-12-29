@@ -15,7 +15,7 @@
     flakeOutputs.overlays.modifications
 
     # Add unstable nixpkgs.
-    (final: prev: {unstable = flakeInputs.unstable-nixpkgs.legacyPackages.${pkgs.system};})
+    (final: prev: {unstable = flakeInputs.nixpkgs-unstable.legacyPackages.${pkgs.system};})
   ];
 
   # Use overlays from this repo for building system configuration as well as

@@ -18,7 +18,7 @@
 
       # interpreaters
       cling
-      deno
+      unstable.deno
       (python311Full.withPackages (ps:
         with ps; [
           virtualenv
