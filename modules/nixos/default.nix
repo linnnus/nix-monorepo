@@ -12,5 +12,6 @@
     "linus.onl" = import ./linus.onl;
     "notifications.linus.onl" = import ./nofitications.linus.onl;
     "git.linus.onl" = import ./git.linus.onl;
+    "hellohtml.linus.onl" = import ./hellohtml.linus.onl;
   };
 }

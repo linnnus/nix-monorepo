@@ -65,6 +65,10 @@
     enable = true;
     useACME = true;
   };
+  modules."hellohtml.linus.onl" = {
+    enable = true;
+    useACME = true;
+  };
 
   # Configure ACME for various HTTPS services.
   security.acme = {

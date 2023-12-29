@@ -27,6 +27,11 @@
       url = "github:linnnus/comma-zsh";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hellohtml = {
+      url = "github:linnnus/hellohtml";
+      # url = "path:/home/linus/hellohtml";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs = {
@@ -36,6 +41,7 @@
     nix-darwin,
     agenix,
     push-notification-api,
+    hellohtml,
     ...
   } @ inputs: let
     args = {
@@ -88,6 +94,7 @@
             home-manager.nixosModules.home-manager
             agenix.nixosModules.default
             push-notification-api.nixosModules.default
+            hellohtml.nixosModules.default
             ./hosts/ahmed/configuration.nix
             ./hosts/common.nix
             ./home
