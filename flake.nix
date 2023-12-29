@@ -20,7 +20,7 @@
     };
     push-notification-api = {
       url = "github:linnnus/push-notification-api";
-      # url = "path:/home/linus/code/push-notification-api";
+      # url = "path:/home/linus/push-notification-api";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     comma = {
