@@ -100,8 +100,13 @@
     formatter =
       forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
 
-    packages =
-      forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+    packages = forAllSystems (system: let
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = builtins.attrValues self.overlays;
+      };
+    in
+      import ./pkgs pkgs);
 
     overlays = import ./overlays;
 
