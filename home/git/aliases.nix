@@ -3,7 +3,8 @@
 # some keystrokes.
 {...}: {
   programs.git.aliases = {
-    unstage = "restore --staged";
+    unstage = "restore --staged"; # remove file from staging area
+    undo = "reset --soft HEAD~"; # undo last commit
   };
 
   home.shellAliases = {
