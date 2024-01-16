@@ -70,6 +70,8 @@
     useACME = true;
   };
 
+  services.forsvarsarper.enable = true;
+
   # Configure ACME for various HTTPS services.
   security.acme = {
     acceptTerms = true;

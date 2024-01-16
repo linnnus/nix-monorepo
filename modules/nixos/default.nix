@@ -13,5 +13,6 @@
     "notifications.linus.onl" = import ./nofitications.linus.onl;
     "git.linus.onl" = import ./git.linus.onl;
     "hellohtml.linus.onl" = import ./hellohtml.linus.onl;
+    forsvarsarper = import ./forsvarsarper;
   };
 }
