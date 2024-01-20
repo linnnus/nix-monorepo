@@ -132,6 +132,14 @@ nnoremap <c-j> ddpkJ
 " I do this move pretty frequently.
 nnoremap <c-w><c-w> <c-w>L<c-w>h
 
+" If the fzf executable is available, assume that the fzf plugin is going to
+" be loaded. In that case we want an easy way to load a file.
+if executable("fzf")
+	nnoremap <leader><leader> <CMD>FZF<CR>
+else
+	nnoremap <leader><leader> <CMD>echo "FZF not found!"<CR>
+endif
+
 " Commands
 """""""""""""""""""""""""""
 
