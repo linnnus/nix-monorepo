@@ -4,6 +4,7 @@
     on-demand-minecraft = import ./on-demand-minecraft;
     cloudflare-proxy = import ./cloudflare-proxy;
     disable-screen = import ./disable-screen;
+    hellohtml = import ./hellohtml;
   };
 
   personal = {
