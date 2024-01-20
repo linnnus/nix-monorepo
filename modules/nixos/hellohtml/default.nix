@@ -57,8 +57,8 @@ in
           src = pkgs.fetchFromGitHub {
             owner = "linnnus";
             repo = "hellohtml";
-            rev = "8505b271f0db4e8b26c95fe04855ce88954d67f7";
-            hash = "sha256-om8w8K6EVxQ0Hn6VkCPtrc1qV48BpHzPQckOLpAiosI=";
+            rev = "97f00500712d8551d7bbf497ec442083c63384d0";
+            hash = "sha256-6nbL2B26dc83F2gSLXadyfS8etuPhhlFy9ivG5l6Tog";
           };
 
           hellohtml-vendor = pkgs.stdenv.mkDerivation {
@@ -75,7 +75,7 @@ in
             '';
             outputHashAlgo = "sha256";
             outputHashMode = "recursive";
-            outputHash = "sha256-TMijSneZhvkAQb6TXF5mgf+nAcYogEfNYYpnui6i7PI";
+            outputHash = "sha256-0TGLkEvJaBpI7IlTyuYRzA20Bw/TMSMz3q8wm5oPsBM";
           };
 
           hellohtml-drv = pkgs.writeShellScript "hellohtml" ''
