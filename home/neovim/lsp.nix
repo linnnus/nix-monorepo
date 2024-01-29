@@ -49,24 +49,7 @@
         -- map buffer local keybindings when the language server attaches
         local servers = {
         	pyright = { cmd = { "${pkgs.pyright}/bin/pyright-langserver", "--stdio" } },
-        	nil_ls = {
-        		cmd = { "${pkgs.nil}/bin/nil" },
-        		settings = {
-        			["nil"] = {
-        				formatting = {
-        					command = {"nix", "run", "nixpkgs#alejandra"},
-        				},
-        				nix = {
-        					flake = {
-        						-- calls `nix flake archive` to put a flake and its output to store
-        						autoArchive = true,
-        						-- auto eval flake inputs for improved completion
-        						autoEvalInputs = true,
-        					},
-        				},
-        			},
-        		},
-        	},
+                nixd = { cmd = { "${pkgs.nixd}/bin/nixd" } },
         	denols = {
         		init_options = {
         			enable = true,
