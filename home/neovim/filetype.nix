@@ -8,5 +8,6 @@
     vim-noweb
     vim-janet
     vim-crystal
+    vim-svelte
   ];
 }
