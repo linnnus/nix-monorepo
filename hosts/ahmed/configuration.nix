@@ -8,7 +8,7 @@
 }: {
   imports = [
     ./hardware-configuration.nix
-    ./ssh.nix
+    ./ssh
   ];
 
   # Create the main user.
