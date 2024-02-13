@@ -47,9 +47,6 @@
     darwinModules =
       builtins.attrValues (import ./modules/darwin).general
       ++ builtins.attrValues (import ./modules/darwin).personal;
-    nixosModules =
-      builtins.attrValues (import ./modules/nixos).general
-      ++ builtins.attrValues (import ./modules/nixos).personal;
 
     # This is a function that generates an attribute by calling a function
     # you pass to it, with each system as an argument. `systems` lists all
@@ -91,8 +88,7 @@
             ./hosts/ahmed/configuration.nix
             ./hosts/common.nix
             ./home
-          ]
-          ++ nixosModules;
+          ] ++ builtins.attrValues (import ./services);
       };
     };
 
@@ -112,7 +108,7 @@
 
     # We export the generally applicable modules.
     darwinModules = (import ./modules/darwin).geneal;
-    nixosModules = (import ./modules/nixos).general;
     homeModules = import ./modules/home-manager;
+    nixosModules = import ./services;
   };
 }
