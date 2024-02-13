@@ -40,16 +40,14 @@ in {
         Group = "forsvarsarper";
         WorkingDirectory = config.users.users.forsvarsarper.home;
       };
-      script =
-        let
-          python3' = pkgs.python3.withPackages (ps: [ps.requests]);
-        in
-        ''
-          # Load the secret environment variables.
-          export $(grep -v '^#' ${config.age.secrets.forsvarsarper-env.path} | xargs)
-          # Kick off.
-          exec ${python3'}/bin/python3 ${./script.py}
-        '';
+      script = let
+        python3' = pkgs.python3.withPackages (ps: [ps.requests]);
+      in ''
+        # Load the secret environment variables.
+        export $(grep -v '^#' ${config.age.secrets.forsvarsarper-env.path} | xargs)
+        # Kick off.
+        exec ${python3'}/bin/python3 ${./script.py}
+      '';
     };
 
     # Create a timer to activate our oneshot service.

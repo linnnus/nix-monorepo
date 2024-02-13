@@ -33,8 +33,8 @@
   src = fetchFromGitHub {
     owner = "linnnus";
     repo = "duksebot";
-    rev = "24634ab7459d913aea00c2e6d77f916607834ee4";
-    hash = "sha256-+tbC7Z3oewBTyE6wTpUocL+6oWjCRAsqauBLTIOVBUY=";
+    rev = "69d45f62d1a3dce971f098dbcd5ee2b3ad0da7e5";
+    hash = "sha256-4rkVnHY7WoB8A6PteulCfdlcJJJ91ez/oSatg5ujfPw=";
   };
 in
   writeShellScriptBin "duksebot"

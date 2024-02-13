@@ -1,5 +1,9 @@
-{ config, lib, pkgs, ... }:
-
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 # FIXME: It is wasteful to always run the service. We should run on-demand instead.
 #        This is usually achieved using SystemD sockets [4] but we are blocked on missing
 #        features in Deno [1, 5].
@@ -19,11 +23,9 @@
 #        [6]: https://github.com/tokio-rs/tokio/issues/5678
 #        [7]: https://github.com/benoitc/gunicorn/blob/660fd8d850f9424d5adcd50065e6060832a200d4/gunicorn/arbiter.py#L142-L155
 #        [8]: https://github.com/linnnus/push-notification-api/tree/b9ed4071a4500a26b3b348a7f5fbc549e9694562
-
 let
   cfg = config.services.hellohtml;
-in
-{
+in {
   options.services.hellohtml = {
     enable = lib.mkEnableOption "hellohtml service";
 
@@ -43,79 +45,77 @@ in
       home = "/srv/hellohtml";
       createHome = true; # Store DB here.
     };
-    users.groups.hellohtml = { };
+    users.groups.hellohtml = {};
 
     # Create hellohtml service.
     systemd.services.hellohtml = {
       description = "HelloHTML server!!!";
 
-      wantedBy = [ "multi-user.target" ];
-      after = [ "network.target" ];
+      wantedBy = ["multi-user.target"];
+      after = ["network.target"];
 
-      serviceConfig =
-        let
-          src = pkgs.fetchFromGitHub {
-            owner = "linnnus";
-            repo = "hellohtml";
-            rev = "97f00500712d8551d7bbf497ec442083c63384d0";
-            hash = "sha256-6nbL2B26dc83F2gSLXadyfS8etuPhhlFy9ivG5l6Tog";
-          };
-
-          hellohtml-vendor = pkgs.stdenv.mkDerivation {
-            name = "hellohtml-vendor";
-            nativeBuildInputs = [ pkgs.unstable.deno ];
-            inherit src;
-            buildCommand = ''
-              # Deno wants to create cache directories.
-              HOME="$(mktemp -d)"
-              # Thought this wasn't necessary???
-              cd $src
-              # Build directory containing offline deps + import map.
-              deno vendor --output=$out ./src/server.ts
-            '';
-            outputHashAlgo = "sha256";
-            outputHashMode = "recursive";
-            outputHash = "sha256-0TGLkEvJaBpI7IlTyuYRzA20Bw/TMSMz3q8wm5oPsBM";
-          };
-
-          hellohtml-drv = pkgs.writeShellScript "hellohtml" ''
-            export HELLOHTML_DB_PATH="${config.users.users.hellohtml.home}"/hello.db
-            export HELLOHTML_PORT=${toString cfg.port}
-            export HELLOHTML_BASE_DIR="${src}"
-
-            ${pkgs.unstable.deno}/bin/deno run \
-              --allow-read=$HELLOHTML_BASE_DIR,$HELLOHTML_DB_PATH,. \
-              --allow-write=$HELLOHTML_DB_PATH \
-              --allow-net=0.0.0.0:$HELLOHTML_PORT \
-              --allow-env \
-              --no-prompt \
-              --unstable-kv \
-              --import-map=${hellohtml-vendor}/import_map.json \
-              --no-remote \
-              ${src}/src/server.ts
-          '';
-        in
-        {
-          Type = "simple";
-          User = config.users.users.hellohtml.name;
-          Group = config.users.users.hellohtml.group;
-          ExecStart = "${hellohtml-drv}";
-
-          # Harden service
-          # NoNewPrivileges = "yes";
-          # PrivateTmp = "yes";
-          # PrivateDevices = "yes";
-          # DevicePolicy = "closed";
-          # ProtectControlGroups = "yes";
-          # ProtectKernelModules = "yes";
-          # ProtectKernelTunables = "yes";
-          # RestrictAddressFamilies = "AF_UNIX AF_INET AF_INET6 AF_NETLINK";
-          # RestrictNamespaces = "yes";
-          # RestrictRealtime = "yes";
-          # RestrictSUIDSGID = "yes";
-          # MemoryDenyWriteExecute = "yes";
-          # LockPersonality = "yes";
+      serviceConfig = let
+        src = pkgs.fetchFromGitHub {
+          owner = "linnnus";
+          repo = "hellohtml";
+          rev = "97f00500712d8551d7bbf497ec442083c63384d0";
+          hash = "sha256-6nbL2B26dc83F2gSLXadyfS8etuPhhlFy9ivG5l6Tog";
         };
+
+        hellohtml-vendor = pkgs.stdenv.mkDerivation {
+          name = "hellohtml-vendor";
+          nativeBuildInputs = [pkgs.unstable.deno];
+          inherit src;
+          buildCommand = ''
+            # Deno wants to create cache directories.
+            HOME="$(mktemp -d)"
+            # Thought this wasn't necessary???
+            cd $src
+            # Build directory containing offline deps + import map.
+            deno vendor --output=$out ./src/server.ts
+          '';
+          outputHashAlgo = "sha256";
+          outputHashMode = "recursive";
+          outputHash = "sha256-0TGLkEvJaBpI7IlTyuYRzA20Bw/TMSMz3q8wm5oPsBM";
+        };
+
+        hellohtml-drv = pkgs.writeShellScript "hellohtml" ''
+          export HELLOHTML_DB_PATH="${config.users.users.hellohtml.home}"/hello.db
+          export HELLOHTML_PORT=${toString cfg.port}
+          export HELLOHTML_BASE_DIR="${src}"
+
+          ${pkgs.unstable.deno}/bin/deno run \
+            --allow-read=$HELLOHTML_BASE_DIR,$HELLOHTML_DB_PATH,. \
+            --allow-write=$HELLOHTML_DB_PATH \
+            --allow-net=0.0.0.0:$HELLOHTML_PORT \
+            --allow-env \
+            --no-prompt \
+            --unstable-kv \
+            --import-map=${hellohtml-vendor}/import_map.json \
+            --no-remote \
+            ${src}/src/server.ts
+        '';
+      in {
+        Type = "simple";
+        User = config.users.users.hellohtml.name;
+        Group = config.users.users.hellohtml.group;
+        ExecStart = "${hellohtml-drv}";
+
+        # Harden service
+        # NoNewPrivileges = "yes";
+        # PrivateTmp = "yes";
+        # PrivateDevices = "yes";
+        # DevicePolicy = "closed";
+        # ProtectControlGroups = "yes";
+        # ProtectKernelModules = "yes";
+        # ProtectKernelTunables = "yes";
+        # RestrictAddressFamilies = "AF_UNIX AF_INET AF_INET6 AF_NETLINK";
+        # RestrictNamespaces = "yes";
+        # RestrictRealtime = "yes";
+        # RestrictSUIDSGID = "yes";
+        # MemoryDenyWriteExecute = "yes";
+        # LockPersonality = "yes";
+      };
     };
   };
 }
