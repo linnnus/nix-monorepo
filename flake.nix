@@ -88,7 +88,8 @@
             ./hosts/ahmed/configuration.nix
             ./hosts/common.nix
             ./home
-          ] ++ builtins.attrValues (import ./services);
+          ]
+          ++ builtins.attrValues (import ./modules/nixos);
       };
     };
 
@@ -109,6 +110,6 @@
     # We export the generally applicable modules.
     darwinModules = (import ./modules/darwin).geneal;
     homeModules = import ./modules/home-manager;
-    nixosModules = import ./services;
+    nixosModules = import ./modules/nixos;
   };
 }
