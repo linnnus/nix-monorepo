@@ -44,10 +44,6 @@
       metadata = nixpkgs.lib.importTOML ./metadata.toml;
     };
 
-    darwinModules =
-      builtins.attrValues (import ./modules/darwin).general
-      ++ builtins.attrValues (import ./modules/darwin).personal;
-
     # This is a function that generates an attribute by calling a function
     # you pass to it, with each system as an argument. `systems` lists all
     # supported systems.
@@ -72,7 +68,7 @@
             ./hosts/common.nix
             ./home
           ]
-          ++ darwinModules;
+          ++ builtins.attrValues (import ./modules/darwin);
       };
     };
 
@@ -108,7 +104,7 @@
     overlays = import ./overlays;
 
     # We export the generally applicable modules.
-    darwinModules = (import ./modules/darwin).geneal;
+    darwinModules = import ./modules/darwin;
     homeModules = import ./modules/home-manager;
     nixosModules = import ./modules/nixos;
   };
