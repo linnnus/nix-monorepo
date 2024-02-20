@@ -18,6 +18,7 @@
     ./linus.onl
     ./nofitications.linus.onl
     ./ssh
+    ./home
   ];
 
   # Create the main user.
