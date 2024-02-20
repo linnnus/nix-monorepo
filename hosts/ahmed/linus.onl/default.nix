@@ -1,22 +1,15 @@
 {
   pkgs,
   lib,
-  config,
   ...
 }: let
-  inherit (lib) mkEnableOption mkOption types mkIf optional;
-
+  # The domain to serve. Also kinda embedded in the name of the module??
   domain = "linus.onl";
 
-  cfg = config.modules."${domain}";
+  # Enable HTTPS stuff.
+  useACME = true;
 in {
-  options.modules."${domain}" = {
-    enable = mkEnableOption "${domain} static site";
-
-    useACME = mkEnableOption "built-in HTTPS stuff";
-  };
-
-  config = mkIf cfg.enable {
+  config = {
     # Create a user to run the build script under.
     users.users."${domain}-builder" = {
       description = "builds ${domain}";
@@ -91,8 +84,8 @@ in {
     services.nginx = {
       virtualHosts."${domain}" = {
         # NOTE: 'forceSSL' will cause an infite loop, if the cloudflare proxy does NOT connect over HTTPS.
-        enableACME = cfg.useACME;
-        forceSSL = cfg.useACME;
+        enableACME = useACME;
+        forceSSL = useACME;
         root = "/var/www/${domain}";
       };
     };

@@ -1,15 +1,13 @@
 # This module adds some extra configuration useful when running behid a Cloudflare Proxy.
-#
+# Mainly, it blocks all incomming conncections on relevant ports that aren't
+# coming from an official CloudFlare domain.
 {
   config,
   lib,
   pkgs,
+  metadata,
   ...
 }: let
-  inherit (lib.options) mkEnableOption mkOption;
-  inherit (lib.modules) mkIf;
-  inherit (lib.types) listOf nonEmptyStr port;
-
   # TODO: What happens when these get out of date??? Huh??? You little pissbaby
   fileToList = x: lib.strings.splitString "\n" (builtins.readFile x);
   cfipv4 = fileToList (pkgs.fetchurl {
@@ -21,27 +19,10 @@
     hash = "sha256-np054+g7rQDE3sr9U8Y/piAp89ldto3pN9K+KCNMoKk=";
   });
 
-  cfg = config.modules.cloudflare-proxy;
+  IPv4Whitelist = [metadata.hosts.muhammed.ipAddress];
+  IPv6Whitelist = [];
 in {
-  options.modules.cloudflare-proxy = {
-    enable = mkEnableOption "Cloudflare proxy IP extraction for NGINX";
-
-    firewall = {
-      IPv4Whitelist = mkOption {
-        description = "List of IPv4 addresses (or ranges) added to the whitelist.";
-        type = listOf nonEmptyStr;
-        default = [];
-      };
-
-      IPv6Whitelist = mkOption {
-        description = "List of IPv6 addresses (or ranges) added to the whitelist.";
-        type = listOf nonEmptyStr;
-        default = [];
-      };
-    };
-  };
-
-  config = mkIf cfg.enable {
+  config = {
     # Teach NGINX how to extract the proxied IP from proxied requests.
     #
     # See: https://nixos.wiki/wiki/Nginx#Using_realIP_when_behind_CloudFlare_or_other_CDN
@@ -63,9 +44,8 @@ in {
       in ''
         # Flush the old firewall rules. This behavior mirrors the default firewall service.
         # See: https://github.com/NixOS/nixpkgs/blob/ac911bf685eecc17c2df5b21bdf32678b9f88c92/nixos/modules/services/networking/firewall-iptables.nix#L59-L66
-        # TEMP: Removed 2>/dev/null
-        ip46tables --delete INPUT --protocol tcp --destination-port 80 --syn --jump ${chain} || true
-        ip46tables --delete INPUT --protocol tcp --destination-port 443 --syn --jump ${chain} || true
+        ip46tables --delete INPUT --protocol tcp --destination-port 80  --syn --jump ${chain} 2>/dev/null || true
+        ip46tables --delete INPUT --protocol tcp --destination-port 443 --syn --jump ${chain} 2>/dev/null || true
         ip46tables --flush ${chain} || true
         ip46tables --delete-chain ${chain} || true
 
@@ -76,8 +56,8 @@ in {
         ${allow-interface config.networking.firewall.trustedInterfaces}
 
         # Allow local whitelisted IPs through
-        ${allow-ip "iptables" cfg.firewall.IPv4Whitelist}
-        ${allow-ip "ip6tables" cfg.firewall.IPv6Whitelist}
+        ${allow-ip "iptables" IPv4Whitelist}
+        ${allow-ip "ip6tables" IPv6Whitelist}
 
         # Allow Cloudflare's IP ranges through.
         ${allow-ip "iptables" cfipv4}
@@ -100,9 +80,8 @@ in {
         # default firewall at the time of writing.
         #
         # See: https://github.com/NixOS/nixpkgs/blob/ac911bf685eecc17c2df5b21bdf32678b9f88c92/nixos/modules/services/networking/firewall-iptables.nix#L218-L219
-        # TEMP: Removed 2>/dev/null
-        ip46tables --delete INPUT --protocol tcp --destination-port 80 --syn --jump ${chain}  || true
-        ip46tables --delete INPUT --protocol tcp --destination-port 443 --syn --jump ${chain} || true
+        ip46tables --delete INPUT --protocol tcp --destination-port 80  --syn --jump ${chain} 2>/dev/null || true
+        ip46tables --delete INPUT --protocol tcp --destination-port 443 --syn --jump ${chain} 2>/dev/null || true
       '';
     };
   };

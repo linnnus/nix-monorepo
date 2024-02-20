@@ -1,27 +1,16 @@
-# This module defines an on-demand minecraft server service which turns off the
-# server when it's not being used.
+# This module defines systemd unit which runs a script that sends Discrord
+# messages. I use it to notify my classmates about who's on cleaning duty. You
+# are probably not interested in this.
+
 {
   config,
-  lib,
   pkgs,
-  modulesPath,
   ...
 }: let
-  inherit (lib) mkIf mkOption mkEnableOption types;
-
-  cfg = config.services.duksebot;
+  # What script to run.
+  package = pkgs.duksebot;
 in {
-  options.services.duksebot = {
-    enable = mkEnableOption "duksebot daily reminder";
-
-    package = mkOption {
-      description = "What package to use";
-      default = pkgs.duksebot;
-      type = types.package;
-    };
-  };
-
-  config = mkIf cfg.enable {
+  config = {
     # Create a user to run the server under.
     users.users.duksebot = {
       description = "Runs daily dukse reminder";
@@ -53,7 +42,7 @@ in {
         # Load the secret environment variables.
         export $(grep -v '^#' ${config.age.secrets.duksebot-env.path} | xargs)
         # Kick off.
-        exec "${cfg.package}"/bin/duksebot
+        exec "${package}"/bin/duksebot
       '';
     };
 
