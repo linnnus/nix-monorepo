@@ -2,17 +2,10 @@
 # server when it's not being used.
 {
   config,
-  lib,
   pkgs,
   ...
-}: let
-  inherit (lib) mkIf mkEnableOption;
-
-  cfg = config.services.forsvarsarper;
-in {
-  options.services.forsvarsarper.enable = mkEnableOption "daily scan for tests";
-
-  config = mkIf cfg.enable {
+}:{
+  config = {
     # Create a user to run the server under.
     users.users.forsvarsarper = {
       description = "Runs daily scan for tests";

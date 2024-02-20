@@ -1,19 +1,10 @@
-{
-  lib,
-  config,
-  ...
-}: let
-  inherit (lib) mkEnableOption mkIf;
+# This module defines the HelloHTML web server. It extends the NGINX config
+# with a virtual server that proxies the local HelloHTML service.
 
-  cfg = config.modules."hellohtml.linus.onl";
+{ ... }: let
+  useACME = true;
 in {
-  options.modules."hellohtml.linus.onl" = {
-    enable = mkEnableOption "hellohtml.linus.onl site";
-
-    useACME = mkEnableOption "built-in HTTPS stuff";
-  };
-
-  config = mkIf cfg.enable {
+  config = {
     # Start service listening on socket /tmp/hellohtml.sock
     services.hellohtml = {
       enable = true;
@@ -24,8 +15,8 @@ in {
 
     # Use NGINX as reverse proxy.
     services.nginx.virtualHosts."hellohtml.linus.onl" = {
-      enableACME = cfg.useACME;
-      forceSSL = cfg.useACME;
+      enableACME = useACME;
+      forceSSL = useACME;
       locations."/" = rec {
         proxyPass = "http://localhost:8538";
         # Disable settings that might mess with the text/event-stream response of the /listen/:id endpoint.

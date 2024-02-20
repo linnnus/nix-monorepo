@@ -22,8 +22,6 @@
         ./git
         ./dev-utils
         ./networking-utils
-        ./iterm2
-        ./noweb
       ]
       ++ builtins.attrValues flakeOutputs.homeModules;
 

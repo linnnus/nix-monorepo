@@ -43,6 +43,5 @@
     cmp-calc
     cmp-buffer
     cmp-path
-    cmp-conjure
   ];
 }

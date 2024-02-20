@@ -1,5 +1,9 @@
 # This file contains the configuration for my Macbook Pro.
 {flakeInputs, ...}: {
+  imports = [
+    ./home
+  ];
+
   # Specify the location of this configuration file. Very meta.
   environment.darwinConfig = flakeInputs.self + "/hosts/muhammed/configuration.nix";
 

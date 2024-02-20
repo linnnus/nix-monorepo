@@ -1,30 +1,18 @@
 {
-  lib,
   config,
   pkgs,
-  options,
   metadata,
   ...
 }: let
-  inherit (lib) mkEnableOption mkOption types mkIf;
-
   git-shell = "${pkgs.gitMinimal}/bin/git-shell";
 
-  cfg = config.modules."git.linus.onl";
+  # Enables HTTPS stuff.
+  useACME = true;
+
+  # Where repositories will be stored.
+  location = "/srv/git";
 in {
-  options.modules."git.linus.onl" = {
-    enable = mkEnableOption "git.linus.onl static site";
-
-    useACME = mkEnableOption "built-in HTTPS stuff";
-
-    location = mkOption {
-      description = "Where repositories will be stored.";
-      type = types.path;
-      default = "/srv/git";
-    };
-  };
-
-  config = mkIf cfg.enable {
+  config = {
     # Create a user which
     # See: https://git-scm.com/book/en/v2/Git-on-the-Server-Setting-Up-the-Server
     users.users.git = {
@@ -33,7 +21,7 @@ in {
       group = "git";
 
       # FIXME: Is serving the home-directory of a user (indirectly through CGit) a bad idea?
-      home = cfg.location;
+      home = location;
       createHome = false;
 
       # Restrict this user to Git-related activities.
@@ -54,18 +42,19 @@ in {
     environment.shells = [git-shell];
 
     # Create repo directory. It must be readable to NGINX.
+    # NOTE: If location != "/srv/git" you may want to change this!
     # See: https://git.zx2c4.com/cgit/about/faq#why-doesnt-cgit-findshow-my-repo
-    system.activationScripts.create-cgit-scan-path = mkIf (cfg.location == options.modules."git.linus.onl".location.default) ''
-      mkdir -p ${cfg.location}
-      chown ${toString config.users.users.git.name} ${cfg.location}
-      chgrp ${toString config.users.groups.git.name} ${cfg.location}
-      chmod 755 ${cfg.location}
+    system.activationScripts.create-cgit-scan-path = ''
+      mkdir -p ${location}
+      chown ${toString config.users.users.git.name} ${location}
+      chgrp ${toString config.users.groups.git.name} ${location}
+      chmod 755 ${location}
     '';
 
     # Public git viewer.
     services.cgit."git.linus.onl" = {
       enable = true;
-      scanPath = cfg.location;
+      scanPath = location;
       settings = {
         root-title = "Linus' public projects";
         root-desc = "hello yes this is the git server";
@@ -88,8 +77,8 @@ in {
 
     # The CGit service creates the virtual host, but it does not enable ACME.
     services.nginx.virtualHosts."git.linus.onl" = {
-      enableACME = cfg.useACME;
-      forceSSL = cfg.useACME;
+      enableACME = useACME;
+      forceSSL = useACME;
     };
   };
 }

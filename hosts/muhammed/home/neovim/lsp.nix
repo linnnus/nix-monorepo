@@ -1,6 +1,4 @@
-# This module sets up LSP server configurations for Neovim. It is waaay
-# overcomplicated as it kind of turned into an experiment in generating Lua
-# code from a Nix attrset.
+# This module sets up LSP server configurations for Neovim.
 {pkgs, ...}: {
   programs.neovim.plugins = [
     {

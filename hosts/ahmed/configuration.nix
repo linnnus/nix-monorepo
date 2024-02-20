@@ -3,12 +3,21 @@
 {
   config,
   pkgs,
-  metadata,
   ...
 }: {
   imports = [
     ./hardware-configuration.nix
-    ./ssh.nix
+
+    ./cloudflare-proxy
+    ./disable-screen
+    ./duksebot
+    ./forsvarsarper
+    ./git.linus.onl
+    ./hellohtml.linus.onl
+    ./linus.onl
+    ./nofitications.linus.onl
+    ./ssh
+    ./home
   ];
 
   # Create the main user.
@@ -47,31 +56,11 @@
   };
   services.cloudflare-dyndns.domains = ["minecraft.linus.onl"];
 
-  # Set up dukse server. Det er satme hårdt at være overduksepåmindelsesansvarlig.
-  services.duksebot.enable = true;
-
   # Virtual hosts.
+  # Each module for a HTTP service will register a virtual host.
   services.nginx.enable = true;
-  modules."linus.onl" = {
-    enable = true;
-    useACME = true;
-  };
-  modules."notifications.linus.onl" = {
-    enable = true;
-    useACME = true;
-  };
-  modules."git.linus.onl" = {
-    enable = true;
-    useACME = true;
-  };
-  modules."hellohtml.linus.onl" = {
-    enable = true;
-    useACME = true;
-  };
 
-  services.forsvarsarper.enable = true;
-
-  # Configure ACME for various HTTPS services.
+  # Configure ACME. This is used by various HTTP services through the NGINX virtual hosts.
   security.acme = {
     acceptTerms = true;
     defaults.email = "linusvejlo+${config.networking.hostName}-acme@gmail.com";
@@ -93,12 +82,6 @@
 
   # Listen for HTTP connections.
   networking.firewall.allowedTCPPorts = [80 443];
-
-  # We are running behind CF proxy.
-  modules.cloudflare-proxy = {
-    enable = true;
-    firewall.IPv4Whitelist = [metadata.hosts.muhammed.ipAddress];
-  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

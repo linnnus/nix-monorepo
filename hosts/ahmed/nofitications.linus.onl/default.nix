@@ -1,19 +1,9 @@
-{
-  lib,
-  config,
-  ...
-}: let
-  inherit (lib) mkEnableOption mkIf;
-
-  cfg = config.modules."notifications.linus.onl";
+{ ... }: let
+  # Enable HTTPS stuff.
+  useACME = true;
 in {
-  options.modules."notifications.linus.onl" = {
-    enable = mkEnableOption "notifications.linus.onl static site";
-
-    useACME = mkEnableOption "built-in HTTPS stuff";
-  };
-
-  config = mkIf cfg.enable {
+  config = {
+    # Start the proxied service.
     services.push-notification-api = {
       enable = true;
     };
@@ -23,8 +13,8 @@ in {
 
     # Use NGINX as reverse proxy.
     services.nginx.virtualHosts."notifications.linus.onl" = {
-      enableACME = cfg.useACME;
-      forceSSL = cfg.useACME;
+      enableACME = useACME;
+      forceSSL = useACME;
       locations."/" = {
         recommendedProxySettings = true;
         proxyPass = "http://unix:/run/push-notification-api.sock";
