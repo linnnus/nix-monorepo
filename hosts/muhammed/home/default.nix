@@ -5,6 +5,7 @@
     imports = [
       ./iterm2
       ./noweb
+      ./neovim
     ];
   };
 }
