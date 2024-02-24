@@ -1,7 +1,6 @@
 # This module defines systemd unit which runs a script that sends Discrord
 # messages. I use it to notify my classmates about who's on cleaning duty. You
 # are probably not interested in this.
-
 {
   config,
   pkgs,

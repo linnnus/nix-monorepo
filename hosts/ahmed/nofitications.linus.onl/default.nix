@@ -1,4 +1,4 @@
-{ ... }: let
+{...}: let
   # Enable HTTPS stuff.
   useACME = true;
 in {

@@ -4,7 +4,7 @@
   config,
   pkgs,
   ...
-}:{
+}: {
   config = {
     # Create a user to run the server under.
     users.users.forsvarsarper = {

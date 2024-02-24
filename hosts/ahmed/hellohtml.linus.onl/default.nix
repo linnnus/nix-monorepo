@@ -1,7 +1,6 @@
 # This module defines the HelloHTML web server. It extends the NGINX config
 # with a virtual server that proxies the local HelloHTML service.
-
-{ ... }: let
+{...}: let
   useACME = true;
 in {
   config = {
