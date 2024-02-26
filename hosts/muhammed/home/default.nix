@@ -6,6 +6,7 @@
       ./iterm2
       ./noweb
       ./neovim
+      ./dev-utils
     ];
   };
 }

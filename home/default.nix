@@ -20,7 +20,6 @@
         ./neovim
         ./zsh
         ./git
-        ./dev-utils
         ./networking-utils
       ]
       ++ builtins.attrValues flakeOutputs.homeModules;
