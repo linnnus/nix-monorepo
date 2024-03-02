@@ -38,6 +38,14 @@
 
   services.still-awake.enable = true;
 
+  # Create a local Linux builder. This will allow us to build aarch64-linux
+  # targets directly on this machine.
+  nix.settings.trusted-users = ["linus"];
+  nix.linux-builder = {
+    enable = true;
+    ephemeral = true;
+  };
+
   # System-specific version info.
   home-manager.users.linus.home.stateVersion = "22.05";
   system.stateVersion = 4;
