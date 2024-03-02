@@ -34,6 +34,18 @@ in {
       type = lib.types.port;
       default = 8538;
     };
+
+    altDomain = lib.mkOption {
+      description = ''
+        Hellohtml uses two separate domains: one serves the main editor and the
+        other serves the iframe embed. Since the main editor needs to embed the
+        iframe (served at the 2nd domain), the service needs to know the 2nd
+        domain.
+
+        See the source code for more reasoning as to why this is necessary.
+      '';
+      type = lib.types.str;
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -58,8 +70,8 @@ in {
         src = pkgs.fetchFromGitHub {
           owner = "linnnus";
           repo = "hellohtml";
-          rev = "97f00500712d8551d7bbf497ec442083c63384d0";
-          hash = "sha256-6nbL2B26dc83F2gSLXadyfS8etuPhhlFy9ivG5l6Tog";
+          rev = "51d2630578928173ea3ae57d97aeb5fa69b0dd7d";
+          hash = "sha256-CAJoxSDQ8AriYRItsd+Hd1j2jI8CDcOF51a+EXV1P6s=";
         };
 
         hellohtml-vendor = pkgs.stdenv.mkDerivation {
@@ -83,6 +95,7 @@ in {
           export HELLOHTML_DB_PATH="${config.users.users.hellohtml.home}"/hello.db
           export HELLOHTML_PORT=${toString cfg.port}
           export HELLOHTML_BASE_DIR="${src}"
+          export HELLOHTML_ALT_DOMAIN="${cfg.altDomain}"
 
           ${pkgs.unstable.deno}/bin/deno run \
             --allow-read=$HELLOHTML_BASE_DIR,$HELLOHTML_DB_PATH,. \

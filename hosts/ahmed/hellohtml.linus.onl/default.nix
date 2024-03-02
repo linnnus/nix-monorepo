@@ -1,21 +1,34 @@
 # This module defines the HelloHTML web server. It extends the NGINX config
 # with a virtual server that proxies the local HelloHTML service.
 {...}: let
+  mainDomain = "hellohtml.linus.onl";
+  altDomain = "hellohtml.ulovlighacker.download";
+
   useACME = true;
 in {
   config = {
     # Start service listening on socket /tmp/hellohtml.sock
     services.hellohtml = {
       enable = true;
+      inherit altDomain;
     };
 
-    # Register domain name.
-    services.cloudflare-dyndns.domains = ["hellohtml.linus.onl"];
+    # Register domain names.
+    services.cloudflare-dyndns.domains = [
+      mainDomain
+      altDomain
+    ];
 
     # Use NGINX as reverse proxy.
-    services.nginx.virtualHosts."hellohtml.linus.onl" = {
+    services.nginx.virtualHosts.${mainDomain}= {
+      # Set up secondary domain name to also point to this host. Only the
+      # client (browser) should treat these as separate. On the server, they
+      # are the same.
+      serverAliases = [altDomain];
+
       enableACME = useACME;
       forceSSL = useACME;
+
       locations."/" = rec {
         proxyPass = "http://localhost:8538";
         # Disable settings that might mess with the text/event-stream response of the /listen/:id endpoint.
