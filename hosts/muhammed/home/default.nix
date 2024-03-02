@@ -7,6 +7,7 @@
       ./noweb
       ./neovim
       ./dev-utils
+      ./qbittorrent
     ];
   };
 }
