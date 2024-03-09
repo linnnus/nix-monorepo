@@ -19,6 +19,20 @@
         + (final.lib.strings.optionalString (final.stdenv.cc.isGNU or false) " -Wno-maybe-uninitialized");
     });
 
+    # Use a slightly newer version of qBittorrent that doesn't include the password bug.
+    #
+    # See: https://old.reddit.com/r/qBittorrent/comments/1827zqn/locked_out_of_qbittorrent/kahat1u/?context=3
+    # See: https://www.qbittorrent.org/news#mon-nov-27th-2023---qbittorrent-v4.6.2-release
+    qbittorrent-nox = prev.qbittorrent-nox.overrideAttrs (old: rec {
+      version = "4.6.2";
+      src = final.fetchFromGitHub {
+        owner = "qbittorrent";
+        repo = "qBittorrent";
+        rev = "release-${version}";
+        hash = "sha256-+leX0T+yJUG6F7WbHa3nCexQZmd7RRfK8Uc+suMJ+vI=";
+      };
+    });
+
     # Use newest version.
     noweb = prev.noweb.overrideAttrs (old: rec {
       version = "2_13rc3";

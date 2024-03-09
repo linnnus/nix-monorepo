@@ -20,7 +20,7 @@ in {
     ];
 
     # Use NGINX as reverse proxy.
-    services.nginx.virtualHosts.${mainDomain}= {
+    services.nginx.virtualHosts.${mainDomain} = {
       # Set up secondary domain name to also point to this host. Only the
       # client (browser) should treat these as separate. On the server, they
       # are the same.

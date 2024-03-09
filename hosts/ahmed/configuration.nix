@@ -17,6 +17,7 @@
     ./linus.onl
     ./nofitications.linus.onl
     ./ssh
+    ./torrenting
     ./home
   ];
 
