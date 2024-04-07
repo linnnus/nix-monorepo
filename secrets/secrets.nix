@@ -2,9 +2,11 @@
 # imported into the system cofniguration.
 let
   metadata = builtins.fromTOML (builtins.readFile ../metadata.toml);
-  publicKeys = map (builtins.getAttr "sshPubKey") (builtins.attrValues metadata.hosts);
+  ahmedKey = metadata.hosts.ahmed.sshPubKey;
+  muhammedKey = metadata.hosts.muhammed.sshPubKey;
 in {
-  "cloudflare-ddns-token.env.age".publicKeys = publicKeys;
-  "duksebot.env.age".publicKeys = publicKeys;
-  "forsvarsarper.env.age".publicKeys = publicKeys;
+  "cloudflare-ddns-token.env.age".publicKeys = [muhammedKey ahmedKey];
+  "duksebot.env.age".publicKeys = [muhammedKey ahmedKey];
+  "forsvarsarper.env.age".publicKeys = [muhammedKey ahmedKey];
+  "mullvad-wg.key.age".publicKeys = [muhammedKey ahmedKey];
 }
