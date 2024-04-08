@@ -1,0 +1,68 @@
+body {
+	font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	box-sizing: border-box;
+
+	max-width: 600px;
+	margin: 1rem auto;
+	padding: 0 1rem;
+}
+
+.title {
+	text-align: center;
+}
+
+.actions {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.actions__item {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	margin-bottom: 1rem;
+
+	aspect-ratio: 4 / 1;
+	background-position-x: center;
+	background-repeat: no-repeat;
+}
+
+.actions__item--watch {
+	background-image:
+		radial-gradient(rgba(0, 0, 0, 10%), black),
+		url(/watching-tv.jpg);
+	background-position-y: 40%;
+}
+
+.actions__item--fetch {
+	background-image:
+		radial-gradient(rgba(0, 0, 0, 10%), black),
+		url(/thief.webp);
+	background-position-y: 20%;
+}
+
+.actions__item--find-anime {
+	background-image:
+		radial-gradient(rgba(0, 0, 0, 10%), black),
+		url(/anime.jpg);
+	background-position-y: 38%;
+}
+
+.actions__item--find-movies {
+	background-image:
+		radial-gradient(rgba(0, 0, 0, 10%), black),
+		url(/movie.jpg);
+	background-position-y: center;
+}
+
+.actions__link {
+	/* Remove link styling */
+	text-decoration: none;
+	color: white;
+
+	font-size: xx-large;
+	font-weight: bold;
+}
+
