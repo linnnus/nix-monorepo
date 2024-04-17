@@ -1,7 +1,7 @@
 {pkgs,lib,config,...}: let
   downloadPath = "/srv/media/";
 
-  categories = [ "Movies" "Anime Movies" "Miscellaneous" ];
+  categories = [ "Movies" "Anime Movies" "Anime Series" "Series" "Miscellaneous" ];
 in {
   # Create the directory to which media will be downloaded. This will be used
   # by qBittorent to hold files and Jellyfin will serve from it.
