@@ -18,6 +18,8 @@ in {
     extraConfig = {
       init.defaultBranch = "master";
 
+      help.autoCorrect = "prompt";
+
       credential = {
         "https://github.com/" = {
           username = "linnnus";
