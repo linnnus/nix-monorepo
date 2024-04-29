@@ -23,6 +23,10 @@
         PROMPT='%B%(2L.LVL%L .)%b%F{red}%(?..E%? )%f%F{93}%n%f@%F{35}%m%f%# '
       fi
       RPROMPT='%F{green}%$((COLUMNS/4))<...<%~%<<%f'
+
+      mkcd () {
+        mkdir "$1" && cd "$1"
+      }
     '';
   };
 }
