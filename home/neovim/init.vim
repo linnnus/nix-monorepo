@@ -255,3 +255,10 @@ augroup Sus
 	au InsertEnter * call s:RemoveSyntax()
 	au InsertLeave * call s:AddSyntax()
 augroup END
+
+" Allow for quick prototyping outside of NixOS/Home-Manager by loading some
+" extra configuration if relevant.
+let extra_vimrc = expand("~/extra-temporary.vimrc")
+if filereadable(extra_vimrc)
+	execute "source " . extra_vimrc
+endif
