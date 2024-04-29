@@ -43,7 +43,6 @@
   nix.settings.trusted-users = ["linus"];
   nix.linux-builder = {
     enable = true;
-    ephemeral = true;
   };
 
   # System-specific version info.
