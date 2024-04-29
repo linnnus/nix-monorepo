@@ -1,5 +1,4 @@
 # This module configures the my torrenting setup. It uses qBittorrent over a VPN.
-
 {
   pkgs,
   options,

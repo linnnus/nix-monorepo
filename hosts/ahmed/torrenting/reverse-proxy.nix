@@ -1,6 +1,5 @@
 # This module configures a reverse proxy for the various services that are
 # exposed to the internet.
-
 {
   pkgs,
   config,
@@ -44,7 +43,7 @@ in {
 
       locations."/" = {
         index = "index.html";
-        root = pkgs.runCommand "${baseDomain}-portal" { inherit qbDomain jellyfinDomain; } ''
+        root = pkgs.runCommand "${baseDomain}-portal" {inherit qbDomain jellyfinDomain;} ''
           mkdir $out
 
           ${pkgs.xorg.lndir}/bin/lndir ${./portal} $out

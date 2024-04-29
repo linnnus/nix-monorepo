@@ -1,9 +1,5 @@
 # This module configures a WireGuard for qBittorrent to use.
-
-{
-  config,
-  ...
-}: let
+{config, ...}: let
   wgInterface = "wg0";
   wgPort = 51820;
 in {

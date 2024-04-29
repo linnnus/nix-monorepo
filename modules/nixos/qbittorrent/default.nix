@@ -132,16 +132,16 @@ in {
           configPath = "${cfg.profile}/qBittorrent/config/qBittorrent.conf";
 
           start-pre-script = pkgs.writeShellScript "qbittorrent-start-pre" ''
-            set -ue
+             set -ue
 
-            # Create data directory if it doesn't exist
-            if ! test -d ${cfg.profile}; then
-              echo "Creating initial qBittorrent data directory in: ${cfg.profile}"
-              install -d -m 0755 -o ${cfg.user} -g ${cfg.group} ${cfg.profile}/qBittorrent/config/
-            fi
+             # Create data directory if it doesn't exist
+             if ! test -d ${cfg.profile}; then
+               echo "Creating initial qBittorrent data directory in: ${cfg.profile}"
+               install -d -m 0755 -o ${cfg.user} -g ${cfg.group} ${cfg.profile}/qBittorrent/config/
+             fi
 
-           # Force-apply configuration.
-           ${pkgs.crudini}/bin/crudini --ini-options=nospace --merge ${configPath} <${settingsFile}
+            # Force-apply configuration.
+            ${pkgs.crudini}/bin/crudini --ini-options=nospace --merge ${configPath} <${settingsFile}
           '';
         in
           # Requires full permissions to create data directory, hence the "!".
