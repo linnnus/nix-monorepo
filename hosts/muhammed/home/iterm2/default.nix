@@ -1,16 +1,12 @@
 # This file configures iterm2. Note that the actual definition of iTerm2 for
 # home-manager is in `modules/home-manager/iterm2`. *That* file declares
 # `options.programs.iterm2.enable`.
-{
-  pkgs,
-  lib,
-  ...
-}: let
-  inherit (lib) mkIf;
-  inherit (pkgs.stdenv) isDarwin;
-in {
-  config = mkIf isDarwin {
+{pkgs, ...}: {
+  config = {
     home.packages = with pkgs; [imgcat];
+
+    # Install a script which automatically makes iTerm2 match the system-wide light/dark mode.
+    home.file."/Library/Application Support/iTerm2/Scripts/AutoLaunch/auto_theme.py".text = builtins.readFile ./auto_theme.py;
 
     programs.iterm2 = {
       enable = true;

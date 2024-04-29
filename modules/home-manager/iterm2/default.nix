@@ -48,6 +48,7 @@ in {
   config = mkIf cfg.enable {
     home.packages = [cfg.package];
 
+    # TODO: Use the same overwriting approach as for qBittorrent.
     home.file = mkIf (cfg.config != null) {
       "/Library/Preferences/com.googlecode.iterm2.plist".text = toPlist {} cfg.config;
     };

@@ -1,8 +1,6 @@
 " Settings
 """""""""""""""""""""""""""
 
-colorscheme darkblue
-
 " Leave boomer mode
 set nocompatible
 
