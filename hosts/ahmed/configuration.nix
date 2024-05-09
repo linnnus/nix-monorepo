@@ -11,7 +11,6 @@
     ./cloudflare-proxy
     ./disable-screen
     ./duksebot
-    ./forsvarsarper
     ./git.linus.onl
     ./hellohtml.linus.onl
     ./linus.onl

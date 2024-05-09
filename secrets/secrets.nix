@@ -7,6 +7,5 @@ let
 in {
   "cloudflare-ddns-token.env.age".publicKeys = [muhammedKey ahmedKey];
   "duksebot.env.age".publicKeys = [muhammedKey ahmedKey];
-  "forsvarsarper.env.age".publicKeys = [muhammedKey ahmedKey];
   "mullvad-wg.key.age".publicKeys = [muhammedKey ahmedKey];
 }
