@@ -66,3 +66,9 @@ body {
 	font-weight: bold;
 }
 
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #343434;
+        color: white;
+    }
+}
