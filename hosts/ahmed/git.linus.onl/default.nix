@@ -55,7 +55,9 @@ in {
     services.cgit."git.linus.onl" = {
       enable = true;
       scanPath = location;
-      settings = let package = config.services.cgit."git.linus.onl".package; in {
+      settings = let
+        package = config.services.cgit."git.linus.onl".package;
+      in {
         root-title = "Linus' public projects";
         root-desc = "hello yes this is the git server";
         root-readme = toString ./about.html;
