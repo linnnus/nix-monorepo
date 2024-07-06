@@ -40,6 +40,7 @@
     curl
     moreutils
     flakeInputs.agenix.packages.${system}.default
+    jq
   ];
 
   # Aliases that are burned into my muscle memory.
