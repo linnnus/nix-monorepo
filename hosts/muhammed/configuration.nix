@@ -64,6 +64,12 @@
     };
   };
 
+  # Enable nightly GC of Nix store.
+  nix.gc = {
+    automatic = true;
+    interval = {Hour = 3;};
+  };
+
   # System-specific version info.
   home-manager.users.linus.home.stateVersion = "22.05";
   system.stateVersion = 4;
