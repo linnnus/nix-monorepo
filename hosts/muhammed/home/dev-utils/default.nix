@@ -29,6 +29,10 @@
       nim
       guile
 
+      # Rust ecosystem
+      rustc
+      cargo
+
       # Clojure ecosystem
       clojure
       leiningen
