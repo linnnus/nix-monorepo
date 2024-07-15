@@ -3,6 +3,5 @@
 {...}: {
   imports = [
     ./lsp.nix
-    ./conjure.nix
   ];
 }
