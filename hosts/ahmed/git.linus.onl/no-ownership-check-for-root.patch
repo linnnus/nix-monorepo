@@ -1,0 +1,14 @@
+diff --git a/setup.c b/setup.c
+index 18927a8..ac6823f 100644
+--- a/setup.c	
++++ b/setup.c
+@@ -1159,6 +1159,9 @@ static int ensure_valid_ownership(const char *gitfile,
+ 				  const char *worktree, const char *gitdir,
+ 				  struct strbuf *report)
+ {
++	if (git_env_bool("GIT_NO_CHECK_OWNERSHIP", 0))
++		return 1;
++
+ 	struct safe_directory_data data = {
+ 		.path = worktree ? worktree : gitdir
+ 	};

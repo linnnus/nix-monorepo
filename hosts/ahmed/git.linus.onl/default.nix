@@ -2,6 +2,7 @@
   config,
   pkgs,
   metadata,
+  lib,
   ...
 }: let
   git-shell = "${pkgs.gitMinimal}/bin/git-shell";
@@ -54,6 +55,7 @@ in {
     # Public git viewer.
     services.cgit."git.linus.onl" = {
       enable = true;
+
       scanPath = location;
       settings = let
         package = config.services.cgit."git.linus.onl".package;
@@ -83,6 +85,18 @@ in {
     services.nginx.virtualHosts."git.linus.onl" = {
       enableACME = useACME;
       forceSSL = useACME;
+    };
+
+    # Monkey-patch the version of Git used by CGit to handle requests.
+    services.nginx.virtualHosts."git.linus.onl" = {
+      locations."~ /.+/(info/refs|git-upload-pack)".fastcgiParams = {
+        SCRIPT_FILENAME = lib.mkForce "${pkgs.git.overrideAttrs (old: {
+          patches = (old.patches or []) ++ [
+            ./no-ownership-check-for-root.patch
+          ];
+        })}/libexec/git-core/git-http-backend";
+        GIT_NO_CHECK_OWNERSHIP = "1";
+      };
     };
   };
 }
