@@ -3,6 +3,7 @@
 {
   config,
   pkgs,
+  flakeInputs,
   ...
 }: {
   imports = [
@@ -82,6 +83,21 @@
 
   # Listen for HTTP connections.
   networking.firewall.allowedTCPPorts = [80 443];
+
+  # Automatic upgrades
+  system.autoUpgrade = {
+    enable = true;
+    flake = flakeInputs.self.outPath;
+    flags = [
+      "--update-input"
+      "nixpkgs"
+      "-L" # print build logs
+    ];
+    dates = "02:00";
+    randomizedDelaySec = "45min";
+    allowReboot = true;
+  };
+
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
