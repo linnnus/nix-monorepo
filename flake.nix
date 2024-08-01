@@ -64,6 +64,7 @@
           [
             {_module.args = args;}
             home-manager.darwinModules.home-manager
+            agenix.darwinModules.default
             ./hosts/muhammed/configuration.nix
             ./hosts/common.nix
             ./home

@@ -2,6 +2,7 @@
 {flakeInputs, ...}: {
   imports = [
     ./home
+    ./wraaath-sshfs
   ];
 
   # Specify the location of this configuration file. Very meta.
