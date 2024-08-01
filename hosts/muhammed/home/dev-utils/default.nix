@@ -28,6 +28,7 @@
       crystal
       nim
       guile
+      vemf
 
       # Rust ecosystem
       rustc
