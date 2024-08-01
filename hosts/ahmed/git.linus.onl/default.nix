@@ -91,9 +91,11 @@ in {
     services.nginx.virtualHosts."git.linus.onl" = {
       locations."~ /.+/(info/refs|git-upload-pack)".fastcgiParams = {
         SCRIPT_FILENAME = lib.mkForce "${pkgs.git.overrideAttrs (old: {
-          patches = (old.patches or []) ++ [
-            ./no-ownership-check-for-root.patch
-          ];
+          patches =
+            (old.patches or [])
+            ++ [
+              ./no-ownership-check-for-root.patch
+            ];
         })}/libexec/git-core/git-http-backend";
         GIT_NO_CHECK_OWNERSHIP = "1";
       };
