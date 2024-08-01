@@ -3,11 +3,12 @@
   programs.neovim.plugins = with pkgs;
   with vimPlugins; [
     # Filetype plugins
-    nim-vim
     vim-nix
     vim-noweb
     vim-janet
+    nim-vim
     vim-crystal
     vim-svelte
+    gleam-vim
   ];
 }

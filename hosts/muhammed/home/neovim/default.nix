@@ -3,5 +3,6 @@
 {...}: {
   imports = [
     ./lsp.nix
+    ./filetype.nix
   ];
 }

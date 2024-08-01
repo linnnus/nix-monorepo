@@ -29,6 +29,7 @@
       nim
       guile
       vemf
+      gleam
 
       # Rust ecosystem
       rustc

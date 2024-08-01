@@ -79,6 +79,12 @@
         	rust_analyzer = {
         		cmd = { "${pkgs.rust-analyzer}/bin/rust-analyzer" },
         	},
+        	rust_analyzer = {
+        		cmd = { "${pkgs.rust-analyzer}/bin/rust-analyzer" },
+        	},
+        	gleam = {
+        		cmd = { "${pkgs.gleam}/bin/gleam", "lsp" },
+        	},
         };
         for server, config in pairs(servers) do
         	-- set common options

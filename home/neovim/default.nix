@@ -1,7 +1,6 @@
 # This file contains the HM configuration options for Neovim.
 {...}: {
   imports = [
-    ./filetype.nix
     ./completion.nix
     ./editing-plugins.nix
   ];
