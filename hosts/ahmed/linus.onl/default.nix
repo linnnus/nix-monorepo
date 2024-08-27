@@ -44,7 +44,6 @@ in {
         User = "${domain}-builder";
         Group = "${domain}-builder";
       };
-      startAt = "*-*-* *:00/5:00";
 
       path = with pkgs; [
         git
@@ -75,6 +74,14 @@ in {
       # before NGINX.
       before = ["nginx.service"];
       wantedBy = ["nginx.service"];
+    };
+
+    # Start the source fetching shit only after network acess has been achieved.
+    systemd.timers."${domain}-source" = {
+      after = ["network-online.target"];
+      requires = ["network-online.target"];
+      wantedBy = ["timers.target"];
+      timerConfig.OnCalendar = ["*-*-* *:00/5:00"];
     };
 
     # Register domain name with ddns.
