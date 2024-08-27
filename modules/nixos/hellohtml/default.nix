@@ -70,8 +70,8 @@ in {
         src = pkgs.fetchFromGitHub {
           owner = "linnnus";
           repo = "hellohtml";
-          rev = "51d2630578928173ea3ae57d97aeb5fa69b0dd7d";
-          hash = "sha256-CAJoxSDQ8AriYRItsd+Hd1j2jI8CDcOF51a+EXV1P6s=";
+          rev = "75f62b976d258aadc02e1764e6aa42ebcb831622";
+          hash = "sha256-0P1tXjTcn2P28loq1ZYBID6LEf0dppxE8Cwsr5IYAUc=";
         };
 
         hellohtml-vendor = pkgs.stdenv.mkDerivation {
