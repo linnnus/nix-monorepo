@@ -18,6 +18,9 @@
     (final: prev: {unstable = flakeInputs.nixpkgs-unstable.legacyPackages.${pkgs.system};})
   ];
 
+  # I'm not *that* vegan.
+  nixpkgs.config.allowUnfree = true;
+
   # Use overlays from this repo for building system configuration as well as
   # system-wide.
   #
