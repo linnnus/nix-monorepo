@@ -21,12 +21,17 @@
       # Should be automatically deleted upon unmount.
       mkdir -p /Volumes/Wraaath
 
+      # Get rid of potential leftover mount from graceless exit.
+      umount /Volumes/Wraaath || true
+      diskutil umount force /Volumes/Wraaath || true
+
       # Start a MacFUSE daemon.
       # Will run in background mode, as foreground mode broke everything for some reason.
       exec ${pkgs.sshfs}/bin/sshfs linus@ddns.wraaath.com:/ /Volumes/Wraaath \
         -p 2222 \
         -o volname=Wraath \
         -o reconnect \
+        -o kill_on_unmount \
         -o allow_other \
         -o password_stdin <${config.age.secrets.wraaath-sftp-password.path}
     '';
