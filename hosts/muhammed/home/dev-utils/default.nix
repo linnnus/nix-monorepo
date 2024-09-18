@@ -30,6 +30,7 @@
       guile
       vemf
       gleam
+      nodejs_latest
 
       # Rust ecosystem
       rustc
