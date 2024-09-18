@@ -29,7 +29,9 @@
       nim
       guile
       vemf
-      gleam
+      unstable.gleam
+      erlang_nox # Required by Gleam
+      rebar3 # Required by Gleam
       nodejs_latest
 
       # Rust ecosystem
