@@ -138,6 +138,12 @@ else
 	nnoremap <leader><leader> <CMD>echo "FZF not found!"<CR>
 endif
 
+command WrapItUp set wrap
+               \ | nnoremap j gj
+               \ | nnoremap k gk
+               \ | nnoremap 0 g0
+               \ | nnoremap $ g$
+
 " Commands
 """""""""""""""""""""""""""
 
