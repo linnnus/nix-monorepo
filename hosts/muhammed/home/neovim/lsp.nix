@@ -56,8 +56,9 @@
         			enable = true,
         			unstable = true,
         			lint = true,
+        			nodeModulesDir = true,
         		},
-        		cmd = { "${pkgs.unstable.deno}/bin/deno", "lsp", "--unstable" },
+        		cmd = { "${pkgs.unstable.deno}/bin/deno", "lsp" },
         		root_dir = function(startpath)
         			if util.find_package_json_ancestor(startpath) then
         				-- This is a Node project; let tsserver handle this one.
