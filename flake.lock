@@ -30,11 +30,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1700504939,
-        "narHash": "sha256-WgAvmIMSMKPmvIxpDoakkRu9zmBFh5FcTv/bfc1RG4A=",
+        "lastModified": 1727199410,
+        "narHash": "sha256-Jel6ql/t2JbLeG96yOku+5OfdcRszzh0NYSJO8fxV8w=",
         "owner": "linnnus",
         "repo": "comma-zsh",
-        "rev": "075d7ce7c3ff7e8d744371beff034a1d95bc147c",
+        "rev": "3456170554b423fde30d698632d479d6b97b7e0b",
         "type": "github"
       },
       "original": {
