@@ -20,6 +20,10 @@ in {
 
       help.autoCorrect = "prompt";
 
+      # Make sure we don't accidentally update submodules with changes that are only available locally.
+      # See: https://git-scm.com/book/en/v2/Git-Tools-Submodules
+      push.recurseSubmodules = "check";
+
       credential = {
         "https://github.com/" = {
           username = "linnnus";
