@@ -14,7 +14,7 @@
   location = "/srv/git";
 in {
   config = {
-    # Create a user which
+    # Create a user which will own (i.e. have rw access to) the git repositories.
     # See: https://git-scm.com/book/en/v2/Git-on-the-Server-Setting-Up-the-Server
     users.users.git = {
       description = "Git server user";
@@ -55,6 +55,13 @@ in {
     # Public git viewer.
     services.cgit."git.linus.onl" = {
       enable = true;
+
+      # This CGit instance and the fcgiwrap instance coupled to this CGit
+      # instance will use this unpriveledged user to access the world readable
+      # git repositories. This is fine as they only need read access.
+      # See: https://discourse.nixos.org/t/51419
+      user = "cgit";
+      group = "cgit";
 
       scanPath = location;
       settings = let
