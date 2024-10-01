@@ -202,11 +202,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1727518071,
-        "narHash": "sha256-PO4AUB+1IiY/D1zzVucObF5dMFwf58jdwFoPQDuxHh0=",
+        "lastModified": 1727814191,
+        "narHash": "sha256-ABLkHkIpz+DC+XDv40tx4o6tq3h0QcbqT+4MVe4C/Gg=",
         "owner": "linnnus",
         "repo": "push-notification-api",
-        "rev": "b593ceaa5100a4ab67ea774d5ec191abe5092e7a",
+        "rev": "4457cb2ea67409f1cf406fbd0ac28be93e50f164",
         "type": "github"
       },
       "original": {
