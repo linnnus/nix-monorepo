@@ -143,6 +143,9 @@ command WrapItUp set wrap
                \ | nnoremap k gk
                \ | nnoremap 0 g0
                \ | nnoremap $ g$
+" Define go-to-definition help pages, otherwise see the mappings in the hook
+" for LSP configuration.
+autocmd Filetype help nnoremap <buffer> gd <C-]>
 
 " Commands
 """""""""""""""""""""""""""
