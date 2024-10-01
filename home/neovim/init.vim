@@ -138,11 +138,6 @@ else
 	nnoremap <leader><leader> <CMD>echo "FZF not found!"<CR>
 endif
 
-command WrapItUp set wrap
-               \ | nnoremap j gj
-               \ | nnoremap k gk
-               \ | nnoremap 0 g0
-               \ | nnoremap $ g$
 " Define go-to-definition help pages, otherwise see the mappings in the hook
 " for LSP configuration.
 autocmd Filetype help nnoremap <buffer> gd <C-]>
@@ -195,6 +190,12 @@ command! DiffOnDisk
 	\ diffthis                                      |
 	\ wincmd p                                      |
 	\ diffthis
+
+command WrapItUp setlocal wrap
+               \| nnoremap <buffer> j gj
+               \| nnoremap <buffer> k gk
+               \| nnoremap <buffer> 0 g0
+               \| nnoremap <buffer> $ g$
 
 " Miscellaneous
 """""""""""""""""""""""""""
