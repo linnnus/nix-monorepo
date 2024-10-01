@@ -45,10 +45,15 @@ in {
         categoriesJson = lib.genAttrs categories (c: {"save_path" = "${downloadPath}/${c}";});
         categoriesFile = (pkgs.formats.json {}).generate "categories.json" categoriesJson;
         categoriesPath = "${config.services.qbittorrent.profile}/qBittorrent/config/categories.json";
-      in
-        pkgs.writeShellScript "qbittorrent-create-categories.sh" ''
+
+        script = pkgs.writeShellScript "qbittorrent-create-categories.sh" ''
+          # FIXME: Creation and chowning are duplicated between this and qBittorrent service definition.
+          mkdir -p /var/lib/qBittorrent/qBittorrent/config
           ln -s -f ${categoriesFile} ${categoriesPath}
+          chown --recursive qbittorrent:qbittorrent -- ${config.services.qbittorrent.profile}/qBittorrent/config/
         '';
+      in
+       "!${script}";
     };
   };
 

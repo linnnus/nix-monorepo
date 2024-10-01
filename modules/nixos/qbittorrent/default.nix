@@ -136,12 +136,16 @@ in {
 
              # Create data directory if it doesn't exist
              if ! test -d ${cfg.profile}; then
-               echo "Creating initial qBittorrent data directory in: ${cfg.profile}"
-               install -d -m 0755 -o ${cfg.user} -g ${cfg.group} ${cfg.profile}/qBittorrent/config/
+               echo "Creating initial qBittorrent config directory in: ${cfg.profile}"
+               mkdir -p ${cfg.profile}/qBittorrent/config/
              fi
 
             # Force-apply configuration.
             ${pkgs.crudini}/bin/crudini --ini-options=nospace --merge ${configPath} <${settingsFile}
+
+            # Fix permissions in directory. This not only necessary for initial setup, but also after
+            # changing the option `services.qbittorrent.user`.
+            chown --recursive ${cfg.user}:${cfg.group} -- ${cfg.profile}
           '';
         in
           # Requires full permissions to create data directory, hence the "!".
