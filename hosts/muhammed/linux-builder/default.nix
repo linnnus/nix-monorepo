@@ -2,10 +2,7 @@
 # targets directly on this machine.
 #
 # It also does some related stuff to make NixOS tests work.
-
-{ ... }:
-
-{
+{...}: {
   nix.settings.trusted-users = ["linus"];
 
   nix.linux-builder = {
