@@ -52,8 +52,7 @@ in {
           ln -s -f ${categoriesFile} ${categoriesPath}
           chown --recursive qbittorrent:qbittorrent -- ${config.services.qbittorrent.profile}/qBittorrent/config/
         '';
-      in
-       "!${script}";
+      in "!${script}";
     };
   };
 
