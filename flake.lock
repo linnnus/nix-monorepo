@@ -223,7 +223,8 @@
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "push-notification-api": "push-notification-api"
+        "push-notification-api": "push-notification-api",
+        "webhook-listener": "webhook-listener"
       }
     },
     "systems": {
@@ -253,6 +254,26 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "webhook-listener": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1727892481,
+        "narHash": "sha256-fgsNGC8VaoH9LcSMHwMufuFUZpH6oq4pVQVnmp2Q0Mo=",
+        "owner": "linnnus",
+        "repo": "webhook-listener",
+        "rev": "c0ff85fd243f0e6cb3f5d4d0d61ad33cc893108f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "linnnus",
+        "repo": "webhook-listener",
         "type": "github"
       }
     }

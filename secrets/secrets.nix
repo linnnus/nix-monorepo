@@ -9,4 +9,5 @@ in {
   "duksebot.env.age".publicKeys = [muhammedKey ahmedKey];
   "mullvad-wg.key.age".publicKeys = [muhammedKey ahmedKey];
   "wraaath-sftp-password.txt.age".publicKeys = [muhammedKey ahmedKey];
+  "linus.onl-github-secret.txt.age".publicKeys = [muhammedKey ahmedKey];
 }

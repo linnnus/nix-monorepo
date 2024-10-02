@@ -27,6 +27,10 @@
       url = "github:linnnus/comma-zsh";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    webhook-listener = {
+      url = "github:linnnus/webhook-listener";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -36,6 +40,7 @@
     nix-darwin,
     agenix,
     push-notification-api,
+    webhook-listener,
     ...
   } @ inputs: let
     args = {
@@ -82,6 +87,7 @@
             home-manager.nixosModules.home-manager
             agenix.nixosModules.default
             push-notification-api.nixosModules.default
+            webhook-listener.nixosModules.default
             ./hosts/ahmed/configuration.nix
             ./hosts/common.nix
             ./home
