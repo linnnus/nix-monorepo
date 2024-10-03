@@ -43,7 +43,7 @@
         sha256 = "COcWyrYkheRaSr2gqreRRsz9SYRTX2PSl7km+g98ljs=";
       };
       # Have to discard old patches as the no longer apply cleanly.
-      patches = [./noweb-no-unnecessary-cflags.patch];
+      patches = (old.patches or []) ++ [./noweb-no-unnecessary-cflags.patch];
     });
   };
 }
