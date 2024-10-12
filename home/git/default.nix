@@ -24,6 +24,11 @@ in {
       # See: https://git-scm.com/book/en/v2/Git-Tools-Submodules
       push.recurseSubmodules = "check";
 
+      # It seems like a de facto standard to have a file with this name in the
+      # project root containing all the commits that should be ignored when
+      # running `git blame`.
+      blame.ignoreRevsFile = ".git-blame-ignore-revs";
+
       credential = {
         "https://github.com/" = {
           username = "linnnus";
