@@ -41,9 +41,6 @@
           vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
           vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts)
           vim.keymap.set('n', '<leader>s', function() vim.cmd[[ClangdSwitchSourceHeader]] end, bufopts)
-
-          -- Rust-analyzer supports inlay hints
-          vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
         end
 
         -- Use a loop to conveniently call 'setup' on multiple servers and
