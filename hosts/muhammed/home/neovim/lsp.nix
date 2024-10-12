@@ -115,6 +115,10 @@
           gleam = {
             cmd = { "${pkgs.unstable.gleam}/bin/gleam", "lsp" },
           },
+          svelte = {
+            cmd = { "${pkgs.nodePackages_latest.svelte-language-server}/bin/svelteserver", "--stdio" },
+            root_dir = util.root_pattern("package.json", ".git", "deno.json", "deno.jsonc"),
+          },
         };
         for server, config in pairs(servers) do
           -- set common options
