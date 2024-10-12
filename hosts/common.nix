@@ -21,11 +21,20 @@
   # I'm not *that* vegan.
   nixpkgs.config.allowUnfree = true;
 
-  # Use overlays from this repo for building system configuration as well as
-  # system-wide.
-  #
-  # See: https://nixos.wiki/wiki/Overlays#Using_nixpkgs.overlays_from_configuration.nix_as_.3Cnixpkgs-overlays.3E_in_your_NIX_PATH
-  nix.nixPath = options.nix.nixPath.default ++ ["nixpkgs-overlays=${flakeInputs.self}/overlays/compat.nix"];
+  nix.nixPath = [
+    # Use overlays from this repo for building system configuration as well as
+    # system-wide.
+    #
+    # See: https://nixos.wiki/wiki/Overlays#Using_nixpkgs.overlays_from_configuration.nix_as_.3Cnixpkgs-overlays.3E_in_your_NIX_PATH
+    "nixpkgs-overlays=${flakeInputs.self}/overlays/compat.nix"
+
+    # For consistency, use the same version of nixpkgs everywhere. This DOES
+    # however make the system closure depend on the nixpkgs sources which would
+    # be undesirable if I didn't already use all my systems interactively for
+    # Nix stuff.
+    "nixpkgs=${flakeInputs.nixpkgs}"
+    "nixpkgs-unstable=${flakeInputs.nixpkgs-unstable}"
+  ];
 
   # Set ZSH as the shell.
   # https://nixos.wiki/wiki/Command_Shell#Changing_default_shelltrue
