@@ -32,7 +32,7 @@
       unstable.gleam
       erlang_nox # Required by Gleam
       rebar3 # Required by Gleam
-      nodejs_latest
+      unstable.nodejs_latest
 
       # Rust ecosystem
       rustc
