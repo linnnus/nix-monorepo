@@ -4,4 +4,5 @@
 {
   iterm2 = import ./iterm2;
   git-credential-lastpass = import ./git-credential-lastpass;
+  assert-valid-neovim-config = import ./assert-valid-neovim-config;
 }
