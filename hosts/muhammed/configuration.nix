@@ -1,5 +1,9 @@
 # This file contains the configuration for my Macbook Pro.
-{flakeInputs, ...}: {
+{
+  flakeInputs,
+  config,
+  ...
+}: {
   imports = [
     ./home
     ./linux-builder
@@ -33,6 +37,7 @@
   environment.etc."sudoers.d/10-unauthenticated-commands".text = let
     commands = [
       "/usr/bin/pmset"
+      "${config.users.users.linus.home}/.local/bin/monner" # TODO: We should really package this.
     ];
   in ''
     %admin ALL=(ALL:ALL) NOPASSWD: ${builtins.concatStringsSep ", " commands}
