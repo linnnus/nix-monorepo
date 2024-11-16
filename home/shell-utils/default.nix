@@ -17,5 +17,16 @@ in {
       pbv
       trash
       disable-sleep
+
+      # Unlike the `stat` command on Linux (from coreutils or whatever), OSX's
+      # `stat` does not automatically use the nicer format when stdout is a
+      # sterminal.
+      (pkgs.writeShellScriptBin "stat" ''
+        if [ -t 1 ]; then
+          /usr/bin/stat -x "$@"
+        else
+          /usr/bin/stat "$@"
+        fi
+      '')
     ];
 }
