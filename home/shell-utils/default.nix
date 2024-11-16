@@ -9,6 +9,7 @@ in {
       ripgrep
       jc
       jq
+      nowrap
     ]
     ++ lib.optionals isLinux [
       file # File is not included in NixOS, but *is* included in Darwin.
