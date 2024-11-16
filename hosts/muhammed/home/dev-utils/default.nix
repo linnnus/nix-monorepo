@@ -30,6 +30,7 @@
       guile
       vemf
       unstable.gleam
+      cscript
       erlang_nox # Required by Gleam
       rebar3 # Required by Gleam
       unstable.nodejs_latest
