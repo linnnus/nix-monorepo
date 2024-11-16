@@ -1,7 +1,8 @@
 # This file contains the configuration for my Macbook Pro.
 {
   flakeInputs,
-  config,
+  pkgs,
+  lib,
   ...
 }: {
   imports = [
@@ -37,7 +38,7 @@
   environment.etc."sudoers.d/10-unauthenticated-commands".text = let
     commands = [
       "/usr/bin/pmset"
-      "${config.users.users.linus.home}/.local/bin/monner" # TODO: We should really package this.
+      (lib.getExe pkgs.disable-sleep)
     ];
   in ''
     %admin ALL=(ALL:ALL) NOPASSWD: ${builtins.concatStringsSep ", " commands}
