@@ -21,6 +21,7 @@
         ./zsh
         ./git
         ./networking-utils
+        ./shell-utils
       ]
       ++ builtins.attrValues flakeOutputs.homeModules;
 
