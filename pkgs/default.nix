@@ -25,6 +25,8 @@ pkgs: {
 
   human-sleep = pkgs.callPackage ./human-sleep {};
 
+  disable-sleep = pkgs.callPackage ./disable-sleep {};
+
   # TODO: These should be contained in the 'vimPlugins' attrset. This turns out
   # to be non-trivial because this module is both consumed in a flake output
   # context and an overlay context.
