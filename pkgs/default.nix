@@ -29,6 +29,8 @@ pkgs: {
 
   nowrap = pkgs.callPackage ./nowrap {};
 
+  echoargs = pkgs.callPackage ./echoargs {};
+
   # TODO: These should be contained in the 'vimPlugins' attrset. This turns out
   # to be non-trivial because this module is both consumed in a flake output
   # context and an overlay context.
