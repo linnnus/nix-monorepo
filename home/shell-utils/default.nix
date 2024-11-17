@@ -10,6 +10,7 @@ in {
       jc
       jq
       nowrap
+      echoargs
     ]
     ++ lib.optionals isLinux [
       file # File is not included in NixOS, but *is* included in Darwin.
