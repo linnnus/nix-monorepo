@@ -11,8 +11,8 @@
     src = fetchFromGitHub {
       owner = "linnnus";
       repo = pname;
-      rev = "855f35a4e6d5046000a1d9ff7b887ccd7c4a8c91";
-      hash = "sha256-d722f3K3QXnPqDVNVGBK+mj6Bl1VNShmJ4WICj0p64s=";
+      rev = "45c8dca682484a6a5873e38d917960ff1f7e971e";
+      hash = "sha256-KhmHd8mQ387aSfXPAm7sJNFXlUKNyKPRITG1JUUjRE4=";
     };
 
     # Instead of using the system CC and LLDB (impure), use the most recent LLVM release.
@@ -28,6 +28,11 @@
 
     preInstall = "mkdir -p $out/bin";
     makeFlags = ["INSTALL=$(out)/bin"];
+
+    doCheck = true;
+    doInstallCheck = true;
+    preInstallCheck = ''export PATH="$out/bin:$PATH"''; # Otherwise `/usr/bin/env` can't find `cscript`.
+    installCheckTarget = "installtest";
 
     passthru = rec {
       # Mimic Python's interpreter attributes.
