@@ -2,6 +2,7 @@
   stdenv,
   lib,
   fetchFromGitHub,
+  llvmPackages,
 }: let
   self = stdenv.mkDerivation rec {
     pname = "cscript";
@@ -13,6 +14,17 @@
       rev = "855f35a4e6d5046000a1d9ff7b887ccd7c4a8c91";
       hash = "sha256-d722f3K3QXnPqDVNVGBK+mj6Bl1VNShmJ4WICj0p64s=";
     };
+
+    # Instead of using the system CC and LLDB (impure), use the most recent LLVM release.
+    postPatch = let
+      toStringLiteral = lib.flip lib.pipe [builtins.toJSON lib.strings.escapeShellArg];
+      ccPathLiteral = toStringLiteral "${llvmPackages.clang}/bin/clang";
+      lldbPathLiteral = toStringLiteral "${llvmPackages.lldb}/bin/lldb";
+    in ''
+      substituteInPlace cscript.c \
+        --replace-fail '"cc"' ${ccPathLiteral} \
+        --replace-fail '"lldb"' ${lldbPathLiteral} \
+    '';
 
     preInstall = "mkdir -p $out/bin";
     makeFlags = ["INSTALL=$(out)/bin"];
