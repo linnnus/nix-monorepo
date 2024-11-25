@@ -87,10 +87,8 @@
   # Automatic upgrades
   system.autoUpgrade = {
     enable = true;
-    flake = flakeInputs.self.outPath;
+    flake = "github:linnnus/nix-monorepo";
     flags = [
-      "--update-input"
-      "nixpkgs"
       "-L" # print build logs
     ];
     dates = "02:00";
