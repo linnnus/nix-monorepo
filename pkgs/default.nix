@@ -9,8 +9,6 @@ pkgs: {
 
   mcping = pkgs.callPackage ./mcping {};
 
-  watch-while = pkgs.callPackage ./watch-while {};
-
   # This is not wrapping the YaLafi python library, just a particular example
   # from the repo where they spellcheck LaTex files.
   yalafi-shell = pkgs.callPackage ./yalafi-shell {};
