@@ -8,6 +8,7 @@
     # smol utils
     nodePackages_latest.nodemon
     rlwrap
+    devenv
 
     # heavy hitters
     imagemagick
