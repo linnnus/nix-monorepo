@@ -14,7 +14,6 @@
     ffmpeg_6-full
 
     # interpreaters
-    cling
     unstable.deno
     (python311Full.withPackages (ps:
       with ps; [

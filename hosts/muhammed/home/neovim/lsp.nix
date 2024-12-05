@@ -62,7 +62,7 @@
             cmd = { "${pkgs.unstable.deno}/bin/deno", "lsp" },
             root_dir = function(startpath)
               if util.find_package_json_ancestor(startpath) then
-                -- This is a Node project; let tsserver handle this one.
+                -- This is a Node project; let ts_ls handle this one.
                 -- This exactly mirrors how typescript-langauge-server yields to this server for Deno projects.
                 return nil
               else
@@ -73,9 +73,7 @@
               end
             end,
           },
-          -- NOTE: Will be renamed to ts_ls shortly
-          -- See: https://github.com/neovim/nvim-lspconfig/commit/bdbc65aadc708ce528efb22bca5f82a7cca6b54d
-          tsserver = {
+          ts_ls = {
             cmd = { "${pkgs.nodePackages_latest.typescript-language-server}/bin/typescript-language-server", "--stdio" },
             root_dir = function(startpath)
               local find_deno_root_dir = util.root_pattern("deno.json", "deno.jsonc")

@@ -1,6 +1,7 @@
 {
   lib,
   swiftPackages,
+  xcbuild,
   fetchFromGitHub,
 }:
 swiftPackages.stdenv.mkDerivation {
@@ -16,7 +17,7 @@ swiftPackages.stdenv.mkDerivation {
 
   buildInputs = [
     swiftPackages.swift
-    swiftPackages.xcbuild
+    xcbuild
     swiftPackages.apple_sdk.frameworks.Cocoa
   ];
 
