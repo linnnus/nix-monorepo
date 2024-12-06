@@ -19,6 +19,7 @@
     ./ssh
     ./torrenting
     ./home
+    ./remote-builder
   ];
 
   # Create the main user.
