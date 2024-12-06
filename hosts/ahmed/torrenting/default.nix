@@ -13,6 +13,11 @@
 
   services.qbittorrent = {
     enable = true;
+
+    # We need unstable until at least 5.0.1 becomes part of stable nixpkgs.
+    # See: https://sharpsec.run/rce-vulnerability-in-qbittorrent/
+    package = pkgs.unstable.qbittorrent-nox;
+
     settings = {
       Preferences = {
         # Configure credentials. This should be safe to keep here, since the password is hashed.
