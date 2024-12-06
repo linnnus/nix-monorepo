@@ -1,7 +1,15 @@
 # Create a local Linux builder. This will allow us to build aarch64-linux
 # targets directly on this machine.
+#
+# Note that building the linux-builder requires having access to a linux
+# builder already. To break this cycle, a version of the linux builder with
+# `nix.linux-builder.config = {}` is cached on the official binary cache.
+#
+# If you do not have a linux builder available when switching to this
+# configuration, you should start by commenting out all custom configuration of
+# the VM and building that first.
 {...}: {
-  # XXX: Why is this necessary?
+  # User must be trusted in order to use the Linux builder.
   nix.settings.trusted-users = ["linus"];
 
   nix.linux-builder = {
@@ -15,15 +23,16 @@
     config = {pkgs, ...}: {
       environment.systemPackages = with pkgs; [
         # cntr is used to jump into the sandbox of packages that use breakpointHook.
-        pkgs.cntr
-
-        # Nix is used to debug and fetch other tools as needed.
-        pkgs.nix
+        cntr
       ];
 
+      nix.enable = true;
+
       # Allow root login. This would normally be horrible but it's a local VM so who cares.
-      users.users.root.hashedPassword = "$y$j9T$TosKLKCZ.g9be.Wz5/qVJ.$YWvn4nAp8tn.xhHGBMOz748PHma6QGhN/WShilEbz8A";
+      users.users.root.password = "root";
       services.openssh.permitRootLogin = "yes";
+
+      nixpkgs.hostPlatform = {system = "x86_64-linux";};
     };
   };
 
