@@ -7,7 +7,7 @@
 }: {
   imports = [
     ./home
-    ./linux-builder
+    ./remote-builders
     ./wraaath-sshfs
   ];
 

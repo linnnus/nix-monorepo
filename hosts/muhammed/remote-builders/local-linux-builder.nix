@@ -1,8 +1,7 @@
 # Create a local Linux builder. This will allow us to build aarch64-linux
 # targets directly on this machine.
-#
-# It also does some related stuff to make NixOS tests work.
 {...}: {
+  # XXX: Why is this necessary?
   nix.settings.trusted-users = ["linus"];
 
   nix.linux-builder = {
