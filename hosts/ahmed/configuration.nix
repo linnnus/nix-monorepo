@@ -10,7 +10,6 @@
     ./hardware-configuration.nix
 
     ./cloudflare-proxy
-    ./disable-screen
     ./duksebot
     ./git.linus.onl
     ./hellohtml.linus.onl
