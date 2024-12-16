@@ -9,7 +9,7 @@ in {
   networking.wireguard.interfaces = {
     ${wgInterface} = {
       # The port to use for communication. This should also be opened in the firewall.
-      ips = ["10.70.101.133/32" "fc00:bbbb:bbbb:bb01::7:6584/128"];
+      ips = ["10.2.0.2/32"];
       privateKeyFile = config.age.secrets.mullvad-wg-key.path;
       allowedIPsAsRoutes = false;
       listenPort = wgPort;
@@ -40,10 +40,10 @@ in {
       peers = [
         {
           # The public key of the server.
-          publicKey = "/iivwlyqWqxQ0BVWmJRhcXIFdJeo0WbHQ/hZwuXaN3g=";
+          publicKey = "9WowgFUh2itRfPh2SoaJsJHvxzXBZuD+xqdmBAf2CB4=";
 
           # The location of the server.
-          endpoint = "193.32.127.66:${toString wgPort}";
+          endpoint = "149.50.217.161:${toString wgPort}";
 
           # Which destination IPs should be directed to this ip/pubkey pair. In
           # this case, we send all packets to our only peer.
