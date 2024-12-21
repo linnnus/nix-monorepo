@@ -8,7 +8,6 @@
   imports = [
     ./home
     ./remote-builders
-    ./wraaath-sshfs
   ];
 
   # Specify the location of this configuration file. Very meta.
