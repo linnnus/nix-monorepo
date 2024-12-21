@@ -6,7 +6,10 @@
   inherit (lib) optional;
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
 in {
-  imports = [./ignore.nix ./aliases.nix];
+  imports = [
+    ./ignore.nix
+    ./aliases.nix
+  ];
 
   programs.git = {
     enable = true;
@@ -38,4 +41,9 @@ in {
       };
     };
   };
+
+  home.packages = with pkgs; [
+    # Add the GitHub CLI for authentication.
+    gh
+  ];
 }

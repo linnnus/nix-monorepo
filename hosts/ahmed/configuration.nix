@@ -3,13 +3,16 @@
 {
   config,
   pkgs,
-  flakeInputs,
   ...
 }: {
   imports = [
     ./hardware-configuration.nix
 
-    ./cloudflare-proxy
+    ../../shared/nixos/cloudflare-proxy
+    ../../shared/nixos/common-nix-settings
+    ../../shared/nixos/common-shell-settings
+    ../../shared/nixos/common-hm-settings
+
     ./duksebot
     ./git.linus.onl
     ./hellohtml.linus.onl
@@ -17,7 +20,6 @@
     ./nofitications.linus.onl
     ./ssh
     ./torrenting
-    ./home
     ./remote-builder
   ];
 
@@ -28,6 +30,15 @@
     extraGroups = ["wheel"];
   };
   users.mutableUsers = false;
+
+  home-manager.users.linus = {
+    imports = [
+      # Despite this being a "just a server" it is also the only x86_64-linux
+      # host I have access to, so in practice I end up using it for development
+      # sometimes.
+      ../../shared/home-manager/development-minimal
+    ];
+  };
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;

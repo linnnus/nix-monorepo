@@ -15,12 +15,6 @@ Most files also contain a little comment at the top, explaining what it does.
   * `/hosts/ahmed/`: Mediocre home-server which runs most of my self-hosted services.
   * `/hosts/muhammed/`: My personal laptop used for development.
   * `/hosts/fatima/`: NAS
-  * `/hosts/common.nix`: Common configuration options shared by all hosts.
-    Every `configuration.nix` imports this file. It contains basic stuff like
-    making `zsh` the default shell.
-* `/home/`: Contains the part of my [home-manager] configuration that is common
-  to all hosts. This includes basic stuff like `zsh` plugins. It is matched by
-  `/hosts/<host>/home` which contains host-specific home-manager configuration.
 * `/modules/`: Contains reusable modules that are configurable using [NixOS's
   module system][mod-sys] and are exported for other consumers via `flake.nix`.
   * `/modules/nixos/`: Every subdirectory in this directory contains a NixOS
@@ -33,9 +27,11 @@ Most files also contain a little comment at the top, explaining what it does.
   versions and fix bugs used in the repo. These are exported as
   `outputs.overlays.modifications` in `flake.nix`.
 * `/pkgs/`: Contains Nix packages which I haven't upstreamed into `nixpkgs` for
-  some reason. `/pkgs/default.nix` lists out every package. These are also
+  some reason. `/overlays/additions.nix` lists out every package. These are also
   exported in `flake.nix`. An overlay that adds all new packages is also
   available as `outputs.overlays.additions`.
+* `/shared/`: This can somewhat be thought of like `nixos/modules/profiles` in
+  nixpkgs; bits of configuration which are imported to be used.
 * `/secrets`: All files which can't be added to the world-readable Nix-store
   are managed by [agenix].
   * `/secrets/secrets.nix`: The only Nix file which isn't (indirectly) imported

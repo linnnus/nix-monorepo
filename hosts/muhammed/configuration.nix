@@ -6,7 +6,10 @@
   ...
 }: {
   imports = [
-    ./home
+    ../../shared/nixos/common-shell-settings
+    ../../shared/nixos/common-nix-settings
+    ../../shared/nixos/common-hm-settings
+
     ./remote-builders
   ];
 
@@ -20,10 +23,24 @@
   # Use the Nix daemon.
   services.nix-daemon.enable = true;
 
-  # Set up main account with ZSH.
+  # Set up main account.
   users.users.linus = {
     description = "Personal user account";
     home = "/Users/linus";
+  };
+
+  home-manager.users.linus = {
+    imports = [
+      ../../shared/home-manager/development-full
+      ../../shared/home-manager/qbittorrent
+      ../../shared/home-manager/iterm2
+      ({pkgs, ...}: {
+        home.packages = with pkgs; [
+          imagemagick
+          ffmpeg_6-full
+        ];
+      })
+    ];
   };
 
   # Should match containing folder.

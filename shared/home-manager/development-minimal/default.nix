@@ -1,44 +1,23 @@
-# This part (module) of my home manager configuration adds some random utilities.
+# This module pulls in other HM modules which together form a minimal
+# development enviroment. It does so while taking care not to balloon the
+# closure size too much.
 {
   pkgs,
   lib,
   ...
 }: {
+  imports = [
+    ../zsh
+    ../shell-utils
+
+    ../git
+    ../neovim
+    ../networking-utils
+  ];
+
   home.packages = with pkgs; [
-    # smol utils
-    nodePackages_latest.nodemon
     rlwrap
     devenv
-
-    # heavy hitters
-    imagemagick
-    ffmpeg_6-full
-
-    # interpreaters
-    unstable.deno
-    (python311Full.withPackages (ps:
-      with ps; [
-        virtualenv
-        tkinter
-      ]))
-    tcl-8_6
-    crystal
-    nim
-    guile
-    vemf
-    unstable.gleam
-    cscript
-    erlang_nox # Required by Gleam
-    rebar3 # Required by Gleam
-    unstable.nodejs_latest
-
-    # Rust ecosystem
-    rustc
-    cargo
-
-    # Clojure ecosystem
-    clojure
-    leiningen
   ];
 
   # Add system manual pages to the search path on Darwin.

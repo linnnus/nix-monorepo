@@ -71,8 +71,6 @@
             home-manager.darwinModules.home-manager
             agenix.darwinModules.default
             ./hosts/muhammed/configuration.nix
-            ./hosts/common.nix
-            ./home
           ]
           ++ builtins.attrValues (import ./modules/darwin);
       };
@@ -89,8 +87,6 @@
             push-notification-api.nixosModules.default
             webhook-listener.nixosModules.default
             ./hosts/ahmed/configuration.nix
-            ./hosts/common.nix
-            ./home
           ]
           ++ builtins.attrValues (import ./modules/nixos);
       };

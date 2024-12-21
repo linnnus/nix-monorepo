@@ -3,6 +3,7 @@
   imports = [
     ./completion.nix
     ./editing-plugins.nix
+    ./lsp.nix
   ];
 
   programs.neovim = {
