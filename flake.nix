@@ -90,6 +90,17 @@
           ]
           ++ builtins.attrValues (import ./modules/nixos);
       };
+      omar = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules =
+          [
+            {_module.args = args;}
+            home-manager.nixosModules.home-manager
+            agenix.nixosModules.default
+            ./hosts/omar/configuration.nix
+          ]
+          ++ builtins.attrValues (import ./modules/nixos);
+      };
     };
 
     # Formatter to be run when `nix fmt` is executed.
