@@ -2,9 +2,7 @@
   stdenv,
   lib,
   fetchFromGitHub,
-  # TODO: I think the PR will become part of 24.11, at which point this becomes unnecessary.
-  # TEMP: We unstable for NixOS/nixpkgs#309165 for LLDB to work on Darwin.
-  unstable,
+  llvmPackages,
 }: let
   self = stdenv.mkDerivation rec {
     pname = "cscript";
@@ -20,8 +18,8 @@
     # Instead of using the system CC and LLDB (impure), use the most recent LLVM release.
     postPatch = let
       toStringLiteral = lib.flip lib.pipe [builtins.toJSON lib.strings.escapeShellArg];
-      ccPathLiteral = toStringLiteral "${unstable.llvmPackages.clang}/bin/clang";
-      lldbPathLiteral = toStringLiteral "${unstable.llvmPackages.lldb}/bin/lldb";
+      ccPathLiteral = toStringLiteral "${llvmPackages.clang}/bin/clang";
+      lldbPathLiteral = toStringLiteral "${llvmPackages.lldb}/bin/lldb";
     in ''
       substituteInPlace cscript.c \
         --replace-fail '"cc"' ${ccPathLiteral} \
