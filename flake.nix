@@ -97,14 +97,14 @@
       forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
 
     packages = forAllSystems (system: let
-      pkgs = import nixpkgs {
-        inherit system;
-        overlays = builtins.attrValues self.overlays;
-      };
+      pkgs = import nixpkgs {inherit system;};
     in
-      import ./pkgs pkgs);
+      import ./overlays/additions.nix pkgs pkgs);
 
-    overlays = import ./overlays;
+    overlays = {
+      additions = import ./overlays/additions.nix;
+      modifications = import ./overlays/modifications.nix;
+    };
 
     # We export the generally applicable modules.
     darwinModules = import ./modules/darwin;

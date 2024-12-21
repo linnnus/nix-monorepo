@@ -37,10 +37,9 @@ lib.mkMerge [
         # Use overlays from this repo for building system configuration as well as system-wide.
         # See: https://nixos.wiki/wiki/Overlays#Using_nixpkgs.overlays_from_configuration.nix_as_.3Cnixpkgs-overlays.3E_in_your_NIX_PATH
         "nixpkgs-overlays=${flakeInputs.self}/overlays/compat.nix"
-
-        # This will additionally add out inputs to the system's legacy channels
-        # Making legacy nix commands consistent as well, awesome!
       ]
+      # This will additionally add out inputs to the system's legacy channels
+      # Making legacy nix commands consistent as well, awesome!
       ++ lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
 
     # Add shell-utilities which are only relevant if Nix is enabled.

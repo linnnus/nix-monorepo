@@ -5,7 +5,7 @@
     yalafi-shell
   ];
 
-  programs.neovim.plugins = with pkgs; [
+  programs.neovim.plugins = with pkgs.vimPlugins; [
     vim-noweb
   ];
 
