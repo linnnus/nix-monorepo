@@ -100,7 +100,15 @@
     enable = true;
     flake = "github:linnnus/nix-monorepo";
     flags = [
-      "-L" # print build logs
+      # Update nixpkgs inputs to recieve security patches and such.
+      # Since the updated lockfile isn't commited, we still have to bump manually also.
+      "--update-input"
+      "nixpkgs"
+      "--update-input"
+      "nixpkgs-unstable"
+
+      # Print build logs.
+      "-L"
     ];
     dates = "02:00";
     randomizedDelaySec = "45min";
