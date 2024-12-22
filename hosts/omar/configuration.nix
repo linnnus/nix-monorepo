@@ -8,9 +8,9 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
 
-    ../../shared/nixos/common-nix-settings
-    ../../shared/nixos/common-shell-settings
-    ../../shared/nixos/common-hm-settings
+    ../../shared/nixos-and-darwin/common-nix-settings
+    ../../shared/nixos-and-darwin/common-shell-settings
+    ../../shared/nixos-and-darwin/common-hm-settings
     ../../shared/nixos/zfs-impermenance
   ];
 

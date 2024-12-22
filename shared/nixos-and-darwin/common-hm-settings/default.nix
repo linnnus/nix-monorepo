@@ -1,8 +1,8 @@
 # This module sets common settings related to home-manager (HM). All hosts that
 # I directly interact with should include this module.
 #
-# NOTE: Even though this lives under `shared/nixos` the configuration in here
-# should also be compatible with nix-darwin!!
+# NOTE: This lives under `shared/nixos-and-darwin`. The configuration in here
+# should be compatible with both nixos and nix-darwin!!
 {
   flakeInputs,
   flakeOutputs,

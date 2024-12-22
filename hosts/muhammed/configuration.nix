@@ -5,9 +5,9 @@
   ...
 }: {
   imports = [
-    ../../shared/nixos/common-shell-settings
-    ../../shared/nixos/common-nix-settings
-    ../../shared/nixos/common-hm-settings
+    ../../shared/nixos-and-darwin/common-shell-settings
+    ../../shared/nixos-and-darwin/common-nix-settings
+    ../../shared/nixos-and-darwin/common-hm-settings
 
     ./remote-builders
   ];

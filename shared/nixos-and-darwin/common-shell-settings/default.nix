@@ -1,8 +1,8 @@
 # This module sets options to ensure a consistent Baseline Shell Experince™
 # across the entire fleet. This includes e.g. common utilities and aliases.
 #
-# NOTE: Even though this lives under `shared/nixos` the configuration in here
-# should also be compatible with nix-darwin!!
+# NOTE: This lives under `shared/nixos-and-darwin`. The configuration in here
+# should be compatible with both nixos and nix-darwin!!
 {pkgs, ...}: {
   # Set ZSH as the shell.
   # https://nixos.wiki/wiki/Command_Shell#Changing_default_shelltrue
