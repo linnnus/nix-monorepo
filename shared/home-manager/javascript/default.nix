@@ -6,6 +6,7 @@
   ];
 
   programs.neovim.extraLuaConfig = ''
+    local util = require("lspconfig.util")
     require("lspconfig")["denols"].setup({
       init_options = {
         enable = true,
