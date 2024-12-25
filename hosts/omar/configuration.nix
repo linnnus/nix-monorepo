@@ -12,6 +12,8 @@
     ../../shared/nixos-and-darwin/common-shell-settings
     ../../shared/nixos-and-darwin/common-hm-settings
     ../../shared/nixos/zfs-impermenance
+
+    ./wireless-networking
   ];
 
   boot.loader.grub = {
@@ -33,10 +35,6 @@
 
   # Should match containing folder.
   networking.hostName = "omar";
-
-  # Pick only one of the below networking options.
-  networking.wireless.enable = true; # Enables wireless support via wpa_supplicant.
-  # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
   # Create the main user.
   users.users.linus = {
