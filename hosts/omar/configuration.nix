@@ -12,6 +12,7 @@
     ../../shared/nixos-and-darwin/common-shell-settings
     ../../shared/nixos-and-darwin/common-hm-settings
     ../../shared/nixos/zfs-impermenance
+    ../../shared/nixos/persist-ssh-host-keys
 
     ./wireless-networking
   ];
