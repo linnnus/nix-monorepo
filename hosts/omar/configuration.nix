@@ -50,6 +50,7 @@
       # I am planning on using this host when traveling.
       ../../shared/home-manager/development-full
     ];
+    home.stateVersion = "24.11";
   };
 
   # Enable the X11 windowing system.
