@@ -13,6 +13,7 @@
     ../../shared/nixos-and-darwin/common-hm-settings
     ../../shared/nixos/zfs-impermenance
     ../../shared/nixos/persist-ssh-host-keys
+    ../../shared/nixos/danish
 
     ./wireless-networking
     ./desktop-environment
