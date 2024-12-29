@@ -24,4 +24,6 @@
     imports = builtins.attrValues flakeOutputs.homeModules;
     xdg.enable = true;
   };
+
+  home-manager.backupFileExtension = "hmBackup";
 }
