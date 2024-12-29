@@ -21,6 +21,9 @@
 
     # Add unstable nixpkgs.
     (final: prev: {unstable = flakeInputs.nixpkgs-unstable.legacyPackages.${pkgs.system};})
+
+    # Add NUR packages
+    flakeInputs.nur.overlays.default
   ];
 
   # I'm not *that* vegan.
