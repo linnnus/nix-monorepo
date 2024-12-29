@@ -30,6 +30,8 @@ final: prev: {
 
   echoargs = prev.callPackage ../pkgs/echoargs {};
 
+  dwm-setstatus = prev.callPackage ../pkgs/dwm-setstatus {};
+
   vimPlugins = prev.vimPlugins.extend (final': prev': {
     vim-crystal = prev.callPackage ../pkgs/vim-crystal {};
     vim-noweb = prev.callPackage ../pkgs/vim-noweb {};
