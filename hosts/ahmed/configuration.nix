@@ -13,7 +13,6 @@
     ../../shared/nixos-and-darwin/common-shell-settings
     ../../shared/nixos-and-darwin/common-hm-settings
 
-    ./duksebot
     ./git.linus.onl
     ./hellohtml.linus.onl
     ./linus.onl
