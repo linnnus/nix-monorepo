@@ -22,7 +22,7 @@
       Preferences = {
         # Configure credentials. This should be safe to keep here, since the password is hashed.
         "WebUI\\Username" = "linus";
-        "WebUI\\Password_PBKDF2" = "@ByteArray(wOEz+v4PMOZTIUxD+NI0sQ==:uEp16/vHvNgv71RcHHBuxm7WgjqgVZpuEWEG1KnCxrCxGX1n3y2cqQyGYDLBlpyGv8rjk3G0g+d5xuxW1izV2g==)";
+	"WebUI\\Password_PBKDF2" = "@ByteArray(KCBHD0C70+/50xW/zkIUiw==:WY6phmLjJza//fD6w6fXwqzLCYIQjFMRQ3hlqYVIRcKVNHh1fYjMHlI1aBPciJtDdBABq3/D2hOuhQpAt3oUXQ==)";
       };
     };
   };
