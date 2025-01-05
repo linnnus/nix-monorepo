@@ -1,9 +1,6 @@
 # This module ensures that SSH keys are not cleared on reboots.
 # It assumes that `/` is ephemeral and `/persist` isn't.
-
-{...}:
-
-{
+{...}: {
   services.openssh = {
     hostKeys = [
       {
