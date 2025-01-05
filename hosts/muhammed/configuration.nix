@@ -30,12 +30,7 @@
       ../../shared/home-manager/development-full
       ../../shared/home-manager/qbittorrent
       ../../shared/home-manager/iterm2
-      ({pkgs, ...}: {
-        home.packages = with pkgs; [
-          imagemagick
-          ffmpeg_6-full
-        ];
-      })
+      ./extra-utils.nix
     ];
   };
 
