@@ -10,7 +10,7 @@
   home.shellAliases = {
     gs = "git status";
     gd = "git diff --";
-    gl = "git log --oneline HEAD~10..HEAD --";
+    gl = "git log --oneline | head -n 10";
 
     gc = "git commit";
     gcp = "git commit --patch";
