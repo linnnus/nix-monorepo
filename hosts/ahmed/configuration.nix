@@ -9,8 +9,8 @@
     ./hardware-configuration.nix
 
     ../../shared/nixos/cloudflare-proxy
-    ../../shared/nixos-and-darwin/common-nix-settings
-    ../../shared/nixos-and-darwin/common-shell-settings
+    ../../shared/nixos/common-nix-settings
+    ../../shared/nixos/common-shell-settings
     ../../shared/nixos-and-darwin/common-hm-settings
 
     ./git.linus.onl

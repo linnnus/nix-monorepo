@@ -3,52 +3,42 @@
 #
 # NOTE: This lives under `shared/nixos-and-darwin`. The configuration in here
 # should be compatible with both nixos and nix-darwin!!
+{pkgs, ...}: {
+  # Set ZSH as the shell.
+  # https://nixos.wiki/wiki/Command_Shell#Changing_default_shelltrue
+  programs.zsh.enable = true;
+  environment.shells = [pkgs.zsh];
 
-{pkgs, lib, ...}:
+  # Very basic system administration tools.
+  environment.systemPackages = with pkgs; [
+    curl
+    jq
+    moreutils
+    neovim
+    tree
+  ];
 
-lib.mkMerge [
-  {
-    # Set ZSH as the shell.
-    # https://nixos.wiki/wiki/Command_Shell#Changing_default_shelltrue
-    programs.zsh.enable = true;
-    environment.shells = [pkgs.zsh];
+  # Aliases that are burned into my muscle memory.
+  environment.shellAliases = {
+    "mv" = "mv -i";
+    "rm" = "rm -i";
+    "cp" = "cp -i";
+    "ls" = "ls -F -G -A --color=auto";
+    "grep" = "grep --color=auto";
+    "file" = "file --no-dereference";
+    "tree" = "tree --dirsfirst --gitignore";
 
-    # Very basic system administration tools.
-    environment.systemPackages = with pkgs; [
-      curl
-      jq
-      moreutils
-      neovim
-      tree
-    ];
+    # See: https://github.com/NixOS/nix/issues/5858
+    "nix" = "nix --print-build-logs";
 
-    # Aliases that are burned into my muscle memory.
-    environment.shellAliases = {
-      "mv" = "mv -i";
-      "rm" = "rm -i";
-      "cp" = "cp -i";
-      "ls" = "ls -F -G -A --color=auto";
-      "grep" = "grep --color=auto";
-      "file" = "file --no-dereference";
-      "tree" = "tree --dirsfirst --gitignore";
-
-      # See: https://github.com/NixOS/nix/issues/5858
-      "nix" = "nix --print-build-logs";
-
-      ".." = "cd ../";
-      "..." = "cd ../../";
-      "...." = "cd ../../../";
-      "....." = "cd ../../../../";
-      "......" = "cd ../../../../../";
-      "......." = "cd ../../../../../../";
-      "........" = "cd ../../../../../../../";
-      "........." = "cd ../../../../../../../../";
-      ".........." = "cd ../../../../../../../../../";
-    };
-  }
-  (lib.mkIf pkgs.stdenv.isLinux {
-    # There is not nix-darwin equivalent to this NixOS option.
-    # The default shell on MacOS is already ZSH.
-    users.defaultUserShell = pkgs.zsh;
-  })
-]
+    ".." = "cd ../";
+    "..." = "cd ../../";
+    "...." = "cd ../../../";
+    "....." = "cd ../../../../";
+    "......" = "cd ../../../../../";
+    "......." = "cd ../../../../../../";
+    "........" = "cd ../../../../../../../";
+    "........." = "cd ../../../../../../../../";
+    ".........." = "cd ../../../../../../../../../";
+  };
+}
