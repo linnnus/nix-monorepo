@@ -1,5 +1,8 @@
 # This module sets common settings related to Nix such as enabling flakes and
 # using overlays everywhere.
+#
+# NOTE: This lives under `shared/nixos-and-darwin`. The configuration in here
+# should be compatible with both nixos and nix-darwin!!
 {
   pkgs,
   lib,
