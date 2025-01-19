@@ -6,7 +6,6 @@
 {
   imports = [
     ../../nixos-and-darwin/common-nix-settings
+    ./sandbox.nix
   ];
-
-  nix.settings.sandbox = "relaxed";
 }
