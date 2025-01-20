@@ -1,7 +1,7 @@
 # This module configures development tools for Python.
 {pkgs, ...}: {
   home.packages = with pkgs; [
-    (python311Full.withPackages (ps:
+    (python312Full.withPackages (ps:
       with ps; [
         virtualenv
         tkinter
