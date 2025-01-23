@@ -63,7 +63,7 @@ in {
         tmpdir="$(mktemp -d -t linus.onl-source.XXXXXXXXXXXX)"
         cd "$tmpdir"
         trap 'rm -rf $tmpdir' EXIT
-        git clone --depth=1 --branch=${mainBranch} https://github.com/linnnus/${domain} .
+        git clone --branch=${mainBranch} --filter=blob:none https://github.com/linnnus/${domain} .
         make _build
         rsync --archive --delete _build/ /var/www/${domain}
       '';
