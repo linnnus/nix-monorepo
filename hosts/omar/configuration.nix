@@ -51,6 +51,7 @@
     imports = [
       # I am planning on using this host when traveling.
       ../../shared/home-manager/development-full
+      ../../shared/home-manager/firefox
     ];
     home.stateVersion = "24.11";
   };
