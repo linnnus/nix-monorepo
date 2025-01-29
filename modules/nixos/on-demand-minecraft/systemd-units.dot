@@ -1,0 +1,26 @@
+// This file documents the interactions of the systemd units defined in `default.nix`.
+// It exists only to aid readers of the Nix code.
+// Make sure to keep the SVG file up to date by running `dot -Tsvg systemd-units.dot >systemd-units.svg`.
+
+digraph systemd_units {
+    label = "Systemd unit interactions";
+    labelloc = "t";
+
+    subgraph cluster_start {
+        label = "Starting up";
+
+        "minecraft-listen.socket"->"minecraft-listen.service" [color="green", label="Triggers the proxifier upon connection"];
+        "minecraft-listen.service"->"minecraft-hook.service" [color="green", label="Runs"];
+        "minecraft-hook.service"->"minecraft-server.service" [color="green", label="Starts"];
+    }
+
+    subgraph cluster_stop {
+        label = "Shutting down";
+
+        "minecraft-hook.service"->"minecraft-stop.timer" [color="green", label="Starts"];
+        "minecraft-stop.timer"->"minecraft-stop.service" [color="green", label="Runs every X seconds"];
+        "minecraft-stop.service"->"minecraft-server.service" [color="red", label="Stops if conditions are met"];
+        "minecraft-stop.service"->"minecraft-stop.timer" [color="red", label="Stops if conditions are met"];
+        "minecraft-stop.service"->"minecraft-hook.service" [color="red", label="Stops if conditions are met"];
+    }
+}
