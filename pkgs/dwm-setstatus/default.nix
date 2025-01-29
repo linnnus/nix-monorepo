@@ -8,7 +8,7 @@ stdenv.mkDerivation {
   version = "16-11-2024"; # Date of last change
 
   src = ./.;
-  nativeBuildInputs = [ libX11 ];
+  nativeBuildInputs = [libX11];
   buildPhase = ''
     cc dwm-setstatus.c -lX11 -o dwm-setstatus
   '';

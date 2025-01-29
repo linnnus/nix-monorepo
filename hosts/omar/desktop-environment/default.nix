@@ -1,5 +1,4 @@
 # This module configures a desktop environment specific to this host.
-
 {
   imports = [
     ./window-manager.nix

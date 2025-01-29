@@ -1,8 +1,5 @@
 # This module configures Firefox with all my plugins and such.
-
-{pkgs,...}:
-
-{
+{pkgs, ...}: {
   imports = [
     ./privacy.nix
   ];
