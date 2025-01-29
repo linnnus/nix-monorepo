@@ -398,7 +398,7 @@ in {
         message = "You must agree to Mojangs EULA to run minecraft-server. Read https://account.mojang.com/documents/minecraft_eula and set `services.minecraft-server.eula` to `true` if you agree.";
       }
       {
-        assertion = cfg.whitelist != {} -> cfg.server-properties."white-list";
+        assertion = cfg.whitelist != {} -> cfg.server-properties."white-list" or false;
         message = "If you set a `services.on-demand-minecraft.whitelist`, you must set `services.on-demand-minecraft.server-properties.\"white-list\" = true`";
       }
     ];
