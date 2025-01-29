@@ -64,6 +64,9 @@
     openFirewall = true;
     # Try shutting down every 10 minutes.
     frequency-check-players = "*-*-* *:00/10:00";
+
+    # Seed requested by Tobias.
+    server-properties."level-seed" = "1727502807";
   };
   services.cloudflare-dyndns.domains = ["minecraft.linus.onl"];
 
