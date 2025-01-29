@@ -133,8 +133,20 @@ in {
 
     jvm-options = mkOption {
       description = "JVM options for the Minecraft server. List of command line arguments.";
-      type = types.listOf lib.types.str;
+      type = with types; listOf str;
       default = ["-Xmx2048M" "-Xms2048M"];
+    };
+
+    data-dir = mkOption {
+      description = ''
+        Where to store game files.
+
+        Note that you may have to clear this directory when changing
+        `services.on-demand-minecraft.package`, as the servers may be confused
+        about files they don't understand.
+      '';
+      type = types.path;
+      default = "/var/lib/minecraft";
     };
   };
 
@@ -142,7 +154,7 @@ in {
     # Create a user to run the server under.
     users.users.minecrafter = {
       description = "On-demand minecraft server service user";
-      home = "/srv/minecrafter";
+      home = cfg.data-dir;
       createHome = true;
       group = "minecrafter";
       isSystemUser = true;
@@ -203,15 +215,11 @@ in {
             })
             cfg.whitelist));
 
-      # HACK: Each server is given its own subdirectory so
-      #       incompatibilities between servers don't cause complaints.
-      # FIXME: This hack will break everything when trying to upgrade servers.
       start-server = pkgs.writeShellScript "minecraft-server-start" ''
         # Switch to runtime directory.
-        export RUNTIME_DIR="${config.users.users.minecrafter.home}/${cfg.package.name}/"
-        ${pkgs.busybox}/bin/mkdir -p "$RUNTIME_DIR"
-        ${pkgs.busybox}/bin/chown minecrafter:minecrafter "$RUNTIME_DIR"
-        cd "$RUNTIME_DIR"
+        ${pkgs.busybox}/bin/mkdir -p "${cfg.data-dir}"
+        ${pkgs.busybox}/bin/chown minecrafter:minecrafter "${cfg.data-dir}"
+        cd "${cfg.data-dir}"
 
         # Set up/update environment for server
         ln -sf ${eula-file} eula.txt

@@ -67,6 +67,9 @@
 
     # Seed requested by Tobias.
     server-properties."level-seed" = "1727502807";
+
+    # I changed the default location after creating the world.
+    data-dir = "/srv/minecrafter/papermc-1.21.4-15";
   };
   services.cloudflare-dyndns.domains = ["minecraft.linus.onl"];
 
