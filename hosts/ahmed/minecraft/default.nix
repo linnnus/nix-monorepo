@@ -19,6 +19,21 @@
 
     # I changed the default location after creating the world.
     data-dir = "/srv/minecrafter/papermc-1.21.4-15";
+
+    # Whitelist generated with this command:
+    # ```sh
+    # journalctl --grep='UUID of' --unit=minecraft-server.service \
+    # 	| sed -E 's/.*UUID of player (.*) is (.*).*/"\1" = "\2";/p' -n \
+    # 	| sort -u
+    # ```
+    server-properties."white-list" = true;
+    whitelist = {
+      "BANANABARBARA" = "b3fa0532-e49c-4783-8ba4-e20082983d30";
+      "em_T" = "c52db3ea-9f8a-4e0f-af11-7ca56099dfb1";
+      "_SneakyPanda_" = "6f88ea4f-2f87-47c9-99dd-be16e68c9913";
+      "TobiKanob1" = "07931771-f2eb-4894-ac84-d3a121086d9f";
+      "Alfholm" = "6a0a1d3b-ad0f-4a73-8e0c-97782a380ff4";
+    };
   };
 
   # Update the DDNS.
