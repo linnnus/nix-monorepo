@@ -14,17 +14,19 @@
     # Try shutting down every 10 minutes.
     frequency-check-players = "*-*-* *:00/10:00";
 
-    # Seed requested by Tobias.
-    server-properties."level-seed" = "1727502807";
-
     # I changed the default location after creating the world.
     data-dir = "/srv/minecrafter/papermc-1.21.4-15";
+
+    # Gameplay settings.
+    server-properties.level-seed = "1727502807"; # Seed requested by Tobias.
+    server-properties.difficulty = "hard"; # Required for some game mechanic.
+    server-properties.allow-cheats = true;
 
     # Whitelist generated with this command:
     # ```sh
     # journalctl --grep='UUID of' --unit=minecraft-server.service \
-    # 	| sed -E 's/.*UUID of player (.*) is (.*).*/"\1" = "\2";/p' -n \
-    # 	| sort -u
+    #   | sed -E 's/.*UUID of player (.*) is (.*).*/"\1" = "\2";/p' -n \
+    #   | sort -u
     # ```
     server-properties."white-list" = true;
     whitelist = {
@@ -34,6 +36,21 @@
       "TobiKanob1" = "07931771-f2eb-4894-ac84-d3a121086d9f";
       "Alfholm" = "6a0a1d3b-ad0f-4a73-8e0c-97782a380ff4";
     };
+
+    ops = [
+      {
+        username = "BANANABARBARA";
+        uuid = "b3fa0532-e49c-4783-8ba4-e20082983d30";
+        level = 4;
+	# I always need to get on in case something is going wrong.
+        bypasses-player-limit = true;
+      }
+      {
+        username = "Alfholm";
+        uuid = "6a0a1d3b-ad0f-4a73-8e0c-97782a380ff4";
+        level = 2;
+      }
+    ];
   };
 
   # Update the DDNS.

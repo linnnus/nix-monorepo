@@ -8,6 +8,9 @@
 }: let
   inherit (lib) mkIf mkOption mkEnableOption types;
 
+  # Custom type for Minecraft UUIDs which are used to uniquely identify players.
+  minecraftUuid = lib.types.strMatching "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}" // {description = "Minecraft UUID";};
+
   cfg = config.services.on-demand-minecraft;
 in {
   options.services.on-demand-minecraft = {
@@ -113,15 +116,7 @@ in {
         `services.on-demand-minecraft.server-properties` by setting `white-list
         = true`.
       '';
-      type = with types; let
-        minecraftUuid =
-          strMatching
-          "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
-          // {
-            description = "Minecraft UUID";
-          };
-      in
-        attrsOf minecraftUuid;
+      type = with types; attrsOf minecraftUuid;
       example = lib.literalExpression ''
         {
           username1 = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
@@ -129,6 +124,56 @@ in {
         };
       '';
       default = {};
+    };
+
+    ops = mkOption {
+      description = ''
+        List of players with operator status.
+
+        See <https://minecraft.wiki/w/Ops.json> for a description of how ops work.
+      '';
+      type = with types; let
+        opsEntry = submodule {
+          options = {
+            username = mkOption {
+              description = "The player's username";
+              type = nonEmptyStr;
+            };
+
+            uuid = mkOption {
+              description = ''
+                The UUID associated with the player.
+
+                You can use <https://mcuuid.net/> to get a Minecraft UUID for a username.
+              '';
+              type = minecraftUuid;
+            };
+
+            level = mkOption {
+              description = ''
+                The permission level that this user should be given. There are 5 possible levels:
+
+                - Level 0: Everyone
+                - Level 1: Moderator
+                - Level 2: Gamemaster
+                - Level 3: Administrator
+                - Level 4: Owner
+
+                See <https://minecraft.wiki/w/Permission_level> for an explanation of user permission levels.
+              '';
+              type = ints.between 0 4;
+            };
+
+            bypasses-player-limit = mkOption {
+              description = "If true, the operator can join the server even if the player limit has been reached.";
+              type = bool;
+              default = false;
+            };
+          };
+        };
+      in
+        listOf opsEntry;
+      default = [];
     };
 
     jvm-options = mkOption {
@@ -217,6 +262,20 @@ in {
             })
             cfg.whitelist));
 
+      # Takes a mapping of old attribute name -> new attribute name and applies
+      # it to the given attribute set.
+      renameAttrs = mappings: attrset: lib.attrsets.mapAttrs' (name: value: lib.attrsets.nameValuePair (mappings.${name} or name) value) attrset;
+
+      ops-file =
+        pkgs.writeText "ops.json"
+        (builtins.toJSON (
+          map (renameAttrs {
+            "bypasses-player-limit" = "bypassesPlayerlimit";
+            "username" = "name";
+          })
+          cfg.ops
+        ));
+
       start-server = pkgs.writeShellScript "minecraft-server-start.sh" ''
         # Switch to runtime directory.
         ${pkgs.busybox}/bin/mkdir -p "${cfg.data-dir}"
@@ -226,6 +285,7 @@ in {
         # Set up/update environment for server
         ln -sf ${eula-file} eula.txt
         ln -sf ${whitelist-file} whitelist.json
+        ln -sf ${ops-file} ops.json
         cp -f ${server-properties-file} server.properties
         chmod u+w server.properties # Must be writable because server regenerates it.
 
