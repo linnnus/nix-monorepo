@@ -104,10 +104,10 @@
     flags = [
       # Update nixpkgs inputs to recieve security patches and such.
       # Since the updated lockfile isn't commited, we still have to bump manually also.
+      # We don't bump nixpkgs-unstable as it is mainly used for packages for which I need a specific version (e.g. PaperMC).
       "--update-input"
       "nixpkgs"
-      "--update-input"
-      "nixpkgs-unstable"
+      "--no-write-lock-file"
 
       # Print build logs.
       "-L"
