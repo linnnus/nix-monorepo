@@ -103,6 +103,34 @@ in {
       '';
     };
 
+    whitelist = mkOption {
+      description = ''
+        Whitelisted players. This is a mapping from Minecraft usernames to
+        UUIDs. You can use <https://mcuuid.net/> to get a Minecraft UUID for a
+        username.
+
+        Note, this option only has an effect when the whitelist is enabled via
+        `services.on-demand-minecraft.server-properties` by setting `white-list
+        = true`.
+      '';
+      type = with types; let
+        minecraftUuid =
+          strMatching
+          "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+          // {
+            description = "Minecraft UUID";
+          };
+      in
+        attrsOf minecraftUuid;
+      example = lib.literalExpression ''
+        {
+          username1 = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+          username2 = "yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy";
+        };
+      '';
+      default = {};
+    };
+
     jvm-options = mkOption {
       description = "JVM options for the Minecraft server. List of command line arguments.";
       type = types.listOf lib.types.str;
@@ -164,6 +192,17 @@ in {
         eula=true
       '';
 
+      # We always generate a (possibly empty) whitelist file. The server just
+      # won't use it, when the corresponding server property is disabled.
+      whitelist-file =
+        pkgs.writeText "whitelist.json"
+        (builtins.toJSON
+          (lib.mapAttrsToList (n: v: {
+              name = n;
+              uuid = v;
+            })
+            cfg.whitelist));
+
       # HACK: Each server is given its own subdirectory so
       #       incompatibilities between servers don't cause complaints.
       start-server = pkgs.writeShellScript "minecraft-server-start" ''
@@ -175,6 +214,7 @@ in {
 
         # Set up/update environment for server
         ln -sf ${eula-file} eula.txt
+        ln -sf ${whitelist-file} whitelist.json
         cp -f ${server-properties-file} server.properties
         chmod u+w server.properties # Must be writable because server regenerates it.
 
@@ -349,6 +389,10 @@ in {
       {
         assertion = cfg.eula;
         message = "You must agree to Mojangs EULA to run minecraft-server. Read https://account.mojang.com/documents/minecraft_eula and set `services.minecraft-server.eula` to `true` if you agree.";
+      }
+      {
+        assertion = cfg.whitelist != {} -> cfg.server-properties."white-list";
+        message = "If you set a `services.on-demand-minecraft.whitelist`, you must set `services.on-demand-minecraft.server-properties.\"white-list\" = true`";
       }
     ];
   };
