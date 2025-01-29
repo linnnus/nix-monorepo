@@ -60,7 +60,7 @@
   services.on-demand-minecraft = {
     enable = true;
     eula = true;
-    package = pkgs.papermc;
+    package = pkgs.unstable.papermc;
     openFirewall = true;
     # Try shutting down every 10 minutes.
     frequency-check-players = "*-*-* *:00/10:00";

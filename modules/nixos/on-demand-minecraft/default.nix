@@ -205,6 +205,7 @@ in {
 
       # HACK: Each server is given its own subdirectory so
       #       incompatibilities between servers don't cause complaints.
+      # FIXME: This hack will break everything when trying to upgrade servers.
       start-server = pkgs.writeShellScript "minecraft-server-start" ''
         # Switch to runtime directory.
         export RUNTIME_DIR="${config.users.users.minecrafter.home}/${cfg.package.name}/"
