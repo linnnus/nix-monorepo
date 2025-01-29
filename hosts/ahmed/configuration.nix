@@ -20,6 +20,9 @@
     ./ssh
     ./torrenting
     ./remote-builder
+    ./dyndns
+    ./minecraft
+    ./nginx
   ];
 
   # Create the main user.
@@ -55,50 +58,6 @@
     font = "sun12x22"; # This font is pretty readable on the cracked display.
     keyMap = "dk"; # This host has a Danish keyboard layout.
   };
-
-  # Set up Minecraft server.
-  services.on-demand-minecraft = {
-    enable = true;
-    eula = true;
-    package = pkgs.unstable.papermc;
-    openFirewall = true;
-    # Try shutting down every 10 minutes.
-    frequency-check-players = "*-*-* *:00/10:00";
-
-    # Seed requested by Tobias.
-    server-properties."level-seed" = "1727502807";
-
-    # I changed the default location after creating the world.
-    data-dir = "/srv/minecrafter/papermc-1.21.4-15";
-  };
-  services.cloudflare-dyndns.domains = ["minecraft.linus.onl"];
-
-  # Virtual hosts.
-  # Each module for a HTTP service will register a virtual host.
-  services.nginx.enable = true;
-
-  # Configure ACME. This is used by various HTTP services through the NGINX virtual hosts.
-  security.acme = {
-    acceptTerms = true;
-    defaults.email = "linusvejlo+${config.networking.hostName}-acme@gmail.com";
-  };
-
-  # Configure DDNS. The website for each module is responsible for extending
-  # `services.cloudflare-dyndns.domains` with its domain.
-  age.secrets.cloudflare-dyndns-api-token.file = ../../secrets/cloudflare-ddns-token.env.age;
-  services.cloudflare-dyndns = {
-    enable = true;
-    apiTokenFile = config.age.secrets.cloudflare-dyndns-api-token.path;
-    proxied = true;
-  };
-  # We also have to overwrite the dependencies of the DYNDNS client service to
-  # make sure we are *actually* online.
-  #
-  # See: https://www.freedesktop.org/wiki/Software/systemd/NetworkTarget
-  systemd.services.cloudflare-dyndns.after = ["network-online.target"];
-
-  # Listen for HTTP connections.
-  networking.firewall.allowedTCPPorts = [80 443];
 
   # Automatic upgrades
   system.autoUpgrade = {
