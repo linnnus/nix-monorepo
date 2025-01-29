@@ -151,6 +151,8 @@ in {
   };
 
   config = mkIf cfg.enable {
+    # TODO: We should contain all of this in a cgroup (a systemd slice?), which can be limited.
+
     # Create a user to run the server under.
     users.users.minecrafter = {
       description = "On-demand minecraft server service user";
@@ -215,7 +217,7 @@ in {
             })
             cfg.whitelist));
 
-      start-server = pkgs.writeShellScript "minecraft-server-start" ''
+      start-server = pkgs.writeShellScript "minecraft-server-start.sh" ''
         # Switch to runtime directory.
         ${pkgs.busybox}/bin/mkdir -p "${cfg.data-dir}"
         ${pkgs.busybox}/bin/chown minecrafter:minecrafter "${cfg.data-dir}"
@@ -230,7 +232,7 @@ in {
         exec ${cfg.package}/bin/minecraft-server "$@"
       '';
 
-      stop-server = pkgs.writeShellScript "minecraft-server-stop" ''
+      stop-server = pkgs.writeShellScript "minecraft-server-stop.sh" ''
         # Send the 'stop' command to the server. It listens for commands on stdin.
         echo stop > ${config.systemd.sockets.minecraft-server.socketConfig.ListenFIFO}
         # Wait for the PID of the minecraft server to disappear before
@@ -240,7 +242,6 @@ in {
         done
       '';
     in {
-      description = "Actually runs the Minecraft server";
       requires = ["minecraft-server.socket"];
       after = ["networking.target" "minecraft-server.socket"];
       wantedBy = []; # TEMP: Does this do anything?
@@ -293,14 +294,13 @@ in {
     # This service is triggered by a TCP connection on the public
     # port. It starts minecraft-hook.service if it is not running
     # already and waits for it to return (using `after`). Then it proxifies the TCP
-    # connection to the real (local) Minecraft port.
+    # connection to the real (internal) Minecraft port.
     systemd.services.minecraft-listen = {
       enable = true;
-      path = with pkgs; [systemd];
       requires = ["minecraft-hook.service" "minecraft-listen.socket"];
       after = ["minecraft-hook.service" "minecraft-listen.socket"];
       serviceConfig.ExecStart = ''
-        ${pkgs.systemd.out}/lib/systemd/systemd-socket-proxyd 127.0.0.1:${toString cfg.internal-port}
+        ${pkgs.systemd}/lib/systemd/systemd-socket-proxyd 127.0.0.1:${toString cfg.internal-port}
       '';
     };
 
@@ -310,18 +310,17 @@ in {
     systemd.services.minecraft-hook = {
       enable = true;
       # Add tools used by scripts to path.
-      path = with pkgs; [systemd libressl busybox];
       serviceConfig = let
         # Start the Minecraft server and the timer regularly
         # checking whether it should stop.
-        start-mc = pkgs.writeShellScriptBin "start-mc" ''
+        start-mc = pkgs.writeShellScript "start-mc.sh" ''
           echo "Starting server and stop-timer..."
-          systemctl start minecraft-server.service
-          systemctl start minecraft-stop.timer
+          ${pkgs.systemd}/bin/systemctl start minecraft-server.service \
+            minecraft-stop.timer
         '';
         # Wait for the internal port to be accessible for max.
         # 60 seconds before complaining.
-        wait-tcp = pkgs.writeShellScriptBin "wait-tcp" ''
+        wait-tcp = pkgs.writeShellScript "wait-tcp.sh" ''
           echo "Waiting for server to start listening on port ${toString cfg.internal-port}..."
           for i in `seq 60`; do
             if ${pkgs.netcat.nc}/bin/nc -z 127.0.0.1 ${toString cfg.internal-port} >/dev/null; then
@@ -335,8 +334,8 @@ in {
         '';
       in {
         # First we start the server, then we wait for it to become available.
-        ExecStart = "${start-mc}/bin/start-mc";
-        ExecStartPost = "${wait-tcp}/bin/wait-tcp";
+        ExecStart = "${start-mc}";
+        ExecStartPost = "${wait-tcp}";
       };
     };
 
@@ -346,7 +345,6 @@ in {
       enable = true;
       timerConfig = {
         OnCalendar = cfg.frequency-check-players;
-        #Unit = "minecraft-stop.service";
       };
     };
 
@@ -359,7 +357,7 @@ in {
       # NOTE: `pkgs.mcping` is declared my personal monorepo. Hopefully
       # everything just works out through the magic of flakes, but if you are
       # getting errors like "missing attribute 'mcping'" that's probably why.
-      no-player-connected = pkgs.writeShellScriptBin "no-player-connected" ''
+      no-player-connected = pkgs.writeShellScript "no-player-connected.sh" ''
         servicestartsec="$(date -d "$(systemctl show --property=ActiveEnterTimestamp minecraft-server.service | cut -d= -f2)" +%s)"
         serviceelapsedsec="$(( $(date +%s) - servicestartsec))"
 
@@ -380,11 +378,11 @@ in {
       enable = true;
       serviceConfig.Type = "oneshot";
       script = ''
-        if ${no-player-connected}/bin/no-player-connected; then
+        if ${no-player-connected}; then
           echo "Stopping minecraft server..."
-          systemctl stop minecraft-server.service
-          systemctl stop minecraft-hook.service
-          systemctl stop minecraft-stop.timer
+          ${pkgs.systemd}/bin/systemctl stop minecraft-server.service \
+            minecraft-hook.service \
+            minecraft-stop.timer
         fi
       '';
     };
