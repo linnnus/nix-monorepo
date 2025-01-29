@@ -282,8 +282,8 @@ in {
     };
 
     # This socket listens for connections on the public port and
-    # triggers `listen-minecraft.service` when a connection is made.
-    systemd.sockets.listen-minecraft = {
+    # triggers `minecraft-listen.service` when a connection is made.
+    systemd.sockets.minecraft-listen = {
       enable = true;
       wantedBy = ["sockets.target"];
       requires = ["network.target"];
@@ -291,23 +291,23 @@ in {
     };
 
     # This service is triggered by a TCP connection on the public
-    # port. It starts hook-minecraft.service if it is not running
+    # port. It starts minecraft-hook.service if it is not running
     # already and waits for it to return (using `after`). Then it proxifies the TCP
     # connection to the real (local) Minecraft port.
-    systemd.services.listen-minecraft = {
+    systemd.services.minecraft-listen = {
       enable = true;
       path = with pkgs; [systemd];
-      requires = ["hook-minecraft.service" "listen-minecraft.socket"];
-      after = ["hook-minecraft.service" "listen-minecraft.socket"];
+      requires = ["minecraft-hook.service" "minecraft-listen.socket"];
+      after = ["minecraft-hook.service" "minecraft-listen.socket"];
       serviceConfig.ExecStart = ''
         ${pkgs.systemd.out}/lib/systemd/systemd-socket-proxyd 127.0.0.1:${toString cfg.internal-port}
       '';
     };
 
     # This starts Minecraft if required and waits for it to be
-    # available over TCP to unlock the `listen-minecraft.service`
+    # available over TCP to unlock the `minecraft-listen.service`
     # proxy.
-    systemd.services.hook-minecraft = {
+    systemd.services.minecraft-hook = {
       enable = true;
       # Add tools used by scripts to path.
       path = with pkgs; [systemd libressl busybox];
@@ -317,7 +317,7 @@ in {
         start-mc = pkgs.writeShellScriptBin "start-mc" ''
           echo "Starting server and stop-timer..."
           systemctl start minecraft-server.service
-          systemctl start stop-minecraft.timer
+          systemctl start minecraft-stop.timer
         '';
         # Wait for the internal port to be accessible for max.
         # 60 seconds before complaining.
@@ -325,7 +325,7 @@ in {
           echo "Waiting for server to start listening on port ${toString cfg.internal-port}..."
           for i in `seq 60`; do
             if ${pkgs.netcat.nc}/bin/nc -z 127.0.0.1 ${toString cfg.internal-port} >/dev/null; then
-              echo "Yay! ${toString cfg.internal-port} is now available. hook-minecraft is finished."
+              echo "Yay! ${toString cfg.internal-port} is now available. minecraft-hook is finished."
               exit 0
             fi
             sleep 1
@@ -342,15 +342,15 @@ in {
 
     # This timer runs the service of the same name, that checks if
     # the server needs to be stopped.
-    systemd.timers.stop-minecraft = {
+    systemd.timers.minecraft-stop = {
       enable = true;
       timerConfig = {
         OnCalendar = cfg.frequency-check-players;
-        #Unit = "stop-minecraft.service";
+        #Unit = "minecraft-stop.service";
       };
     };
 
-    systemd.services.stop-minecraft = let
+    systemd.services.minecraft-stop = let
       # Script that returns true (exit code 0) if the server can be shut
       # down. It uses mcping to get the player list. It does not continue if
       # the server was started less than `minimum-server-lifetime` seconds
@@ -383,8 +383,8 @@ in {
         if ${no-player-connected}/bin/no-player-connected; then
           echo "Stopping minecraft server..."
           systemctl stop minecraft-server.service
-          systemctl stop hook-minecraft.service
-          systemctl stop stop-minecraft.timer
+          systemctl stop minecraft-hook.service
+          systemctl stop minecraft-stop.timer
         fi
       '';
     };
