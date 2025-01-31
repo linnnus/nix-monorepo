@@ -35,6 +35,7 @@
       "_SneakyPanda_" = "6f88ea4f-2f87-47c9-99dd-be16e68c9913";
       "TobiKanob1" = "07931771-f2eb-4894-ac84-d3a121086d9f";
       "Alfholm" = "6a0a1d3b-ad0f-4a73-8e0c-97782a380ff4";
+      "XenoDK" = "df3a7f06-5baf-4f56-b78f-bac8e7f28dec";
     };
 
     ops = [
