@@ -1,0 +1,7 @@
+/* Make special messages stand out */
+.error, .info { font-family: serif; font-style: italic; }
+.error { color: red; }
+.info { color: blue; }
+
+/* Make time lower visual priority */
+time { color: grey; }
