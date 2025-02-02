@@ -36,6 +36,8 @@
       "TobiKanob1" = "07931771-f2eb-4894-ac84-d3a121086d9f";
       "Alfholm" = "6a0a1d3b-ad0f-4a73-8e0c-97782a380ff4";
       "XenoDK" = "df3a7f06-5baf-4f56-b78f-bac8e7f28dec";
+      "xbx" = "59498ad4-f7c5-47cd-a63d-d3bd3712cb8a";
+      "Tablefl1pp" = "f2534fcd-93a6-4823-8fa9-9849575983af";
     };
 
     ops = [
@@ -43,7 +45,7 @@
         username = "BANANABARBARA";
         uuid = "b3fa0532-e49c-4783-8ba4-e20082983d30";
         level = 4;
-	# I always need to get on in case something is going wrong.
+        # I always need to get on in case something is going wrong.
         bypasses-player-limit = true;
       }
       {
