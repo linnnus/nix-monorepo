@@ -21,6 +21,7 @@
     server-properties.level-seed = "1727502807"; # Seed requested by Tobias.
     server-properties.difficulty = "hard"; # Required for some game mechanic.
     server-properties.allow-cheats = true;
+    server-properties.spawn-protection = 0; # Don't prevent building around spawn.
 
     # Whitelist generated with this command:
     # ```sh
@@ -51,6 +52,11 @@
       {
         username = "Alfholm";
         uuid = "6a0a1d3b-ad0f-4a73-8e0c-97782a380ff4";
+        level = 2;
+      }
+      {
+        username = "_SneakyPanda_";
+        uuid = "6f88ea4f-2f87-47c9-99dd-be16e68c9913";
         level = 2;
       }
     ];
