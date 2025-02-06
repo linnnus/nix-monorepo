@@ -85,7 +85,6 @@ def get_log_entries(units, last_event_id = None) -> t.Generator[Event, None, Non
             "/run/current-system/sw/bin/journalctl",
             # We want a stream
             "--follow",
-            "--lines=20",
             # A JSON line for each entry
             "--output=json",
             # Use UTC timestamps to avoid tricky timezone issues on the client
@@ -100,6 +99,10 @@ def get_log_entries(units, last_event_id = None) -> t.Generator[Event, None, Non
         # If this is such a connection, we can avoid including duplicate entries by
         # starting just after the given cursor.
         args.append("--after-cursor=" + last_event_id)
+    else:
+        # Otherwise this the user has just opened the page and we should give
+        # them a bit of context for the next lines that appear
+        args.append("--lines=200")
 
     try:
         process = subprocess.Popen(args, stdout=subprocess.PIPE)
