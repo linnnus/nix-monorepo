@@ -44,4 +44,9 @@ in {
 
     initExtra = concatStringsSep "\n" (catAttrs "config" plugins);
   };
+
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+  };
 }
