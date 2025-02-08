@@ -16,6 +16,7 @@ stdenv.mkDerivation rec {
 
   patches = [
     ./0001-print-usage-to-stderr.patch
+    ./0002-fix-sign-compare.patch
   ];
   buildPhase = ''
     cc -o mcping -Wall -Wextra mcping.c

@@ -1,0 +1,13 @@
+diff --git a/mcping.c b/mcping.c
+index 44333a5..99c26c8 100644
+--- a/mcping.c
++++ b/mcping.c
+@@ -279,7 +279,7 @@ int main(int argc, char **argv) {
+   freeaddrinfo(result);
+ 
+   len = build_handshake(handshake, argv[1], port);
+-  if (send(sfd, handshake, len, 0) != len) {
++  if (send(sfd, handshake, len, 0) != (ssize_t)len) {
+     fprintf(stderr, "Failed to send handshake\n");
+     return EXIT_FAILURE;
+   }
