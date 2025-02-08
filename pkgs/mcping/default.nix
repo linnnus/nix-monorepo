@@ -14,6 +14,9 @@ stdenv.mkDerivation rec {
     hash = "sha256-BVZOjOqptEbva6kmI0oYNmodbLuL0nxKdWn/+EZG91U=";
   };
 
+  patches = [
+    ./0001-print-usage-to-stderr.patch
+  ];
   buildPhase = ''
     cc -o mcping -Wall -Wextra mcping.c
   '';

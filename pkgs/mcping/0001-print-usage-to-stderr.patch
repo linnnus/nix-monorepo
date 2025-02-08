@@ -1,0 +1,15 @@
+diff --git a/mcping.c b/mcping.c
+index 44333a5..588cb10 100644
+--- a/mcping.c
++++ b/mcping.c
+@@ -188,8 +188,8 @@ int main(int argc, char **argv) {
+   char string[STRING_BUF_SIZE];
+ 
+   if (argc < 2) {
+-    printf("MC Ping 1.2.0, Minecraft Server List Ping tool.\n");
+-    printf("Usage: mcping <host> <port>\n");
++    fprintf(stderr, "MC Ping 1.2.0, Minecraft Server List Ping tool.\n");
++    fprintf(stderr, "Usage: mcping <host> <port>\n");
+     return EXIT_FAILURE;
+   }
+ 
