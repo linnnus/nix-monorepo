@@ -8,6 +8,9 @@
   config,
   ...
 }: let
+  # Enable HTTPS stuff.
+  useACME = true;
+
   socket-path = "/run/minecraft-log-server.sock";
 
   python = pkgs.python3.withPackages (ps:
@@ -67,6 +70,9 @@ in {
 
   services.nginx = {
     virtualHosts."minecraft.linus.onl" = {
+      enableACME = useACME;
+      forceSSL = useACME;
+
       # Let's be safe and pass-word protect it just in case the logs contain some sensitive data.
       basicAuthFile = ./.htpasswd;
 

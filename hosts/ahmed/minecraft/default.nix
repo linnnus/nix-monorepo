@@ -61,8 +61,4 @@
       }
     ];
   };
-
-  # Update the DDNS.
-  # This would be the "IP" we give to folks.
-  services.cloudflare-dyndns.domains = ["minecraft.linus.onl"];
 }
