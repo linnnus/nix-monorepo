@@ -10,6 +10,7 @@
     ../../shared/nixos-and-darwin/common-hm-settings
 
     ./remote-builders
+    ./update-git-repos
   ];
 
   # Avoid downloading the nixpkgs tarball every hour.
