@@ -30,7 +30,7 @@
 
       # Allow root login. This would normally be horrible but it's a local VM so who cares.
       users.users.root.password = "root";
-      services.openssh.permitRootLogin = "yes";
+      services.openssh.settings.PermitRootLogin = "yes";
     };
   };
 
