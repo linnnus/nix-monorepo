@@ -11,5 +11,6 @@
     ../noweb
     ../python
     ../rust
+    ../svelte
   ];
 }
