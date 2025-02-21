@@ -10,7 +10,6 @@
     ../../shared/nixos-and-darwin/common-hm-settings
 
     ./remote-builders
-    ./dev-vm
     ./update-git-repos
   ];
 
