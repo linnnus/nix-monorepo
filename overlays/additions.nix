@@ -32,6 +32,8 @@ final: prev: {
 
   dwm-setstatus = prev.callPackage ../pkgs/dwm-setstatus {};
 
+  beanstalkd-cli = prev.callPackage ../pkgs/beanstalkd-cli {};
+
   vimPlugins = prev.vimPlugins.extend (final': prev': {
     vim-crystal = prev.callPackage ../pkgs/vim-crystal {};
     vim-noweb = prev.callPackage ../pkgs/vim-noweb {};
