@@ -35,11 +35,6 @@ in {
             Hour = 23;
             Minute = 30;
           }
-          {Hour = 23;}
-          {
-            Hour = 23;
-            Minute = 30;
-          }
           {Hour = 00;}
           {
             Hour = 00;
