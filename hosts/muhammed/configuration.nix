@@ -32,6 +32,7 @@
       ../../shared/home-manager/qbittorrent
       ../../shared/home-manager/iterm2
       ./extra-utils.nix
+      ./syncthing.nix
     ];
   };
 
