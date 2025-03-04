@@ -31,11 +31,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1728231969,
-        "narHash": "sha256-ZFiWnntZeYv6gzoOX26EKOe9gkESWmHl9w6BYz/FYSE=",
+        "lastModified": 1741103656,
+        "narHash": "sha256-QT19uRX91KmlouNQ8OEbdLupmjZ0jjjCwpZQDH25Ed8=",
         "owner": "linnnus",
         "repo": "comma-zsh",
-        "rev": "e0df20c2ff02cc835879627264f6f0ff32eb7e23",
+        "rev": "dde3b9534928625f33b9520f97dac97ca05ed516",
         "type": "github"
       },
       "original": {
