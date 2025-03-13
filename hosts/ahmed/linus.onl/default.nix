@@ -71,8 +71,11 @@ in {
       # TODO: Harden service
 
       # Network must be online for us to check.
-      after = ["network-online.target"];
-      requires = ["network-online.target"];
+      # FIXME: This configuration still attempts to run without network/DNS/something, which fails and breaks automatic NixOS updrades.
+      # https://wiki.archlinux.org/title/Systemd#Running_services_after_the_network_is_up
+      # https://systemd.io/NETWORK_ONLINE/#discussion
+      after = ["network-online.target" "nss-lookup.target"];
+      wants = ["network-online.target" "nss-lookup.target"];
 
       # We must generate some files for NGINX to serve, so this should be run
       # before NGINX.
