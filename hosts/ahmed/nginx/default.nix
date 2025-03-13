@@ -15,4 +15,38 @@
 
   # Allow HTTP connections.
   networking.firewall.allowedTCPPorts = [80 443];
+
+  services.fail2ban = {
+    enable = true;
+
+    jails = {
+      "nginx-http-auth".settings = {
+        enabled = true;
+        port = "http,https";
+        filter = "nginx-http-auth";
+        logpath = "%(nginx_error_log)s";
+      };
+
+      "nginx-botsearch".settings = {
+        enabled = true;
+        port = "http,https";
+        filter = "nginx-botsearch";
+        logpath = "%(nginx_access_log)s";
+      };
+
+      "nginx-forbidden".settings = {
+        enabled = true;
+        port = "http,https";
+        filter = "nginx-forbidden";
+        logpath = "%(nginx_error_log)s";
+      };
+
+      "nginx-sslerror".settings = {
+        enabled = true;
+        port = "http,https";
+        filter = "nginx-bad-request";
+        logpath = "%(nginx_error_log)s";
+      };
+    };
+  };
 }
