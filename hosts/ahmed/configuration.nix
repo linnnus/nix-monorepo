@@ -22,7 +22,6 @@
     ./remote-builder
     ./dyndns
     ./minecraft
-    ./minecraft-log-server
     ./nginx
   ];
 
