@@ -1,5 +1,5 @@
 # This file contains an overlay which adds all the custom packages from `pkgs/`.
-final: prev: {
+final: prev: rec {
   duksebot = prev.callPackage ../pkgs/duksebot {};
 
   tcl-cmark = prev.callPackage ../pkgs/tcl-cmark {};
@@ -18,7 +18,7 @@ final: prev: {
 
   vemf-unwrapped = prev.callPackage ../pkgs/vemf-unwrapped {};
 
-  vemf = prev.callPackage ../pkgs/vemf {};
+  vemf = prev.callPackage ../pkgs/vemf {inherit vemf-unwrapped;};
 
   cscript = prev.callPackage ../pkgs/cscript {};
 
