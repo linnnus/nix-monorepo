@@ -40,6 +40,7 @@
       # host I have access to, so in practice I end up using it for development
       # sometimes.
       ../../shared/home-manager/development-minimal
+      ../../shared/home-manager/nix
     ];
   };
 
