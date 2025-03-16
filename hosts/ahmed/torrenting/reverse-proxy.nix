@@ -1,20 +1,8 @@
 # This module configures a reverse proxy for the various services that are
 # exposed to the internet.
-{
-  pkgs,
-  config,
-  lib,
-  ...
-}: let
-  baseDomain = "internal";
-  qbDomain = "qbittorrent.${baseDomain}";
-  jellyfinDomain = "jellyfin.${baseDomain}";
-
+{config, ...}: let
   # The internal port where qBittorrents web UI will be served.
   qbWebUiPort = 8082;
-
-  # Whether to use ACME/Letsencrypt to get free certificates.
-  useACME = true;
 in {
   services.qbittorrent = {
     openFirewall = false;
@@ -32,14 +20,14 @@ in {
 
   # Use NGINX as a reverse proxy.
   services.nginx = {
-    virtualHosts.${qbDomain} = {
+    virtualHosts."qbittorrent.${config.linus.local-dns.domain}" = {
       locations."/" = {
         proxyPass = "http://localhost:${toString qbWebUiPort}";
         recommendedProxySettings = true;
       };
     };
 
-    virtualHosts.${jellyfinDomain} = {
+    virtualHosts."jellyfin.${config.linus.local-dns.domain}" = {
       locations."/" = {
         # This is the "static port" of the HTTP web interface.
         #
@@ -62,5 +50,8 @@ in {
     };
   };
 
-  # See also `hosts/ahmed/dns/default.nix`.
+  linus.local-dns.subdomains = [
+    "qbittorrent"
+    "jellyfin"
+  ];
 }
