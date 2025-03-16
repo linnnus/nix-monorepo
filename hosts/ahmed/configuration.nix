@@ -23,6 +23,7 @@
     ./dyndns
     ./minecraft
     ./nginx
+    ./dns
   ];
 
   # Create the main user.
