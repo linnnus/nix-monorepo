@@ -21,6 +21,8 @@
       .internal:127.0.0.1:a
       =ahmed.internal:${metadata.hosts.ahmed.ipAddress}
       =muhammed.internal:${metadata.hosts.muhammed.ipAddress}
+      =jellyfin.internal:${metadata.hosts.ahmed.ipAddress}
+      =qbittorrent.internal:${metadata.hosts.ahmed.ipAddress}
     '';
   };
 

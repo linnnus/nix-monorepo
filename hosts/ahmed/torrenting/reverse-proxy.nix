@@ -6,8 +6,7 @@
   lib,
   ...
 }: let
-  baseDomain = "ulovlighacker.download";
-  wwwDomain = "www.${baseDomain}";
+  baseDomain = "internal";
   qbDomain = "qbittorrent.${baseDomain}";
   jellyfinDomain = "jellyfin.${baseDomain}";
 
@@ -31,33 +30,9 @@ in {
     };
   };
 
-  services.jellyfin.openFirewall = false;
-
   # Use NGINX as a reverse proxy.
   services.nginx = {
-    virtualHosts."${baseDomain}" = {
-      enableACME = useACME;
-      forceSSL = useACME;
-
-      serverAliases = [wwwDomain];
-
-      locations."/" = {
-        index = "index.html";
-        root = pkgs.runCommand "${baseDomain}-portal" {inherit qbDomain jellyfinDomain;} ''
-          mkdir $out
-
-          ${pkgs.xorg.lndir}/bin/lndir ${./portal} $out
-
-          rm $out/index.html
-          substituteAll ${./portal/index.html} $out/index.html
-        '';
-      };
-    };
-
     virtualHosts.${qbDomain} = {
-      enableACME = useACME;
-      forceSSL = useACME;
-
       locations."/" = {
         proxyPass = "http://localhost:${toString qbWebUiPort}";
         recommendedProxySettings = true;
@@ -65,9 +40,6 @@ in {
     };
 
     virtualHosts.${jellyfinDomain} = {
-      enableACME = useACME;
-      forceSSL = useACME;
-
       locations."/" = {
         # This is the "static port" of the HTTP web interface.
         #
@@ -75,14 +47,20 @@ in {
         proxyPass = "http://localhost:8096";
         recommendedProxySettings = true;
       };
+
+      # See: https://jellyfin.org/docs/general/networking/nginx
+      # See: https://nginx.org/en/docs/http/websocket.html
+      locations."/socket" = {
+        proxyPass = "http://localhost:8096";
+        recommendedProxySettings = true;
+        extraConfig = ''
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+        '';
+      };
     };
   };
 
-  # Register the domains with the DDNS client.
-  services.cloudflare-dyndns.domains = [
-    baseDomain
-    wwwDomain
-    qbDomain
-    jellyfinDomain
-  ];
+  # See also `hosts/ahmed/dns/default.nix`.
 }
