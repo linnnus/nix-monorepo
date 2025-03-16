@@ -19,8 +19,21 @@
     hash = "sha256-np054+g7rQDE3sr9U8Y/piAp89ldto3pN9K+KCNMoKk=";
   });
 
-  IPv4Whitelist = [metadata.hosts.muhammed.ipAddress];
-  IPv6Whitelist = [];
+  # Allow local IP addresses.
+  # See: https://en.wikipedia.org/wiki/Reserved_IP_addresses
+  IPv4Whitelist = [
+    "100.64.0.0/10 "
+    "10.0.0.0/8"
+    "127.0.0.0/8"
+    "172.16.0.0/12"
+    "192.0.0.0/24"
+    "192.168.0.0/16"
+    "198.18.0.0/15"
+  ];
+  IPv6Whitelist = [
+    "64:ff9b:1::/48 "
+    "fc00::/7"
+  ];
 in {
   config = {
     # Teach NGINX how to extract the proxied IP from proxied requests.
