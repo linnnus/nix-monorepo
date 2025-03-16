@@ -47,6 +47,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # /boot keeps filling up
+  boot.loader.systemd-boot.configurationLimit = 50;
+
   boot.tmp.cleanOnBoot = true;
 
   # The hostname should match the containing folder.
