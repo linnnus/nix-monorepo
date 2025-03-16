@@ -16,5 +16,8 @@
   # make sure we are *actually* online.
   #
   # See: https://www.freedesktop.org/wiki/Software/systemd/NetworkTarget
-  systemd.services.cloudflare-dyndns.after = ["network-online.target"];
+  systemd.services.cloudflare-dyndns = {
+    after = ["network-online.target"];
+    wants = ["network-online.target"];
+  };
 }
