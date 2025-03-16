@@ -41,11 +41,7 @@ in {
       locations."/socket" = {
         proxyPass = "http://localhost:8096";
         recommendedProxySettings = true;
-        extraConfig = ''
-          proxy_http_version 1.1;
-          proxy_set_header Upgrade $http_upgrade;
-          proxy_set_header Connection "upgrade";
-        '';
+        proxyWebsockets = true;
       };
     };
   };
