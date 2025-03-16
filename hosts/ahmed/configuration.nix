@@ -24,6 +24,7 @@
     ./minecraft
     ./nginx
     ./local-dns
+    ./vaultwarden
   ];
 
   # Create the main user.
