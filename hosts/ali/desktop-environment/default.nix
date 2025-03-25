@@ -1,6 +1,5 @@
 # This module configures a desktop environment specific to this host.
-{pkgs,...}:
-{
+{pkgs, ...}: {
   imports = [
     ./window-manager.nix
     ./input.nix
@@ -13,7 +12,6 @@
     # TODO: We should be able to add "intel" driver?
     videoDrivers = ["fbdev"];
   };
-
 
   # Enable sound.
   # hardware.pulseaudio.enable = true;
