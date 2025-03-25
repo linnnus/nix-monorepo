@@ -24,7 +24,7 @@ final: prev: rec {
 
   human-sleep = prev.callPackage ../pkgs/human-sleep {};
 
-  disable-sleep = prev.callPackage ../pkgs/disable-sleep {};
+  disable-sleep = prev.callPackage ../pkgs/disable-sleep {inherit human-sleep;};
 
   nowrap = prev.callPackage ../pkgs/nowrap {};
 
