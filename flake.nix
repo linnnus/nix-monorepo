@@ -111,7 +111,10 @@
     formatter =
       forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
 
-    packages = forAllSystems (system: let
+    # We have to use the `legacyPackages` output because it contains the
+    # package set `vimPackages` and `packages` must be an attribute set of
+    # derivations. Otherwise `flake check` complains (see: nix-community/fenix#60).
+    legacyPackages = forAllSystems (system: let
       pkgs = import nixpkgs {inherit system;};
     in
       import ./overlays/additions.nix pkgs pkgs);
