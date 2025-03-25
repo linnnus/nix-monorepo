@@ -5,7 +5,6 @@
   config,
   lib,
   pkgs,
-  metadata,
   ...
 }: let
   # TODO: What happens when these get out of date??? Huh??? You little pissbaby

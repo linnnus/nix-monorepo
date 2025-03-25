@@ -35,7 +35,8 @@ in {
       openssh.authorizedKeys.keys =
         map (key: "no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ${key}")
         [
-          metadata.hosts.muhammed.sshPubKey
+          # The user's own SSH key is used when the Git CLI connects to the server.
+          metadata.hosts.muhammed.sshKeys.linus
         ];
     };
     users.groups.git = {};

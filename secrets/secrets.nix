@@ -2,13 +2,24 @@
 # imported into the system cofniguration.
 let
   metadata = builtins.fromTOML (builtins.readFile ../metadata.toml);
-  ahmedKey = metadata.hosts.ahmed.sshPubKey;
-  muhammedKey = metadata.hosts.muhammed.sshPubKey;
+
+  # Keys used for editing secrets on interactive hosts.
+  interactiveKeys = [
+    metadata.hosts.ahmed.sshKeys.linus
+    metadata.hosts.muhammed.sshKeys.linus
+  ];
+
+  # These are the keys which are used when actually decoding the secrets as part of activation.
+  # On NixOS hosts this is the root user, and on nix-darwin hosts it's the user who installed nix-darwin.
+  decodingKeys = {
+    ahmed = metadata.hosts.ahmed.sshKeys.root;
+    muhammed = metadata.hosts.muhammed.linus;
+  };
 in {
-  "cloudflare-ddns-token.env.age".publicKeys = [muhammedKey ahmedKey];
-  "cloudflare-acme-token.env.age".publicKeys = [muhammedKey ahmedKey];
-  "duksebot.env.age".publicKeys = [muhammedKey ahmedKey];
-  "mullvad-wg.key.age".publicKeys = [muhammedKey ahmedKey];
-  "wraaath-sftp-password.txt.age".publicKeys = [muhammedKey ahmedKey];
-  "linus.onl-github-secret.txt.age".publicKeys = [muhammedKey ahmedKey];
+  "cloudflare-ddns-token.env.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
+  "cloudflare-acme-token.env.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
+  "duksebot.env.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
+  "mullvad-wg.key.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
+  "wraaath-sftp-password.txt.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
+  "linus.onl-github-secret.txt.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
 }

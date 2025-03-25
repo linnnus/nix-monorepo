@@ -11,7 +11,7 @@
 # See: hosts/ahmed/remote-builder/default.nix
 # FIXME: How to trust key ahead of time?
 {metadata, ...}: let
-  inherit (metadata.hosts.ahmed) ipAddress;
+  inherit (metadata.hosts.ahmed) ipv4Address;
 in {
   nix.buildMachines = [
     {
@@ -29,7 +29,7 @@ in {
   environment.etc."ssh/ssh_config.d/100-ahmed-builder.conf".text = ''
     Host ahmed-builder
       User remotebuilder
-      Hostname ${ipAddress}
+      Hostname ${ipv4Address}
       HostKeyAlias ahmed-builder
       # This matches `users.users.<builder>.authorizedKeys` on the server-side.
       # HACK: We should use a purpose-specific key.

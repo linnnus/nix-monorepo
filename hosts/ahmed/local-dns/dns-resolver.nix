@@ -32,7 +32,7 @@
 
     # Here we publish all the services we want.
     data = let
-      subdomainToARecord = subdomain: "=${subdomain}.${config.linus.local-dns.domain}:${metadata.hosts.ahmed.ipAddress}";
+      subdomainToARecord = subdomain: "=${subdomain}.${config.linus.local-dns.domain}:${metadata.hosts.ahmed.ipv4Address}";
       ARecords = lib.concatMapStringsSep "\n" subdomainToARecord config.linus.local-dns.subdomains;
     in ''
       # We are authoritative over ${config.linus.local-dns.domain}.
