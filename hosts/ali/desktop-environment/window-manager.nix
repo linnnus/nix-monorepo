@@ -1,7 +1,6 @@
 {pkgs, ...}: {
   services.xserver.windowManager.dwm.enable = true;
 
-  # FIXME: Deduplicate this with omar's config (noting the difference in BAT0 vs BAT1).
   # Show battery and clock in status bar. This is a background daemon which
   # updates the root window, which DWM uses for status.
   systemd.user.services.dwm-battery = {

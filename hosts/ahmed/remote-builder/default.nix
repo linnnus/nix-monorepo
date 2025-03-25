@@ -13,7 +13,6 @@
     # This is matched with the ssh config IdentityFile on the client-side.
     openssh.authorizedKeys.keys = [
       metadata.hosts.muhammed.sshPubKey
-      metadata.hosts.omar.sshPubKey
     ];
   };
   users.groups.remotebuilder = {};
