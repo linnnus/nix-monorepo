@@ -14,6 +14,7 @@
       # This is matched with the ssh config IdentityFile on the client-side.
       # TODO: Use root key!
       metadata.hosts.muhammed.sshKeys.linus
+      metadata.hosts.ali.sshKeys.root
     ];
   };
   users.groups.remotebuilder = {};
