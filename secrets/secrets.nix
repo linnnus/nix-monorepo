@@ -7,13 +7,15 @@ let
   interactiveKeys = [
     metadata.hosts.ahmed.sshKeys.linus
     metadata.hosts.muhammed.sshKeys.linus
+    metadata.hosts.ali.sshKeys.linus
   ];
 
   # These are the keys which are used when actually decoding the secrets as part of activation.
   # On NixOS hosts this is the root user, and on nix-darwin hosts it's the user who installed nix-darwin.
   decodingKeys = {
     ahmed = metadata.hosts.ahmed.sshKeys.root;
-    muhammed = metadata.hosts.muhammed.linus;
+    muhammed = metadata.hosts.muhammed.sshKeys.linus;
+    ali = metadata.hosts.ali.sshKeys.root;
   };
 in {
   "cloudflare-ddns-token.env.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;

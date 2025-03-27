@@ -17,6 +17,9 @@
     ./desktop-environment
   ];
 
+  # Should match containing folder.
+  networking.hostName = "ali";
+
   boot.loader.grub = {
     # Use the GRUB 2 boot loader.
     enable = true;
