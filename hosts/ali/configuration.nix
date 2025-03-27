@@ -15,6 +15,7 @@
 
     ./wireless-networking
     ./desktop-environment
+    ./remote-builders
   ];
 
   # Should match containing folder.
