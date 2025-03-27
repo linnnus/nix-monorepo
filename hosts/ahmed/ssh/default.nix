@@ -18,6 +18,9 @@
 
       # Identity used by Termios on iPhone.
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBPbGet0Mn5+HMeRBXeOkSYqGqbefFZ4kE9aYemyDp9D"
+
+      # Identity on USB stick brought to Japan.
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOh0Pdi/J9nZVrw8iMZut5rfV9dUYVuuGb+VPd5t8KVX"
     ];
   });
 }
