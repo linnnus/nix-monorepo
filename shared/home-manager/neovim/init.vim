@@ -107,11 +107,6 @@ nnoremap <S-Tab> <l
 vnoremap <Tab>   >gv
 vnoremap <S-Tab> <gv
 
-noremap! <C-j> <down>
-noremap! <C-k> <up>
-noremap! <C-h> <left>
-noremap! <C-l> <right>
-
 " Toggle showing 'listchars'
 nnoremap <silent> <leader>l :set list!<cr>
 
