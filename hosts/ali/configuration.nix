@@ -42,6 +42,7 @@
       ../../shared/home-manager/development-minimal
       ../../shared/home-manager/nix
       ../../shared/home-manager/C
+      ./extra-utils.nix
     ];
     home.stateVersion = "24.11";
   };
