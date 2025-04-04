@@ -21,9 +21,6 @@
       User remotebuilder
       Hostname ${metadata.hosts.ahmed.ipv4Address}
       HostKeyAlias ahmed-builder
-      # This matches `users.users.<builder>.authorizedKeys` on the server-side.
-      # HACK: We should use a purpose-specific key.
-      IdentityFile /Users/linus/.ssh/id_rsa
   '';
 
   # We have to trust ahmeds host key or the Nix daemon will fail to connect.
