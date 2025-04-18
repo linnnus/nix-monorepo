@@ -154,6 +154,11 @@ in {
           recommendedProxySettings = true;
           proxyPass = "http://unix:${config.services.webhook-listener.socket-path}:/";
         };
+
+        locations."/1bfb754b-ae23-42f5-9e3f-0f0cc0ed3c51/" = {
+          alias = "/srv/media/";
+          extraConfig = "autoindex on;";
+        };
       };
     };
   };
