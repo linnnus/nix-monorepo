@@ -1,7 +1,6 @@
 # This module adds ahmed as a remote builder for ali.
 # Note that ahmed is configured such that root@ali is allowed to connect to remotebuilder@ahmed.
 # TODO: Dedublicate with hosts/muhammed/remote-builders/ahmed-builder.nix
-
 {metadata, ...}: {
   nix.buildMachines = [
     {

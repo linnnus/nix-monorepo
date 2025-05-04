@@ -2,15 +2,16 @@
 {pkgs, ...}: let
   isLinux = pkgs.stdenv.isLinux;
 in {
-  home.packages = with pkgs; [
-    clang
-    clang-manpages
-    man-pages-posix
-    cscript
-  ]
-  ++ lib.optionals isLinux [
-    man-pages
-  ];
+  home.packages = with pkgs;
+    [
+      clang
+      clang-manpages
+      man-pages-posix
+      cscript
+    ]
+    ++ lib.optionals isLinux [
+      man-pages
+    ];
 
   programs.neovim.extraLuaConfig = ''
     require("lspconfig")["clangd"].setup({
