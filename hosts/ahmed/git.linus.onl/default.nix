@@ -37,6 +37,7 @@ in {
         [
           # The user's own SSH key is used when the Git CLI connects to the server.
           metadata.hosts.muhammed.sshKeys.linus
+          metadata.hosts.ali.sshKeys.linus
         ];
     };
     users.groups.git = {};
