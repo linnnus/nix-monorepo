@@ -85,6 +85,10 @@
     allowReboot = true;
   };
 
+  # Automatic garbage collection. The default value of running every night is
+  # probably a bit overkill, but this system has very little storage.
+  nix.gc.automatic = true;
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It's perfectly fine and recommended to leave
