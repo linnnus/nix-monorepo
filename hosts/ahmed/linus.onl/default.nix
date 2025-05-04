@@ -60,6 +60,7 @@ in {
       environment.TCLLIBPATH = "$TCLLIBPATH ${pkgs.tcl-cmark}/lib/tclcmark1.0";
       script = ''
         set -ex
+        until host github.com >/dev/null 2>&1; do sleep 1; done
         tmpdir="$(mktemp -d -t linus.onl-source.XXXXXXXXXXXX)"
         cd "$tmpdir"
         trap 'rm -rf $tmpdir' EXIT
