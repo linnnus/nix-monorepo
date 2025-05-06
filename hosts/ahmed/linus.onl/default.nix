@@ -59,13 +59,31 @@ in {
       ];
       environment.TCLLIBPATH = "$TCLLIBPATH ${pkgs.tcl-cmark}/lib/tclcmark1.0";
       script = ''
-        set -ex
-        until host github.com >/dev/null 2>&1; do sleep 1; done
+        # Wait for network to become available first. One would certainly think
+        # that setting `After=network-online.target` was enough but empirically
+        # that isn't the case. So here. Have this instead. Fucking shit shit.
+        max_tries=20
+        for ((i=0; i<max_tries; i++)); do
+          if host github.com >/dev/null 2>&1; then
+            break
+          else
+            sleep 2
+          fi
+        done
+        if [ $i -eq $max_tries ]; then
+          echo >&2 "WARNING: Can't connect to github.com! Trying anyways..."
+        fi
+
+        # Create a temporary directory to work in.
         tmpdir="$(mktemp -d -t linus.onl-source.XXXXXXXXXXXX)"
         cd "$tmpdir"
         trap 'rm -rf $tmpdir' EXIT
+
+        # Build the site
         git clone --branch=${mainBranch} --filter=blob:none https://github.com/linnnus/${domain} .
         make _build
+
+        # Copy to destination. Most will likely be unchanged.
         rsync --archive --delete _build/ /var/www/${domain}
       '';
 
@@ -77,11 +95,6 @@ in {
       # https://systemd.io/NETWORK_ONLINE/#discussion
       after = ["network-online.target" "nss-lookup.target"];
       wants = ["network-online.target" "nss-lookup.target"];
-
-      # We must generate some files for NGINX to serve, so this should be run
-      # before NGINX.
-      before = ["nginx.service"];
-      wantedBy = ["nginx.service"];
     };
 
     # This service will listen for webhook events from GitHub's API. Whenever
