@@ -25,6 +25,7 @@
     ./nginx
     ./local-dns
     ./vaultwarden
+    ./wireguard-vpn
   ];
 
   # Create the main user.

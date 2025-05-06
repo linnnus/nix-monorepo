@@ -5,7 +5,13 @@ network = "rumpenettet"
 ipv4Address = "192.168.68.222"
 
 [hosts.ahmed.sshKeys]
+linus = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKTV0NShiJXtHKtOk1kG28xvcSXww5LQTfCDued/Yog0 linus@ahmed"
 root = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOodiSwTcZcaZxqLyHjI2MGe1CpIBvIzzbjpXrwAyiYO root@ahmed"
+
+[hosts.ahmed.wireguard]
+pubkey = "OyVax+rmBHEJsN3DmLAMEczO9mHwFDNb+D16cAV6TzM=" # Matches ./secrets/wireguard-vpn-key.age
+port = 50000
+ipv4Address = "77.33.188.139" # This is technically dynamic. Should use DDNS.
 
 [hosts.muhammed]
 network = "rumpenettet"
