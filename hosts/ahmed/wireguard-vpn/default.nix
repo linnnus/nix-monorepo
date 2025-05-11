@@ -31,6 +31,11 @@ in {
         publicKey = metadata.hosts.muhammed.wireguard.pubkey;
         allowedIPs = ["10.100.0.2/32"];
       }
+      {
+        # iPhone
+        publicKey = "/BCjhCe68dSoORo9XQvGsUKOos/h1xu3LaAJoHvn/yw=";
+        allowedIPs = ["10.100.0.3/32"];
+      }
     ];
   };
 
