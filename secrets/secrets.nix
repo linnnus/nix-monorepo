@@ -24,5 +24,6 @@ in {
   "mullvad-wg.key.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
   "wraaath-sftp-password.txt.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
   "linus.onl-github-secret.txt.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
-  "wireguard-vpn-key.age".publicKeys = [decodingKeys.ahmed] ++ interactiveKeys;
+  "wireguard-keys/ahmed.age".publicKeys = [decodingKeys.ahmed] ++ interactiveKeys;
+  "wireguard-keys/muhammed.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
 }

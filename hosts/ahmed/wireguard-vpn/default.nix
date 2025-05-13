@@ -28,7 +28,7 @@ in {
     peers = [
       {
         # Muhammed
-        publicKey = "l0HoOpGEkyxG3dTsJ3+zNItD6bQEkzymGvcsMLFOdmA=";
+        publicKey = metadata.hosts.muhammed.wireguard.pubkey;
         allowedIPs = ["10.100.0.2/32"];
       }
     ];
@@ -39,7 +39,7 @@ in {
   networking.firewall.allowedUDPPorts = [metadata.hosts.ahmed.wireguard.port];
 
   # Get the private keys.
-  age.secrets.wireguard-vpn-key.file = ../../../secrets/wireguard-vpn-key.age;
+  age.secrets.wireguard-vpn-key.file = ../../../secrets/wireguard-keys/ahmed.age;
 
   # Forward packets from wireguard onto the LAN while also doing address translation.
   networking.nat = {
