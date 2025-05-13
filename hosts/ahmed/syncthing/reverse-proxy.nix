@@ -18,7 +18,7 @@
     insecureSkipHostcheck = true;
 
     user = "linus";
-    password = "$y$j9T$mLlnLvW2XHNH3xlL0Vlnr1$Aa1tc2/c0qAKkp/5yt0F7dBD8pSjzqwgAIL4bZ/sAa9";
+    password = "$2a$12$1OkFkWMKoWZbG2.aVcqHquo3lrP8ZC.hlMDQkdcIEX1uwAYjxEWUy";
   };
 
   linus.local-dns.subdomains = ["syncthing"];
