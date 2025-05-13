@@ -26,4 +26,6 @@ in {
   "wireguard-keys/muhammed.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
   "syncthing-keys/muhammed/key.pem.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
   "syncthing-keys/muhammed/cert.pem.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
+  "syncthing-keys/ahmed/key.pem.age".publicKeys = [decodingKeys.ahmed] ++ interactiveKeys;
+  "syncthing-keys/ahmed/cert.pem.age".publicKeys = [decodingKeys.ahmed] ++ interactiveKeys;
 }

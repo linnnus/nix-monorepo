@@ -23,18 +23,21 @@
     key = config.age.secrets.syncthing-key.path;
     cert = config.age.secrets.syncthing-cert.path;
 
+    openDefaultPorts = true;
+
     settings = {
       folders = {
         "ebooks" = {
           lable = "Ebooks";
           path = "~/Documents/Synced ebooks";
           copyOwnershipFromParent = true;
-          devices = ["boox-tablet"];
+          devices = ["ahmed" "boox-tablet"];
         };
       };
 
       devices = {
         boox-tablet.id = "SFQMOCB-TPRTXLD-WDL3REL-2XINQDR-3PZQ5IT-KX4PGXX-2VJO3JZ-2K2XNQ3";
+        ahmed.id = "5ESNFDE-D7UZTFN-GNZ56QP-CY3TUCN-OJSNFCN-UVKVLQR-UTIJZ4W-2ZDVCQG";
       };
     };
   };

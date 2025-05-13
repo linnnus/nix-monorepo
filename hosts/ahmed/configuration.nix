@@ -26,6 +26,7 @@
     ./local-dns
     ./vaultwarden
     ./wireguard-vpn
+    ./syncthing
   ];
 
   # Create the main user.
