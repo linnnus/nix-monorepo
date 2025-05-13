@@ -11,6 +11,7 @@
 
     ./remote-builders
     ./update-git-repos
+    ./wireguard
   ];
 
   # Avoid downloading the nixpkgs tarball every hour.
