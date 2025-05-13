@@ -1,4 +1,8 @@
-{...}: {
+{
+  config,
+  flakeInputs,
+  ...
+}: {
   # Until nix-community/home-manager@45c07fc becomes part of the channel we're
   # following, I've just manually included it here. When that time comes, the
   # module should be removed.
@@ -7,11 +11,17 @@
       url = "https://github.com/nix-community/home-manager.git";
       rev = "45c07fcf7d28b5fb3ee189c260dee0a2e4d14317";
     };
-  in ["${home-manager'}/modules/services/syncthing.nix"];
+  in [
+    "${home-manager'}/modules/services/syncthing.nix"
+    flakeInputs.agenix.homeManagerModules.age
+  ];
   disabledModules = ["services/syncthing.nix"];
 
   services.syncthing = {
     enable = true;
+
+    key = config.age.secrets.syncthing-key.path;
+    cert = config.age.secrets.syncthing-cert.path;
 
     settings = {
       folders = {
@@ -28,4 +38,9 @@
       };
     };
   };
+
+  # We store the keys as part of the configuration since the device id is based
+  # on the key and we don't want that to change.
+  age.secrets.syncthing-key.file = ../../secrets/syncthing-keys/muhammed/key.pem.age;
+  age.secrets.syncthing-cert.file = ../../secrets/syncthing-keys/muhammed/cert.pem.age;
 }
