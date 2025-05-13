@@ -20,9 +20,7 @@ let
 in {
   "cloudflare-ddns-token.env.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
   "cloudflare-acme-token.env.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
-  "duksebot.env.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
   "mullvad-wg.key.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
-  "wraaath-sftp-password.txt.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
   "linus.onl-github-secret.txt.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
   "wireguard-keys/ahmed.age".publicKeys = [decodingKeys.ahmed] ++ interactiveKeys;
   "wireguard-keys/muhammed.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
