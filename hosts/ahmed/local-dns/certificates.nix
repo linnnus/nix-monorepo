@@ -24,6 +24,31 @@
       dnsPropagationCheck = true;
       domain = "*.${config.linus.local-dns.domain}";
 
+      # To avoid the following cyclical ordering, we want this certificate to
+      # be under a different account, as defined by the account hash (which
+      # includes email).
+      #
+      # 1. `nginx.service` is ordered before `acme-rumpenettet.linus.onl.service`
+      #    because NGINX hard crashes when certificates are missing.
+      # 2. `acme-rumpenettet.linus.onl.service` ordered before
+      #    `acme-account-….target` because it is part of the account and not the
+      #    chosen group leader.
+      # 3. `acme-account-….target` is ordered after
+      #    `acme-git.linus.onl.service` because it is the group leader.
+      # 4. `nginx.service` is ordered before `acme-*.service` because it has to
+      #    be online for the challenge to work.
+      #
+      # So the issue ony arises because we have a DNS-01 certificate and a
+      # HTTP-01 certificate linked (ordering whise) by the account target. And
+      # those different types of certificates are ordered before/after NGINX
+      # respectively.
+      #
+      # We break the cycle by making the DNS certificate part of a different
+      # account. In the future, a more elegant solution might be to use the
+      # same selfsigned trick that NGINX already uses for certificates with
+      # HTTP-01 validation.
+      email = "linusvejlo+${config.networking.hostName}-acme-dns@gmail.com";
+
       group = config.services.nginx.group;
       reloadServices = ["nginx"];
     };

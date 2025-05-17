@@ -10,6 +10,7 @@
   # Configure ACME. This is used by various HTTP services through the NGINX virtual hosts.
   security.acme = {
     acceptTerms = true;
+    # NOTE: The certificate in `local-dns/certficates.nix` uses a different email!
     defaults.email = "linusvejlo+${config.networking.hostName}-acme@gmail.com";
   };
 
