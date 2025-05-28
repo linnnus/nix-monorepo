@@ -25,7 +25,7 @@ in {
 
     plugins = map (p: removeAttrs p ["config"]) plugins;
 
-    initExtra = ''
+    initContent = ''
       # Set up external editing by pressing '!' in normal mode.
       autoload -z edit-command-line
       zle -N edit-command-line

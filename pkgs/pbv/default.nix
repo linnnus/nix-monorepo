@@ -18,7 +18,6 @@ swiftPackages.stdenv.mkDerivation {
   buildInputs = [
     swiftPackages.swift
     xcbuild
-    swiftPackages.apple_sdk.frameworks.Cocoa
   ];
 
   installPhase = ''

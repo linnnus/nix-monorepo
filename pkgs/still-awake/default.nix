@@ -1,10 +1,10 @@
 {
   stdenv,
-  pypy3,
+  python3,
   lib,
 }: let
   # Needs python interpreter with tkinter support.
-  python3' = pypy3;
+  python3' = python3.withPackages (ps: [ps.tkinter]);
 in
   stdenv.mkDerivation {
     pname = "still-awake";

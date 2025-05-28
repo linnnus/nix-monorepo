@@ -42,7 +42,7 @@ in {
   programs.zsh = {
     plugins = map (p: removeAttrs p ["config"]) plugins;
 
-    initExtra = concatStringsSep "\n" (catAttrs "config" plugins);
+    initContent = concatStringsSep "\n" (catAttrs "config" plugins);
   };
 
   programs.direnv = {

@@ -23,8 +23,6 @@
     key = config.age.secrets.syncthing-key.path;
     cert = config.age.secrets.syncthing-cert.path;
 
-    openDefaultPorts = true;
-
     settings = {
       folders = {
         "ebooks" = {

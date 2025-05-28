@@ -2,7 +2,8 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
     unstable.deno
-    unstable.nodejs_latest
+    nodejs_latest
+    yarn
   ];
 
   programs.neovim.extraLuaConfig = ''

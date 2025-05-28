@@ -53,7 +53,7 @@ in {
       "/Library/Preferences/com.googlecode.iterm2.plist".text = toPlist {} cfg.config;
     };
 
-    programs.zsh.initExtra = mkIf cfg.shellIntegration.enableZshIntegration ''
+    programs.zsh.initContent = mkIf cfg.shellIntegration.enableZshIntegration ''
       # Added by home-manager because programs.iterm2.enableZshIntegration == true.
       source "${cfg.package}"/Applications/iTerm2.app/Contents/Resources/iterm2_shell_integration.zsh
     '';

@@ -18,9 +18,6 @@
   # See: https://cohost.org/fullmoon/post/1728807-nix-s-tarball-ttl-op
   nix.settings.tarball-ttl = 604800;
 
-  # Use the Nix daemon.
-  services.nix-daemon.enable = true;
-
   # Set up main account.
   users.users.linus = {
     description = "Personal user account";
@@ -42,7 +39,7 @@
 
   # Let's use fingerprint to authenticate sudo. Very useful as an indicator of
   # when darwin-rebuild is finished...
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   # Don't request password for running pmset.
   environment.etc."sudoers.d/10-unauthenticated-commands".text = let

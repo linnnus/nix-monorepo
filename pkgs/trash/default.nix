@@ -17,9 +17,6 @@ stdenv.mkDerivation rec {
   };
   patches = [./trash-dont-hardcode-arch.patch];
   buildInputs = [
-    darwin.apple_sdk.frameworks.Cocoa
-    darwin.apple_sdk.frameworks.AppKit
-    darwin.apple_sdk.frameworks.ScriptingBridge
     perl538Packages.podlators
   ];
 

@@ -12,7 +12,7 @@
     dotDir = ".config/zsh";
     history.path = config.xdg.cacheHome + "/zsh/history";
 
-    initExtra = ''
+    initContent = ''
       set -o PROMPTSUBST
       if [ -v NVIM -o -v VIM ]; then
         # smol prompt
