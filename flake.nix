@@ -48,9 +48,11 @@
     ...
   } @ inputs: let
     args = {
+      metadata = nixpkgs.lib.importTOML ./metadata.toml;
+    };
+    specialArgs = {
       flakeInputs = inputs;
       flakeOutputs = self.outputs;
-      metadata = nixpkgs.lib.importTOML ./metadata.toml;
     };
 
     # This is a function that generates an attribute by calling a function
@@ -67,7 +69,7 @@
   in {
     darwinConfigurations = {
       muhammed = nix-darwin.lib.darwinSystem {
-        inherit inputs;
+        inherit inputs specialArgs;
         system = "aarch64-darwin";
         modules =
           [
@@ -82,6 +84,7 @@
 
     nixosConfigurations = {
       ahmed = nixpkgs.lib.nixosSystem {
+	inherit specialArgs;
         system = "x86_64-linux";
         modules =
           [
@@ -95,6 +98,7 @@
           ++ builtins.attrValues (import ./modules/nixos);
       };
       ali = nixpkgs.lib.nixosSystem {
+	inherit specialArgs;
         system = "x86_64-linux";
         modules =
           [
