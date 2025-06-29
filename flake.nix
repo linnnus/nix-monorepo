@@ -35,6 +35,10 @@
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    dark-notify = {
+      url = "github:linnnus/dark-notify";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -45,6 +49,7 @@
     agenix,
     push-notification-api,
     webhook-listener,
+    dark-notify,
     ...
   } @ inputs: let
     args = {

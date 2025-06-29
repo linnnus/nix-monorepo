@@ -44,6 +44,26 @@
         "type": "github"
       }
     },
+    "dark-notify": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1751187424,
+        "narHash": "sha256-Qx27vNQOfdyFv3Ow+ey4tUJDHtcrx/9/y83r2zYKcQc=",
+        "owner": "linnnus",
+        "repo": "dark-notify",
+        "rev": "0159b4784601a52bb5f073372b52afe467fca291",
+        "type": "github"
+      },
+      "original": {
+        "owner": "linnnus",
+        "repo": "dark-notify",
+        "type": "github"
+      }
+    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -265,6 +285,7 @@
       "inputs": {
         "agenix": "agenix",
         "comma": "comma",
+        "dark-notify": "dark-notify",
         "home-manager": "home-manager_2",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",

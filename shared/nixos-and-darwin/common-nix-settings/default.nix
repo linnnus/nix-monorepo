@@ -24,6 +24,7 @@
 
     # Add NUR packages
     flakeInputs.nur.overlays.default
+    flakeInputs.dark-notify.overlays.default
   ];
 
   # I'm not *that* vegan.
