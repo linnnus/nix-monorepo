@@ -29,6 +29,7 @@
       ../../shared/home-manager/development-full
       ../../shared/home-manager/qbittorrent
       ../../shared/home-manager/iterm2
+      ../../shared/home-manager/anki
       ./extra-utils.nix
       ./syncthing.nix
     ];
