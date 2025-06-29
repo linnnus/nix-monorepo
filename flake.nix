@@ -71,6 +71,7 @@
       "x86_64-darwin"
     ];
     forAllSystems = nixpkgs.lib.genAttrs systems;
+    forAllPkgs = f: forAllSystems (system: f nixpkgs.legacyPackages.${system});
   in {
     darwinConfigurations = {
       muhammed = nix-darwin.lib.darwinSystem {
@@ -118,15 +119,12 @@
 
     # Formatter to be run when `nix fmt` is executed.
     formatter =
-      forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+      forAllPkgs (pkgs: pkgs.writeShellScriptBin "format" "${pkgs.alejandra}/bin/alejandra .");
 
     # We have to use the `legacyPackages` output because it contains the
     # package set `vimPackages` and `packages` must be an attribute set of
     # derivations. Otherwise `flake check` complains (see: nix-community/fenix#60).
-    legacyPackages = forAllSystems (system: let
-      pkgs = import nixpkgs {inherit system;};
-    in
-      import ./overlays/additions.nix pkgs pkgs);
+    legacyPackages = forAllPkgs (pkgs: import ./overlays/additions.nix pkgs pkgs);
 
     overlays = {
       additions = import ./overlays/additions.nix;
