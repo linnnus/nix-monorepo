@@ -3,7 +3,9 @@
     serviceConfig = {
       ProgramArguments = let
         script = pkgs.writeShellScript "update-git-repos" ''
-          printf '\x1b[1m=> Starting %s\x1b[0m\n' "$(basename "$0")"
+          printf '\x1b[1m=> Syncing repos\x1b[0m\n'
+          (cd ~/Source/nix ; gh repo sync linnnus/nix)
+          printf '\x1b[1m=> Fetching repos\x1b[0m\n'
           find ~/Source ~/Projects -name '*.git' -print0 | while read -d $'\0' -r repo; do
             printf '\x1b[1m=> Updating %s\x1b[0m\n' "$repo"
             git -C "$repo" fetch --all
