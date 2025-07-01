@@ -8,30 +8,12 @@
 # If you do not have a linux builder available when switching to this
 # configuration, you should start by commenting out all custom configuration of
 # the VM and building that first.
-{...}: {
+{
   # User must be trusted in order to use the Linux builder.
   nix.settings.trusted-users = ["linus"];
 
   nix.linux-builder = {
     enable = true;
-
-    # Clearing the VM state upon startup should improve reliability at the cost
-    # of some startup speed. Will have to re-evaluate if this trade off is
-    # worth it at some point.
-    ephemeral = true;
-
-    config = {pkgs, ...}: {
-      environment.systemPackages = with pkgs; [
-        # cntr is used to jump into the sandbox of packages that use breakpointHook.
-        cntr
-      ];
-
-      nix.enable = true;
-
-      # Allow root login. This would normally be horrible but it's a local VM so who cares.
-      users.users.root.password = "root";
-      services.openssh.settings.PermitRootLogin = "yes";
-    };
   };
 
   # Add system-features to the nix daemon that are needed for NixOS tests
