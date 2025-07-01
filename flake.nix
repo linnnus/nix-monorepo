@@ -90,7 +90,7 @@
 
     nixosConfigurations = {
       ahmed = nixpkgs.lib.nixosSystem {
-	inherit specialArgs;
+        inherit specialArgs;
         system = "x86_64-linux";
         modules =
           [
@@ -104,7 +104,7 @@
           ++ builtins.attrValues (import ./modules/nixos);
       };
       ali = nixpkgs.lib.nixosSystem {
-	inherit specialArgs;
+        inherit specialArgs;
         system = "x86_64-linux";
         modules =
           [
