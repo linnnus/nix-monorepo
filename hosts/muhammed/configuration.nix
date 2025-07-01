@@ -63,4 +63,5 @@
   # System-specific version info.
   home-manager.users.linus.home.stateVersion = "22.05";
   system.stateVersion = 4;
+  ids.gids.nixbld = 350; # Issue when upgrading to Sequoia.
 }
