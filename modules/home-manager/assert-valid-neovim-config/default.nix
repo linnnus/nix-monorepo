@@ -19,15 +19,15 @@
       passAsFile = ["luaConfig"];
       luaConfig = config.programs.neovim.generatedConfigs.lua;
     } ''
-      # Print listing to give context to error messages when viewing logs (as
-      # suggested by the assertion's message).
-      nl -b a $luaConfigPath
-
       # `luac` compiles Lua to bytecode, but we can ask it to only parse the input file with `-p`.
       # Result is exported via import-from-derivation.
       if ${pkgs.lua}/bin/luac -p -- $luaConfigPath; then
         echo true >$out
       else
+        # Print listing to give context to error messages when viewing logs (as
+        # suggested by the assertion's message).
+        nl -b a $luaConfigPath
+
         echo false >$out
       fi
     '';
