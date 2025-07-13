@@ -18,10 +18,10 @@ let
     ali = metadata.hosts.ali.sshKeys.root;
   };
 in {
-  "cloudflare-ddns-token.env.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
-  "cloudflare-acme-token.env.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
-  "mullvad-wg.key.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
-  "linus.onl-github-secret.txt.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
+  "cloudflare-ddns-token.env.age".publicKeys = [decodingKeys.ahmed] ++ interactiveKeys;
+  "cloudflare-acme-token.env.age".publicKeys = [decodingKeys.ahmed] ++ interactiveKeys;
+  "mullvad-wg.key.age".publicKeys = [decodingKeys.muhammed decodingKeys.ahmed] ++ interactiveKeys;
+  "linus.onl-github-secret.txt.age".publicKeys = [decodingKeys.ahmed] ++ interactiveKeys;
   "wireguard-keys/ahmed.age".publicKeys = [decodingKeys.ahmed] ++ interactiveKeys;
   "wireguard-keys/muhammed.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
   "syncthing-keys/muhammed/key.pem.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
