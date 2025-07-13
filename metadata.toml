@@ -1,5 +1,9 @@
 # This file specifies metadata for each host.
 
+[domains]
+personal = "ibsenware.org"
+personal_alt = "ulovlighacker.download"
+
 [hosts.ahmed]
 network = "rumpenettet"
 ipv4Address = "192.168.68.222"

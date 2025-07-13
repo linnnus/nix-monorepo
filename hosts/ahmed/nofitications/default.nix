@@ -1,4 +1,6 @@
-{...}: let
+{metadata, ...}: let
+  domain = "notifications.${metadata.domains.personal}";
+
   # Enable HTTPS stuff.
   useACME = true;
 in {
@@ -9,10 +11,10 @@ in {
     };
 
     # Register domain name.
-    services.cloudflare-dyndns.domains = ["notifications.linus.onl"];
+    services.cloudflare-dyndns.domains = [domain];
 
     # Use NGINX as reverse proxy.
-    services.nginx.virtualHosts."notifications.linus.onl" = {
+    services.nginx.virtualHosts.${domain} = {
       enableACME = useACME;
       forceSSL = useACME;
       locations."/" = {

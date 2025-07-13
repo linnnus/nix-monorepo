@@ -13,10 +13,10 @@
     ../../shared/nixos/common-shell-settings
     ../../shared/nixos-and-darwin/common-hm-settings
 
-    ./git.linus.onl
-    ./hellohtml.linus.onl
-    ./linus.onl
-    ./nofitications.linus.onl
+    ./git
+    ./hellohtml
+    ./blog
+    ./nofitications
     ./ssh
     ./torrenting
     ./remote-builder

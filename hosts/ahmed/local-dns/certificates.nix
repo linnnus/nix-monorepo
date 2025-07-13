@@ -1,11 +1,11 @@
 # Getting HTTPS to work for local domains is pretty hard. The approach I've
-# gone with is to request a wildcard domain for `*.rumpenettet.linus.onl`. We
-# can do this because `linus.onl` is a public domain which we have control
+# gone with is to request a wildcard domain for `*.rumpenettet.ibsenware.org`. We
+# can do this because `ibsenware.org` is a public domain which we have control
 # over.
 #
 # This module requests a certificate from letsencrypt using DNS-01
 # verification. I have an API token which can modify DNS records for
-# `linus.onl`. This is how Lego (i.e. `security.acme`) proves domain ownership
+# `ibsenware.org`. This is how Lego (i.e. `security.acme`) proves domain ownership
 # when renewing the certificate.
 #
 # Any services running under `rumpenettet.local.onl` and use this certificate.
@@ -28,13 +28,13 @@
       # be under a different account, as defined by the account hash (which
       # includes email).
       #
-      # 1. `nginx.service` is ordered before `acme-rumpenettet.linus.onl.service`
+      # 1. `nginx.service` is ordered before `acme-rumpenettet.ibsenware.org.service`
       #    because NGINX hard crashes when certificates are missing.
-      # 2. `acme-rumpenettet.linus.onl.service` ordered before
+      # 2. `acme-rumpenettet.ibsenware.org.service` ordered before
       #    `acme-account-….target` because it is part of the account and not the
       #    chosen group leader.
       # 3. `acme-account-….target` is ordered after
-      #    `acme-git.linus.onl.service` because it is the group leader.
+      #    `acme-git.ibsenware.org.service` because it is the group leader.
       # 4. `nginx.service` is ordered before `acme-*.service` because it has to
       #    be online for the challenge to work.
       #

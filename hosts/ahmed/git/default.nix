@@ -5,6 +5,8 @@
   lib,
   ...
 }: let
+  domain = "git.${metadata.domains.personal}";
+
   git-shell = "${pkgs.gitMinimal}/bin/git-shell";
 
   # Enables HTTPS stuff.
@@ -55,7 +57,7 @@ in {
     '';
 
     # Public git viewer.
-    services.cgit."git.linus.onl" = {
+    services.cgit.${domain} = {
       enable = true;
 
       # This CGit instance and the fcgiwrap instance coupled to this CGit
@@ -67,7 +69,7 @@ in {
 
       scanPath = location;
       settings = let
-        package = config.services.cgit."git.linus.onl".package;
+        package = config.services.cgit.${domain}.package;
       in {
         root-title = "Linus' public projects";
         root-desc = "hello yes this is the git server";
@@ -88,16 +90,14 @@ in {
     };
 
     # Register domain name.
-    services.cloudflare-dyndns.domains = ["git.linus.onl"];
+    services.cloudflare-dyndns.domains = [domain];
 
-    # The CGit service creates the virtual host, but it does not enable ACME.
-    services.nginx.virtualHosts."git.linus.onl" = {
+    services.nginx.virtualHosts.${domain} = {
+      # The CGit service creates the virtual host, but it does not enable ACME.
       enableACME = useACME;
       forceSSL = useACME;
-    };
 
-    # Monkey-patch the version of Git used by CGit to handle requests.
-    services.nginx.virtualHosts."git.linus.onl" = {
+      # Monkey-patch the version of Git used by CGit to handle requests.
       locations."~ /.+/(info/refs|git-upload-pack)".fastcgiParams = {
         SCRIPT_FILENAME = lib.mkForce "${pkgs.git.overrideAttrs (old: {
           patches =

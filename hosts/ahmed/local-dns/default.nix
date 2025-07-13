@@ -5,7 +5,11 @@
 # - dns-resolver.nix: Make local domains visible to devices
 #
 # See the files for more info on how each part works.
-{lib, ...}: {
+{
+  lib,
+  metadata,
+  ...
+}: {
   imports = [
     ./certificates.nix
     ./dns-resolver.nix
@@ -36,6 +40,6 @@
   };
 
   config = {
-    linus.local-dns.domain = "rumpenettet.linus.onl";
+    linus.local-dns.domain = "rumpenettet.${metadata.domains.personal}";
   };
 }

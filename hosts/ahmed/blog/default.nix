@@ -2,10 +2,11 @@
   pkgs,
   lib,
   config,
+  metadata,
   ...
 }: let
-  # The domain to serve. Also kinda embedded in the name of the module??
-  domain = "linus.onl";
+  # The domain to serve.
+  domain = metadata.domains.personal;
 
   # Enable HTTPS stuff.
   useACME = true;
@@ -75,12 +76,12 @@ in {
         fi
 
         # Create a temporary directory to work in.
-        tmpdir="$(mktemp -d -t linus.onl-source.XXXXXXXXXXXX)"
+        tmpdir="$(mktemp -d -t ${domain}-source.XXXXXXXXXXXX)"
         cd "$tmpdir"
         trap 'rm -rf $tmpdir' EXIT
 
         # Build the site
-        git clone --branch=${mainBranch} --filter=blob:none https://github.com/linnnus/${domain} .
+        git clone --branch=${mainBranch} --filter=blob:none https://github.com/linnnus/blog .
         make _build
 
         # Copy to destination. Most will likely be unchanged.
@@ -126,12 +127,12 @@ in {
 
       max-idle-time = "10min";
 
-      secret-path = config.age.secrets."linus.onl-github-secret".path;
+      secret-path = config.age.secrets.blog-github-secret.path;
     };
 
     # We have shared a secret with GitHub, which we use to verify requests. Here we decrypt that secret.
-    age.secrets."linus.onl-github-secret" = {
-      file = ../../../secrets/linus.onl-github-secret.txt.age;
+    age.secrets.blog-github-secret = {
+      file = ../../../secrets/blog-github-secret.txt.age;
 
       owner = config.services.webhook-listener.user;
       group = config.services.webhook-listener.group;
@@ -162,7 +163,7 @@ in {
         forceSSL = useACME;
         root = "/var/www/${domain}";
 
-        # I have pointed the GitHub webhook requests at <https://linus.onl/webhook>.
+        # I have pointed the GitHub webhook requests at <https://ibsenware.org/webhook>.
         # These should be forwarded to `/` on the listening socket server.
         locations."= /webhook" = {
           recommendedProxySettings = true;
