@@ -4,6 +4,9 @@
     unstable.deno
     nodejs_latest
     yarn
+
+    # Needed for react-native development
+    cocoapods
   ];
 
   programs.neovim.extraLuaConfig = ''
