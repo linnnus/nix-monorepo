@@ -1,6 +1,6 @@
 # This module configures a WireGuard for qBittorrent to use.
 {config, ...}: let
-  wgInterface = "wg0";
+  wgInterface = "wgtorr";
   wgPort = 51820;
 in {
   # TODO: Use Peer as DNS server: https://arc.net/l/quote/axlprdca

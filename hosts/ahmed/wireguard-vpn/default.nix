@@ -8,7 +8,7 @@
   metadata,
   ...
 }: let
-  wireguardInterface = "wg1"; # wg0 is used for torrenting.
+  wireguardInterface = "wgvpn"; # wg0 is used for torrenting.
 
   externalInterface = "enp0s31f6";
 in {
