@@ -60,6 +60,8 @@
     interval = {Hour = 3;};
   };
 
+  age.identityPaths = ["${config.users.users.linus.home}/.ssh/id_rsa"];
+
   # System-specific version info.
   home-manager.users.linus.home.stateVersion = "22.05";
   system.stateVersion = 4;
