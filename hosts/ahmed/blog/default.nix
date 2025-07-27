@@ -57,6 +57,7 @@ in {
         coreutils-full
         tcl-8_5
         gnumake
+        host
       ];
       environment.TCLLIBPATH = "$TCLLIBPATH ${pkgs.tcl-cmark}/lib/tclcmark1.0";
       script = ''
