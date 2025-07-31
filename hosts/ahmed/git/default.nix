@@ -69,11 +69,13 @@ in {
 
       scanPath = location;
       settings = let
-        package = config.services.cgit.${domain}.package;
+        cgit-config = config.services.cgit.${domain};
+        package = cgit-config.package;
+        location = cgit-config.nginx.location;
       in {
         root-title = "Linus' public projects";
         root-desc = "hello yes this is the git server";
-        root-readme = toString ./about.html;
+        root-readme = toString ./about.md;
 
         # Specify where to look for readme files. The initial colon makes CGit
         # query the default branch instead of assuming the repo has a worktree.
@@ -90,6 +92,19 @@ in {
           ":readme.txt"
         ];
 
+        # Render about and readme files as Markdown.
+        about-filter = "${package}/lib/cgit/filters/about-formatting.sh";
+
+        # No robots, please! Though I doubt the LLM crawlers will respect this.
+        robots = "noindex, nofollow";
+
+        clone-prefix = "${
+          if useACME
+          then "https"
+          else "http"
+        }://${domain}${lib.removeSuffix "/" location}";
+
+        # Add syntax highlighting to source files.
         source-filter = "${package}/lib/cgit/filters/syntax-highlighting.py";
       };
     };
