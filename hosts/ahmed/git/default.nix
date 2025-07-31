@@ -75,18 +75,23 @@ in {
         root-desc = "hello yes this is the git server";
         root-readme = toString ./about.html;
 
+        # Specify where to look for readme files. The initial colon makes CGit
+        # query the default branch instead of assuming the repo has a worktree.
+        readme = [
+          ":README"
+          ":README.md"
+          ":README.rst"
+          ":README.text"
+          ":README.txt"
+          ":readme"
+          ":readme.md"
+          ":readme.rst"
+          ":readme.text"
+          ":readme.txt"
+        ];
+
         source-filter = "${package}/lib/cgit/filters/syntax-highlighting.py";
       };
-      extraConfig = ''
-        readme=:README.md
-        readme=:README.rst
-        readme=:README.text
-        readme=:README.txt
-        readme=:readme.md
-        readme=:readme.rst
-        readme=:readme.text
-        readme=:readme.txt
-      '';
     };
 
     # Register domain name.
