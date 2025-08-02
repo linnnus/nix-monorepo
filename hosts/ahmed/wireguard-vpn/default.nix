@@ -36,6 +36,11 @@ in {
         publicKey = "/BCjhCe68dSoORo9XQvGsUKOos/h1xu3LaAJoHvn/yw=";
         allowedIPs = ["10.100.0.3/32"];
       }
+      {
+        # Ali
+        publicKey = metadata.hosts.ali.wireguard.pubkey;
+        allowedIPs = ["10.100.0.4/32"];
+      }
     ];
   };
 

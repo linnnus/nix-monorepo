@@ -24,6 +24,7 @@ in {
   "blog-github-secret.txt.age".publicKeys = [decodingKeys.ahmed] ++ interactiveKeys;
   "wireguard-keys/ahmed.age".publicKeys = [decodingKeys.ahmed] ++ interactiveKeys;
   "wireguard-keys/muhammed.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
+  "wireguard-keys/ali.age".publicKeys = [decodingKeys.ali] ++ interactiveKeys;
   "syncthing-keys/muhammed/key.pem.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
   "syncthing-keys/muhammed/cert.pem.age".publicKeys = [decodingKeys.muhammed] ++ interactiveKeys;
   "syncthing-keys/ahmed/key.pem.age".publicKeys = [decodingKeys.ahmed] ++ interactiveKeys;

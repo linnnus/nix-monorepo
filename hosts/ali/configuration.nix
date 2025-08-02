@@ -16,6 +16,7 @@
     ./wireless-networking
     ./desktop-environment
     ./remote-builders
+    ./wireguard
   ];
 
   # Should match containing folder.
@@ -46,6 +47,8 @@
     ];
     home.stateVersion = "24.11";
   };
+
+  age.identityPaths = ["/etc/ssh/host_ed25519_key"];
 
   system.stateVersion = "24.11";
 }
