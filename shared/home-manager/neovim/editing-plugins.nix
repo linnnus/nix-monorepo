@@ -28,11 +28,21 @@
           map T <Plug>Sneak_T
         '';
       }
+      {
+        plugin = pkgs.vimPlugins.vim-easy-align;
+      }
     ]
     ++ lib.optionals (pkgs.stdenv.isDarwin) [
       {
         plugin = pkgs.vimPlugins.dark-notify;
-        type = "lua";
+        type = "viml";
+        config = ''
+          " Start interactive EasyAlign in visual mode (e.g. vipga)
+          xmap ga <Plug>(EasyAlign)
+
+          " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+          nmap ga <Plug>(EasyAlign)
+        '';
       }
     ];
 }
