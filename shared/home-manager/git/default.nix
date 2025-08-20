@@ -7,7 +7,6 @@
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
 in {
   imports = [
-    ./ignore.nix
     ./aliases.nix
   ];
 
@@ -41,4 +40,6 @@ in {
     # Add the GitHub CLI for authentication.
     gh
   ];
+
+  xdg.configFile."git/ignore".source = ./ignore;
 }
