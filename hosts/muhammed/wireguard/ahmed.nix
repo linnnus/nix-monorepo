@@ -3,7 +3,7 @@
   config,
   ...
 }: {
-  networking.wg-quick.interfaces.wg0 = {
+  networking.wg-quick.interfaces."rumpenettet" = {
     # Use the address assigned for us in `hosts/ahmed/wireguard-vpn/default.nix`.
     address = ["10.100.0.2"];
 
@@ -11,6 +11,11 @@
     dns = ["10.100.0.1" "1.1.1.1"];
 
     privateKeyFile = config.age.secrets.wireguard-key.path;
+
+    # We only want to use this when we are away from home. However when we *do*
+    # use it, it should be the default route.
+    autostart = false;
+    table = "auto";
 
     peers = [
       (let
@@ -22,8 +27,6 @@
         persistentKeepalive = 5; # We are a roaming client, they are static.
       })
     ];
-
-    # table = "off";
   };
 
   age.secrets.wireguard-key.file = ../../../secrets/wireguard-keys/muhammed.age;
