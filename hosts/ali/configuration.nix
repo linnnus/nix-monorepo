@@ -15,6 +15,7 @@
 
     ./desktop-environment
     ./remote-builders
+    ./wireless-networking
     ./wireguard
   ];
 

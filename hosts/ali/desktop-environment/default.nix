@@ -3,6 +3,7 @@
   imports = [
     ./graphical-utils.nix
     ./input.nix
+    ./desktop-manager.nix
   ];
 
   # Enable the X11 windowing system.
