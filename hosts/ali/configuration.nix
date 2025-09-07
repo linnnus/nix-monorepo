@@ -13,7 +13,6 @@
     ../../shared/nixos-and-darwin/common-hm-settings
     ../../shared/nixos/danish
 
-    ./wireless-networking
     ./desktop-environment
     ./remote-builders
     ./wireguard

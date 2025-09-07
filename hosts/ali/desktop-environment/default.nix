@@ -1,7 +1,7 @@
 # This module configures a desktop environment specific to this host.
-{pkgs, ...}: {
+{
   imports = [
-    ./window-manager.nix
+    ./graphical-utils.nix
     ./input.nix
   ];
 
