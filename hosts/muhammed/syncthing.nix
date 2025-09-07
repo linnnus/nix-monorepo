@@ -27,7 +27,10 @@
       folders = {
         "ebooks" = {
           lable = "Ebooks";
-          path = "~/Documents/Synced ebooks";
+          # This should be outside one of the protected folders (i.e.
+          # Documents, Pictures, etc.), as these require additional permissions
+          # than just u=r+w.
+          path = "~/Sync/ebooks";
           copyOwnershipFromParent = true;
           devices = ["ahmed" "boox-tablet"];
         };
@@ -44,4 +47,11 @@
   # on the key and we don't want that to change.
   age.secrets.syncthing-key.file = ../../secrets/syncthing-keys/muhammed/key.pem.age;
   age.secrets.syncthing-cert.file = ../../secrets/syncthing-keys/muhammed/cert.pem.age;
+
+  # Override the launchd service created by the HMs syncthing module to save logs.
+  # We can't write to /var/logs as this is a user agent running has non-root user.
+  launchd.agents.syncthing.config = rec {
+    StandardOutPath = "/tmp/syncthing.log";
+    StandardErrorPath = StandardOutPath;
+  };
 }
