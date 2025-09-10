@@ -18,7 +18,7 @@
       DisableFirefoxScreenshots = true;
     };
 
-    profiles."default".extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+    profiles."default".extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
       # Block ads & tracking
       ublock-origin
       # Automatically reject cookies

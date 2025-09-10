@@ -11,7 +11,7 @@
       settings."extensions.autoDisableScopes" = 0;
       settings."extensions.enabledScopes" = 15;
 
-      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+      extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
         # Avoid accidental doom-scrolling
         news-feed-eradicator
         # Automatically redirect to old.reddit instead of the redesign.
