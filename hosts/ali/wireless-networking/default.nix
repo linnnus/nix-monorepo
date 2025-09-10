@@ -1,7 +1,10 @@
 # This module configures wireless networking using NetworkManager.
 {
-  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;
+  # Enable wireless networking via NetworkManager.
+  networking = {
+    networkmanager.enable = true;
+    wireless.enable = false;
+  };
 
   users.users."linus".extraGroups = ["networkmanager"];
 }
