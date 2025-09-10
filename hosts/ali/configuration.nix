@@ -22,6 +22,8 @@
   # Should match containing folder.
   networking.hostName = "ali";
 
+  time.timeZone = "Europe/Copenhagen";
+
   boot.loader.grub = {
     # Use the GRUB 2 boot loader.
     enable = true;
