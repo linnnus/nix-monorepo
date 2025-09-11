@@ -1,5 +1,6 @@
 # This file contains the configuration for my Macbook Pro.
 {
+  config,
   pkgs,
   lib,
   ...
@@ -30,6 +31,7 @@
       ../../shared/home-manager/qbittorrent
       ../../shared/home-manager/iterm2
       ../../shared/home-manager/anki
+      ../../shared/home-manager/tagstudio
       ./extra-utils.nix
       ./syncthing.nix
     ];

@@ -39,4 +39,6 @@ final: prev: rec {
     vim-noweb = prev.callPackage ../pkgs/vim-noweb {};
     vim-janet = prev.callPackage ../pkgs/vim-janet {};
   });
+
+  tagstudio-bin = prev.callPackage ../pkgs/tagstudio-bin {};
 }

@@ -16,6 +16,12 @@
       #   TabStyleWithAutomaticOption = 5;
       # };
 
+      # TEMP: Until iTerm2 3.5.14 is stable.
+      # There's a bug where Neovim doesn't handle resizes properly. It's fixed in iTerm2 3.5.14.
+      # See: https://github.com/NixOS/nixpkgs/pull/441992
+      # See: https://github.com/neovim/neovim/issues/3309
+      package = pkgs.unstable.iterm2;
+
       shellIntegration.enableZshIntegration = true;
     };
   };
