@@ -35,5 +35,8 @@ ipv4Address = "192.168.68.173"
 root = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHAINiNBU5XTF7E/ErI/xF9S/t350OR3sOIYhRhfAhZ2 root@ali"
 linus = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMmjaik3g25rPFs1QD/Ig/tobACwHCDxkabc8x69yBZz linus@ali"
 
+[hosts.ali.wireguard]
+pubkey = "8kdSk5kBGcCzIe6wKxcumYLOv5SzOUYjf7w59FnLYU4="
+
 [networks.rumpenettet]
 v4 = "192.168.68.0"
