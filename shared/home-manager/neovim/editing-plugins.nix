@@ -31,6 +31,9 @@
       {
         plugin = pkgs.vimPlugins.vim-easy-align;
       }
+      {
+        plugin = pkgs.vimPlugins.vim-surround;
+      }
     ]
     ++ lib.optionals (pkgs.stdenv.isDarwin) [
       {
