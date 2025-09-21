@@ -30,6 +30,11 @@
       }
       {
         plugin = pkgs.vimPlugins.vim-easy-align;
+        type = "viml";
+        config = ''
+          " Align the backslashes in multiline C-macros
+          let g:easy_align_delimiters = { '\': { 'pattern': '\\$' } }
+        '';
       }
       {
         plugin = pkgs.vimPlugins.vim-surround;

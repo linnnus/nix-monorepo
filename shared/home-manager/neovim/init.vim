@@ -137,6 +137,11 @@ endif
 " for LSP configuration.
 autocmd Filetype help nnoremap <buffer> gd <C-]>
 
+" Use n/p to navicate clist
+nnoremap <leader>n <cmd>cnext<cr>
+nnoremap <leader>p <cmd>cprev<cr>
+
+
 " Commands
 """""""""""""""""""""""""""
 
@@ -260,6 +265,17 @@ augroup Sus
 	au InsertEnter * call s:RemoveSyntax()
 	au InsertLeave * call s:AddSyntax()
 augroup END
+
+" Help in inspecting syntax
+function! SynStack ()
+    for i1 in synstack(line("."), col("."))
+        let i2 = synIDtrans(i1)
+        let n1 = synIDattr(i1, "name")
+        let n2 = synIDattr(i2, "name")
+        echo n1 "->" n2
+    endfor
+endfunction
+map gm <CMD>call SynStack()<CR>
 
 " Allow for quick prototyping outside of NixOS/Home-Manager by loading some
 " extra configuration if relevant.
