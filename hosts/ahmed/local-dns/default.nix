@@ -13,6 +13,7 @@
   imports = [
     ./certificates.nix
     ./dns-resolver.nix
+    ./reverse-proxy.nix
   ];
 
   options = {
