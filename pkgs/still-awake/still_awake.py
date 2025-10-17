@@ -2,6 +2,7 @@ from tkinter import *
 from typing import *
 from os import system
 from time import asctime, localtime
+from subprocess import Popen, PIPE
 
 def position(root: Tk):
     """
@@ -51,7 +52,34 @@ def dont_sleep(root: Tk):
     print("User is still awake. Ending application without shutdown.")
     root.destroy()
 
+# For some reason, when the tkinter application opens, it doesn't move focus to
+# the space (virtual desktop) in which it opens. That's especially annoying
+# when the current space is the fake virtual space used for fullscreen
+# applications.
+#
+# To compensate for this, we can just move to the very first space in the list.
+# This works by using a keyboard shortcut which the user may/may not have
+# enabled. I think it's enabled by default. At least it's enabled on my
+# computer.
+#
+# I really, really hate this. Obviously this should just be rewritten as a
+# SwiftUI application.
+def leftmost_space_hack():
+    ascript = '''
+    tell application "System Events"
+        -- key code 123 is left arrow
+        -- key code 124 is right arrow
+        repeat 10 times
+            key code 123 using {control down}
+        end repeat
+    end tell
+    '''
+    osa = Popen(['osascript', '-'], stdin=PIPE, stdout=PIPE)
+    return osa.communicate(bytes(ascript,'UTF-8'))[0]
+
 def main():
+    leftmost_space_hack()
+
     root = Tk()
     root.title("Still awake?")
     root.attributes("-topmost", True)
