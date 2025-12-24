@@ -39,6 +39,10 @@
       url = "github:linnnus/dark-notify";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    mtg-higher-lower = {
+      url = "git+https://git.ibsenware.org/mtg-higher-lower.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {

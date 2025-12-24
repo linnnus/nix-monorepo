@@ -27,6 +27,7 @@
     ./vaultwarden
     ./wireguard-vpn
     ./syncthing
+    ./mtg-higher-lower
   ];
 
   # Create the main user.

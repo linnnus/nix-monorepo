@@ -185,6 +185,26 @@
         "type": "github"
       }
     },
+    "mtg-higher-lower": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1766596088,
+        "narHash": "sha256-ZH9gZEXO5wMyLB2Kn6x4R92DQcf1ROkyWG5CZLSW+bE=",
+        "ref": "refs/heads/master",
+        "rev": "be1fde856374feefba51fdcc09f601dd371db4e3",
+        "revCount": 8,
+        "type": "git",
+        "url": "https://git.ibsenware.org/mtg-higher-lower.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.ibsenware.org/mtg-higher-lower.git"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -286,6 +306,7 @@
         "comma": "comma",
         "dark-notify": "dark-notify",
         "home-manager": "home-manager_2",
+        "mtg-higher-lower": "mtg-higher-lower",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
