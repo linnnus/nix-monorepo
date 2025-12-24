@@ -192,11 +192,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1766596088,
-        "narHash": "sha256-ZH9gZEXO5wMyLB2Kn6x4R92DQcf1ROkyWG5CZLSW+bE=",
+        "lastModified": 1766597746,
+        "narHash": "sha256-pHSqX9D7CmwfWeu3hRGFvSRknmq/EyZm2GacjLyFYpI=",
         "ref": "refs/heads/master",
-        "rev": "be1fde856374feefba51fdcc09f601dd371db4e3",
-        "revCount": 8,
+        "rev": "09c1400de523a2e10537770b2bac40da3e04fe1c",
+        "revCount": 10,
         "type": "git",
         "url": "https://git.ibsenware.org/mtg-higher-lower.git"
       },
