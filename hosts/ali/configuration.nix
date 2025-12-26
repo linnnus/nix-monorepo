@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: {
+{flakeInputs, ...}: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -13,11 +8,20 @@
     ../../shared/nixos-and-darwin/common-hm-settings
     ../../shared/nixos/danish
 
-    ./desktop-environment
     ./remote-builders
     ./wireless-networking
     ./wireguard
   ];
+
+  # The desktop environment is a bit heavy for this machine so it is placed in
+  # a specialisation that can be selected at boot time.
+  specialisation = {
+    desktop-environment.configuration = {
+      imports = [
+        ./desktop-environment
+      ];
+    };
+  };
 
   # Should match containing folder.
   networking.hostName = "ali";
@@ -45,7 +49,6 @@
       ../../shared/home-manager/development-minimal
       ../../shared/home-manager/nix
       ../../shared/home-manager/C
-      ../../shared/home-manager/firefox
       ./extra-utils.nix
     ];
     home.stateVersion = "24.11";

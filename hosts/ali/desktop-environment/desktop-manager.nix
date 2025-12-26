@@ -7,4 +7,7 @@
       enable = true;
     };
   };
+
+  # TODO: I have manually added the battery indicator via settings but
+  #       obviously I would prefer using xfconf declaratively (via HM?).
 }
