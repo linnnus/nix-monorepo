@@ -4,9 +4,7 @@
   ];
 
   # Exclude some clutter.
-  environment.gnome.excludePackages = with pkgs; [
-    # TODO: Remove video player
-
-    xterm
+  environment.xfce.excludePackages = with pkgs.xfce; [
+    parole # Video player
   ];
 }

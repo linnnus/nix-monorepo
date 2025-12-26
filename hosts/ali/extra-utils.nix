@@ -7,5 +7,9 @@ in {
 
     # For watching movies.
     ffmpeg
+
+    lsof
+    lshw
+    psmisc
   ];
 }

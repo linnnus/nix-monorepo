@@ -45,6 +45,7 @@
       ../../shared/home-manager/development-minimal
       ../../shared/home-manager/nix
       ../../shared/home-manager/C
+      ../../shared/home-manager/firefox
       ./extra-utils.nix
     ];
     home.stateVersion = "24.11";
