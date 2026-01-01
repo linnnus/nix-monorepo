@@ -23,6 +23,12 @@
     };
   };
 
+  # Configure keymap in X11 *and* the console. This is should be active no
+  # matter the specialisation.
+  services.xserver.xkb.layout = "dk";
+  services.xserver.xkb.options = "caps:escape";
+  console.useXkbConfig = true;
+
   # Should match containing folder.
   networking.hostName = "ali";
 

@@ -11,6 +11,7 @@
   home-manager.users.linus = {
     imports = [
       ../../../shared/home-manager/firefox
+      ../../../shared/home-manager/zathura
     ];
   };
 }
