@@ -11,6 +11,8 @@
 
   cfg = config.services.qbittorrent;
 in {
+  disabledModules = ["services/torrent/qbittorrent.nix"];
+
   options.services.qbittorrent = {
     enable = lib.mkEnableOption "headless qBittorrent instance";
 
