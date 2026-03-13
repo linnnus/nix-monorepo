@@ -3,12 +3,12 @@
   config,
   ...
 }: {
-  networking.wg-quick.interfaces."rumpenettet" = {
+  networking.wg-quick.interfaces."rumpevpn" = {
     # Use the address assigned for us in `hosts/ahmed/wireguard-vpn/default.nix`.
-    address = ["10.100.0.2"];
+    address = [metadata.hosts.muhammed.networks.rumpevpn.v4];
 
     # Use DNS server set up in `hosts/ahmed/local-dns/default.nix`.
-    dns = ["10.100.0.1" "1.1.1.1"];
+    dns = [metadata.hosts.ahmed.networks.rumpevpn.v4 "1.1.1.1"];
 
     privateKeyFile = config.age.secrets.wireguard-key.path;
 
@@ -23,7 +23,7 @@
       in {
         publicKey = peerInfo.pubkey;
         allowedIPs = ["0.0.0.0/0" "::/0"];
-        endpoint = "${peerInfo.ipv4Address}:${toString peerInfo.port}";
+        endpoint = "${peerInfo.v4}:${toString peerInfo.port}";
         persistentKeepalive = 5; # We are a roaming client, they are static.
       })
     ];

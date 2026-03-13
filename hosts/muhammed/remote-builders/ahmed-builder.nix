@@ -11,7 +11,7 @@
 # See: hosts/ahmed/remote-builder/default.nix
 # FIXME: How to trust key ahead of time?
 {metadata, ...}: let
-  inherit (metadata.hosts.ahmed) ipv4Address;
+  inherit (metadata.hosts.ahmed.networks.public) v4;
 in {
   nix.buildMachines = [
     {
@@ -29,7 +29,8 @@ in {
   environment.etc."ssh/ssh_config.d/100-ahmed-builder.conf".text = ''
     Host ahmed-builder
       User remotebuilder
-      Hostname ${ipv4Address}
+      Hostname ${v4}
+      Port 2207
       HostKeyAlias ahmed-builder
       # This matches `users.users.<builder>.authorizedKeys` on the server-side.
       # HACK: We should use a purpose-specific key.
@@ -40,9 +41,7 @@ in {
   programs.ssh.knownHosts = {
     ahmed-builder = {
       hostNames = ["ahmed-builder"];
-      # This is the public key of remotebuilder on the remote machine.
-      # It was obtained by manually connecting to remotebuilder@${ipAddress} and trusting the key.
-      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOodiSwTcZcaZxqLyHjI2MGe1CpIBvIzzbjpXrwAyiYO";
+      publicKey = metadata.hosts.ahmed.sshKeys.remotebuilder;
     };
   };
 }

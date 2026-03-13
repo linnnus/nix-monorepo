@@ -8,20 +8,23 @@
   metadata,
   ...
 }: let
-  wireguardInterface = "wgvpn"; # wg0 is used for torrenting.
+  wireguardInterface = "rumpevpn"; # wg0 is used for torrenting.
 
   externalInterface = "enp0s31f6";
+
+  network = "rumpevpn";
+  network' = metadata.networks.${network};
 in {
   networking.wireguard.interfaces.${wireguardInterface} = {
     # This is "network" part of VPN. Also defines the IP of this host within that virtual network.
-    ips = ["10.100.0.1/16"];
+    ips = ["${metadata.hosts.ahmed.networks.${network}.v4}/${toString network'.v4PrefixLength}"];
 
     # The port that WireGuard listens to. Must be accessible by the client.
     listenPort = metadata.hosts.ahmed.wireguard.port;
 
     # This allows the wireguard server to route your traffic to the internet and hence be like a VPN
-    postSetup = "${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.100.0.0/16 -o eth0 -j MASQUERADE";
-    postShutdown = "${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.100.0.0/16 -o eth0 -j MASQUERADE";
+    postSetup = "${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s ${network'.v4}/${toString network'.v4PrefixLength} -o eth0 -j MASQUERADE";
+    postShutdown = "${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s ${network'.v4}/${toString network'.v4PrefixLength} -o eth0 -j MASQUERADE";
 
     privateKeyFile = config.age.secrets.wireguard-vpn-key.path;
 
@@ -29,7 +32,7 @@ in {
       {
         # Muhammed
         publicKey = metadata.hosts.muhammed.wireguard.pubkey;
-        allowedIPs = ["10.100.0.2/32"];
+        allowedIPs = ["${metadata.hosts.muhammed.networks.rumpevpn.v4}/32"];
       }
       {
         # iPhone
@@ -39,7 +42,7 @@ in {
       {
         # Ali
         publicKey = metadata.hosts.ali.wireguard.pubkey;
-        allowedIPs = ["10.100.0.4/32"];
+        allowedIPs = ["${metadata.hosts.ali.networks.rumpevpn.v4}/32"];
       }
     ];
   };
@@ -59,5 +62,6 @@ in {
   };
 
   # Allow DNS from Wireguard.
+  # TODO: This should be calculated from `network.{v4,v4PrefixLength}`.
   services.dnscache.clientIps = ["10.100"];
 }

@@ -32,9 +32,15 @@
 
     # Here we publish all the services we want.
     data = let
-      subdomainToARecord = subdomain: "=${subdomain}.${config.linus.local-dns.domain}:${metadata.hosts.ahmed.ipv4Address}";
+      subdomainToARecord = subdomain: ''
+        =${subdomain}.${config.linus.local-dns.domain}:${metadata.hosts.ahmed.networks.rumpenettet.v4}:::lan
+        =${subdomain}.${config.linus.local-dns.domain}:${metadata.hosts.ahmed.networks.rumpevpn.v4}:::vpn
+      '';
       ARecords = lib.concatMapStringsSep "\n" subdomainToARecord config.linus.local-dns.subdomains;
     in ''
+      # Define the two locations we are interested in serving: LAN and our vpn.
+      %lan:${metadata.networks.rumpenettet.v4Djb}
+      %vpn:${metadata.networks.rumpevpn.v4Djb}
       # We are authoritative over ${config.linus.local-dns.domain}.
       # Here we simply identify as localhost, as only the local dnscache instance will ever see this (I think).
       .${config.linus.local-dns.domain}:127.0.0.1:a

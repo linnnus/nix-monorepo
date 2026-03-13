@@ -18,7 +18,7 @@
   environment.etc."ssh/ssh_config.d/100-ahmed-builder.conf".text = ''
     Host ahmed-builder
       User remotebuilder
-      Hostname ${metadata.hosts.ahmed.ipv4Address}
+      Hostname ${metadata.hosts.ahmed.networks.public.v4}
       HostKeyAlias ahmed-builder
   '';
 
