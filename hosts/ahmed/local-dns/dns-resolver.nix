@@ -10,42 +10,28 @@
   lib,
   ...
 }: {
-  services.dnscache = {
-    enable = true;
-    clientIps = [
-      "192.168" # LAN
-      "127.0.0.1" # Local connections
-    ];
-
-    domainServers = {
-      # Forward any requests to the split domain to our local, authoritative name server.
-      ${config.linus.local-dns.domain} = ["127.0.0.1"];
-    };
-  };
-
-  # Authoritative name server which claims ownership of the split domain.
-  services.tinydns = {
+  services.coredns = {
     enable = true;
 
-    # We will only listen for internal queries from the DNS cache.
-    ip = "127.0.0.1";
-
-    # Here we publish all the services we want.
-    data = let
-      subdomainToARecord = subdomain: ''
-        =${subdomain}.${config.linus.local-dns.domain}:${metadata.hosts.ahmed.networks.rumpenettet.v4}:::lan
-        =${subdomain}.${config.linus.local-dns.domain}:${metadata.hosts.ahmed.networks.rumpevpn.v4}:::vpn
+    config = let
+      cfg = config.linus.local-dns;
+      generateAuthoritativeServer = ip: ''
+        ${cfg.domain} {
+          bind ${ip}
+          hosts {
+            ${lib.concatMapStringsSep "\n" (subdomain: "${ip} ${subdomain}.${cfg.domain}") cfg.subdomains}
+          }
+        }
       '';
-      ARecords = lib.concatMapStringsSep "\n" subdomainToARecord config.linus.local-dns.subdomains;
     in ''
-      # Define the two locations we are interested in serving: LAN and our vpn.
-      %lan:${metadata.networks.rumpenettet.v4Djb}
-      %vpn:${metadata.networks.rumpevpn.v4Djb}
-      # We are authoritative over ${config.linus.local-dns.domain}.
-      # Here we simply identify as localhost, as only the local dnscache instance will ever see this (I think).
-      .${config.linus.local-dns.domain}:127.0.0.1:a
-      # Next, we link all the subdomains to our LAN IP.
-      ${ARecords}
+      ${generateAuthoritativeServer metadata.hosts.ahmed.networks.rumpenettet.v4}
+      ${generateAuthoritativeServer metadata.hosts.ahmed.networks.rumpevpn.v4}
+
+      # Forward all other traffic to public recursors.
+      . {
+        forward . 8.8.8.8 9.9.9.9
+        log
+      }
     '';
   };
 
