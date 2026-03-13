@@ -1,4 +1,8 @@
-{lib, pkgs, ...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: {
   services.xserver = {
     desktopManager.xfce = {
       # Enable XFCE desktop manager. It will register itself via
