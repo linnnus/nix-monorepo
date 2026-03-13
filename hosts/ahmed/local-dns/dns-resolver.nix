@@ -15,23 +15,25 @@
 
     config = let
       cfg = config.linus.local-dns;
-      generateAuthoritativeServer = ip: ''
-        ${cfg.domain} {
+      generateServer = ip: ''
+        . {
           bind ${ip}
+
+          # Point all special subdomains at our own IP address.
           hosts {
             ${lib.concatMapStringsSep "\n" (subdomain: "${ip} ${subdomain}.${cfg.domain}") cfg.subdomains}
+            fallthrough
           }
+
+          # Forward regular internet traffic to a public recursor.
+          forward . 1.1.1.1 8.8.8.8
+          cache 30
+          log
         }
       '';
     in ''
-      ${generateAuthoritativeServer metadata.hosts.ahmed.networks.rumpenettet.v4}
-      ${generateAuthoritativeServer metadata.hosts.ahmed.networks.rumpevpn.v4}
-
-      # Forward all other traffic to public recursors.
-      . {
-        forward . 8.8.8.8 9.9.9.9
-        log
-      }
+      ${generateServer metadata.hosts.ahmed.networks.rumpenettet.v4}
+      ${generateServer metadata.hosts.ahmed.networks.rumpevpn.v4}
     '';
   };
 
