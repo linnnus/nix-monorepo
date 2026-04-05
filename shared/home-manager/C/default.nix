@@ -2,7 +2,7 @@
 {pkgs, ...}: let
   isLinux = pkgs.stdenv.isLinux;
 
-  llvmPackages' = pkgs.llvmPackages_21;
+  llvmPackages' = pkgs.unstable.llvmPackages_22;
 in {
   home.packages = with pkgs;
     [

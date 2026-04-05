@@ -64,6 +64,8 @@
 
   age.identityPaths = ["${config.users.users.linus.home}/.ssh/id_rsa"];
 
+  nix.settings.system-features = ["big-parallel"];
+
   # System-specific version info.
   home-manager.users.linus.home.stateVersion = "22.05";
   system.stateVersion = 4;
