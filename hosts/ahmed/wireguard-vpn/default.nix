@@ -36,7 +36,7 @@ in {
       }
       {
         # iPhone
-        publicKey = "/BCjhCe68dSoORo9XQvGsUKOos/h1xu3LaAJoHvn/yw=";
+        publicKey = "hr7FRAwXol86RfEi+X4WeZeflOC5BlzjCfXVXKazj0I=";
         allowedIPs = ["10.100.0.3/32"];
       }
       {
