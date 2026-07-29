@@ -11,7 +11,7 @@
 
   programs.neovim.initLua = ''
     local util = require("lspconfig.util")
-    require("lspconfig")["denols"].setup({
+    vim.lsp.config("denols", {
       init_options = {
         enable = true,
         unstable = true,
@@ -33,7 +33,7 @@
       end,
     });
 
-    require("lspconfig")["ts_ls"].setup({
+    vim.lsp.config("ts_ls", {
       cmd = { "${pkgs.typescript-language-server}/bin/typescript-language-server", "--stdio" },
       root_dir = function(startpath)
         local find_deno_root_dir = util.root_pattern("deno.json", "deno.jsonc")

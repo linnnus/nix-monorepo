@@ -6,7 +6,7 @@
   ];
 
   programs.neovim.initLua = ''
-    require("lspconfig")["rust_analyzer"].setup({
+    vim.lsp.config("rust_analyzer", {
       cmd = { "${pkgs.rust-analyzer}/bin/rust-analyzer" },
     })
   '';

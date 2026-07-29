@@ -9,7 +9,7 @@
   ];
 
   programs.neovim.initLua = ''
-    require("lspconfig")["pyright"].setup({
+    vim.lsp.config("pyright", {
       cmd = { "${pkgs.pyright}/bin/pyright-langserver", "--stdio" },
     })
   '';

@@ -23,7 +23,7 @@ in {
   home.packages = [gleam'];
 
   programs.neovim.initLua = ''
-    require("lspconfig")["gleam"].setup({
+    vim.lsp.config("gleam", {
       cmd = { "${gleam'}/bin/gleam", "lsp" },
     })
   '';

@@ -6,7 +6,7 @@
     ];
 
     initLua = ''
-      require("lspconfig")["nixd"].setup({
+      vim.lsp.config("nixd", {
         cmd = { "${pkgs.nixd}/bin/nixd" },
       })
     '';
