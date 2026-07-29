@@ -34,6 +34,12 @@
         config = ''
           " Align the backslashes in multiline C-macros
           let g:easy_align_delimiters = { '\': { 'pattern': '\\$' } }
+
+          " Start interactive EasyAlign in visual mode (e.g. vipga)
+          xmap ga <Plug>(EasyAlign)
+
+          " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+          nmap ga <Plug>(EasyAlign)
         '';
       }
       {
@@ -44,13 +50,6 @@
       {
         plugin = pkgs.vimPlugins.dark-notify;
         type = "viml";
-        config = ''
-          " Start interactive EasyAlign in visual mode (e.g. vipga)
-          xmap ga <Plug>(EasyAlign)
-
-          " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-          nmap ga <Plug>(EasyAlign)
-        '';
       }
     ];
 }
