@@ -16,7 +16,6 @@
     ./git
     ./hellohtml
     ./blog
-    ./nofitications
     ./ssh
     ./torrenting
     ./remote-builder

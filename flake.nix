@@ -18,11 +18,6 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    push-notification-api = {
-      url = "github:linnnus/push-notification-api";
-      # url = "path:/home/linus/push-notification-api";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     comma = {
       url = "github:linnnus/comma-zsh";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -51,7 +46,6 @@
     home-manager,
     nix-darwin,
     agenix,
-    push-notification-api,
     webhook-listener,
     dark-notify,
     ...
@@ -101,7 +95,6 @@
             {_module.args = args;}
             home-manager.nixosModules.home-manager
             agenix.nixosModules.default
-            push-notification-api.nixosModules.default
             webhook-listener.nixosModules.default
             ./hosts/ahmed/configuration.nix
           ]
