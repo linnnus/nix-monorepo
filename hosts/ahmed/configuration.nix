@@ -14,7 +14,6 @@
     ../../shared/nixos-and-darwin/common-hm-settings
 
     ./git
-    ./hellohtml
     ./blog
     ./ssh
     ./torrenting
