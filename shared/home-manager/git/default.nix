@@ -13,11 +13,11 @@ in {
   programs.git = {
     enable = true;
 
-    # Set privacy-respecting user information.
-    userName = "Linnnus";
-    userEmail = "linnnus@users.noreply.github.com";
+    settings = {
+      # Set privacy-respecting user information.
+      user.name = "Linnnus";
+      user.email = "linnnus@users.noreply.github.com";
 
-    extraConfig = {
       init.defaultBranch = "master";
 
       help.autoCorrect = "prompt";

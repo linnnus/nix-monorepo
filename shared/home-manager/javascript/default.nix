@@ -9,7 +9,7 @@
     cocoapods
   ];
 
-  programs.neovim.extraLuaConfig = ''
+  programs.neovim.initLua = ''
     local util = require("lspconfig.util")
     require("lspconfig")["denols"].setup({
       init_options = {
@@ -34,7 +34,7 @@
     });
 
     require("lspconfig")["ts_ls"].setup({
-      cmd = { "${pkgs.nodePackages_latest.typescript-language-server}/bin/typescript-language-server", "--stdio" },
+      cmd = { "${pkgs.typescript-language-server}/bin/typescript-language-server", "--stdio" },
       root_dir = function(startpath)
         local find_deno_root_dir = util.root_pattern("deno.json", "deno.jsonc")
         if find_deno_root_dir(startpath) then

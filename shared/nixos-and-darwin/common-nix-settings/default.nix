@@ -20,7 +20,7 @@
     flakeOutputs.overlays.modifications
 
     # Add unstable nixpkgs.
-    (final: prev: {unstable = flakeInputs.nixpkgs-unstable.legacyPackages.${pkgs.system};})
+    (final: prev: {unstable = flakeInputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};})
 
     # Add NUR packages
     flakeInputs.nur.overlays.default

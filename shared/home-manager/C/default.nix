@@ -15,7 +15,7 @@ in {
       man-pages
     ];
 
-  programs.neovim.extraLuaConfig = ''
+  programs.neovim.initLua = ''
     require("lspconfig")["clangd"].setup({
       cmd = { "${llvmPackages'.clang-tools}/bin/clangd", "--background-index", "--clang-tidy" },
       on_attach = function(_, bufnr)

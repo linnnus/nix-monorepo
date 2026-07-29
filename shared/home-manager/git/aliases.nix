@@ -2,7 +2,7 @@
 # pseudo-subcommands which are easier to remember while others simply save me
 # some keystrokes.
 {...}: {
-  programs.git.aliases = {
+  programs.git.settings.alias = {
     unstage = "restore --staged"; # remove file from staging area
     undo = "reset --soft HEAD~"; # undo last commit
   };

@@ -1,7 +1,7 @@
 {
   stdenv,
   fetchFromGitHub,
-  perl538Packages,
+  perl5Packages,
   darwin,
   lib,
 }:
@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   };
   patches = [./trash-dont-hardcode-arch.patch];
   buildInputs = [
-    perl538Packages.podlators
+    perl5Packages.podlators
   ];
 
   outputs = ["out" "man"];

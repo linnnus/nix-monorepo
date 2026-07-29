@@ -68,6 +68,10 @@ in {
       user = "cgit";
       group = "cgit";
 
+      # All repos can be cloned unconditionally. Git's http-backend will not
+      # check for a git-daemon-export-ok file to exist.
+      gitHttpBackend.checkExportOkFiles = false;
+
       scanPath = location;
       settings = let
         cgit-config = config.services.cgit.${domain};

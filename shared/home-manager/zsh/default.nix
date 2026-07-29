@@ -8,8 +8,7 @@
     enable = true;
 
     # Feeble attempt at cleaning up home directory.
-    # TODO: dotDir = (pathRelativeTo config.xdg.configHome config.home) + "/zsh";
-    dotDir = ".config/zsh";
+    dotDir = "${config.xdg.configHome}/zsh";
     history.path = config.xdg.cacheHome + "/zsh/history";
 
     initContent = ''

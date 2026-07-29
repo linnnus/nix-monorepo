@@ -14,7 +14,7 @@ in {
       enableACME = useACME;
       forceSSL = useACME;
 
-      root = "${flakeInputs.mtg-higher-lower.packages.${pkgs.system}.site}";
+      root = "${flakeInputs.mtg-higher-lower.packages.${pkgs.stdenv.hostPlatform.system}.site}";
     };
   };
 }

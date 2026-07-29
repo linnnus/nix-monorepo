@@ -13,6 +13,9 @@
     # my enthusiasm for Nix eventually dies off, I want to take it with me.
     extraConfig = builtins.readFile ./init.vim;
 
+    withRuby = false;
+    withPython3 = false;
+
     # Typing `vi`, `vim`, or `vimdiff` will also run neovim.
     viAlias = true;
     vimAlias = true;
