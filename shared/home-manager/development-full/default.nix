@@ -12,5 +12,6 @@
     ../python
     ../rust
     ../svelte
+    ../gleam
   ];
 }
