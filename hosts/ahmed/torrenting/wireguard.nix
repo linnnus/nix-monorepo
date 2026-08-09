@@ -40,10 +40,10 @@ in {
       peers = [
         {
           # The public key of the server.
-          publicKey = "9WowgFUh2itRfPh2SoaJsJHvxzXBZuD+xqdmBAf2CB4=";
+          publicKey = "fJt+VGA6v6VoXWZ0pxf6XQWZFUH/5A4tPLxMMWasHzI=";
 
           # The location of the server.
-          endpoint = "149.50.217.161:${toString wgPort}";
+          endpoint = "149.88.109.33:51820";
 
           # Which destination IPs should be directed to this ip/pubkey pair. In
           # this case, we send all packets to our only peer.
