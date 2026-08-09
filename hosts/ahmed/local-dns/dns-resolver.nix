@@ -37,6 +37,34 @@
     '';
   };
 
+  # I am having some trouble where bind(2) is failing with EADDRNOTAVAIL [0].
+  # (This was evident when running CoreDNS under strace.) This error code
+  # indicates that:
+  #
+  # > A nonexistent interface was requested or the requested
+  # > address was not local.
+  #
+  # The service currently depends on `network.target` [2] but that is not
+  # sufficient to guarantee that all network interfaces have been brought up!
+  # According to [1]:
+  #
+  # > `network.target` indicates that the network management stack has been
+  # > started. Ordering after it has little meaning during start-up: whether any
+  # > network interfaces are already configured when it is reached is not
+  # > defined.
+  #
+  # Instead, the docs say we should rely on `network-online.target`.
+  #
+  # Thoguh they _do_ also say that the best solution is simply to bind to
+  # `0.0.0.0`. But that is not an option for us because of how we set up the
+  # split-view DNS.
+  #
+  # [0]: https://www.man7.org/linux/man-pages/man2/bind.2.html
+  # [1]: https://systemd.io/NETWORK_ONLINE/#:~:text=whether%20any%20network%20interfaces%20are%20already%20configured%20when%20it%20is%20reached%20is%20not%20defined
+  # [2]: https://github.com/NixOS/nixpkgs/blob/ee48b147c18c7de1e6ec97dc74792be42724bed1/nixos/modules/services/networking/coredns.nix#L42
+  systemd.services.coredns.after = ["network-online.target"];
+  systemd.services.coredns.wants = ["network-online.target"];
+
   # Allow other devices on LAN to interact with us. In the router's DHCP
   # settings, I have set ahmed's IP as the primary DNS server. This will make
   # all clients (which respect DNS from DHCP) use ahmed if he's online.
