@@ -25,6 +25,7 @@
     # Add NUR packages
     flakeInputs.nur.overlays.default
     flakeInputs.dark-notify.overlays.default
+    flakeInputs.local-vimrc.overlays.default
   ];
 
   # I'm not *that* vegan.

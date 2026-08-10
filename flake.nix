@@ -34,6 +34,10 @@
       url = "github:linnnus/dark-notify";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    local-vimrc = {
+      url = "github:linnnus/local-vimrc";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     mtg-higher-lower = {
       url = "git+https://git.ibsenware.org/mtg-higher-lower.git";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -47,7 +51,6 @@
     nix-darwin,
     agenix,
     webhook-listener,
-    dark-notify,
     ...
   } @ inputs: let
     args = {

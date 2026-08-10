@@ -45,6 +45,24 @@
       {
         plugin = pkgs.vimPlugins.vim-surround;
       }
+      {
+        plugin = pkgs.vimPlugins.local-vimrc;
+        type = "lua";
+        config = ''
+          require("local-vimrc").setup({
+            ".vimrc",
+            "local.vimrc",
+            "local/.vimrc",
+            "local/local.vimrc",
+            "projects/neovim/.vimrc",
+            "projects/neovim/local.vimrc",
+            "projects/nvim/.vimrc",
+            "projects/nvim/local.vimrc",
+            "projects/vim/.vimrc",
+            "projects/vim/local.vimrc"
+          })
+        '';
+      }
     ]
     ++ lib.optionals (pkgs.stdenv.isDarwin) [
       {

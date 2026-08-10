@@ -167,6 +167,26 @@
         "type": "github"
       }
     },
+    "local-vimrc": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1786348814,
+        "narHash": "sha256-RVO1XUuAti6vkZIEMW+JcLphqL+S4jOkPZ44u3ljBy0=",
+        "owner": "linnnus",
+        "repo": "local-vimrc",
+        "rev": "29a900ae51ac5613d893f2cf0cc2187deddcda6d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "linnnus",
+        "repo": "local-vimrc",
+        "type": "github"
+      }
+    },
     "mtg-higher-lower": {
       "inputs": {
         "nixpkgs": [
@@ -267,6 +287,7 @@
         "comma": "comma",
         "dark-notify": "dark-notify",
         "home-manager": "home-manager_2",
+        "local-vimrc": "local-vimrc",
         "mtg-higher-lower": "mtg-higher-lower",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",
