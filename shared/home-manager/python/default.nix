@@ -12,5 +12,6 @@
     vim.lsp.config("pyright", {
       cmd = { "${pkgs.pyright}/bin/pyright-langserver", "--stdio" },
     })
+    vim.lsp.enable("pyright")
   '';
 }

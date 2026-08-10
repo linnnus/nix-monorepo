@@ -28,5 +28,6 @@ in {
         })
       end,
     })
+    vim.lsp.enable("clangd")
   '';
 }

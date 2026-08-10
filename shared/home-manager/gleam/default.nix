@@ -26,6 +26,7 @@ in {
     vim.lsp.config("gleam", {
       cmd = { "${gleam'}/bin/gleam", "lsp" },
     })
+    vim.lsp.enable("gleam")
   '';
 
   programs.neovim.plugins = with pkgs.vimPlugins; [

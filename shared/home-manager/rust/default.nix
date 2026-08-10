@@ -9,5 +9,6 @@
     vim.lsp.config("rust_analyzer", {
       cmd = { "${pkgs.rust-analyzer}/bin/rust-analyzer" },
     })
+    vim.lsp.enable("rust_analyzer")
   '';
 }

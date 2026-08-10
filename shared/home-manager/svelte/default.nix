@@ -10,6 +10,7 @@
         cmd = { "${pkgs.svelte-language-server}/bin/svelteserver", "--stdio" },
         root_markers = {"package.json", ".git", "deno.json", "deno.jsonc"},
       })
+      vim.lsp.enable("svelte")
     '';
   };
 }

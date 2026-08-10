@@ -9,6 +9,7 @@
       vim.lsp.config("nixd", {
         cmd = { "${pkgs.nixd}/bin/nixd" },
       })
+      vim.lsp.enable("nixd")
     '';
   };
 }
