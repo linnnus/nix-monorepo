@@ -26,10 +26,6 @@ final: prev: rec {
 
   disable-sleep = prev.callPackage ../pkgs/disable-sleep {inherit human-sleep;};
 
-  nowrap = prev.callPackage ../pkgs/nowrap {};
-
-  echoargs = prev.callPackage ../pkgs/echoargs {};
-
   dwm-setstatus = prev.callPackage ../pkgs/dwm-setstatus {};
 
   beanstalkd-cli = prev.callPackage ../pkgs/beanstalkd-cli {};
@@ -41,4 +37,6 @@ final: prev: rec {
   });
 
   tagstudio-bin = prev.callPackage ../pkgs/tagstudio-bin {};
+
+  linus-utils = prev.callPackage ../pkgs/linus-utils {};
 }
