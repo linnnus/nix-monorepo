@@ -55,6 +55,13 @@ set mouse=nicr
 " sussy sus the sussy sus
 set nowrap
 
+" According to 'default-autocmds', the default SwapExists handler will:
+" > Skips the swapfile prompt (sets v:swapchoice to "e") when the
+" > swapfile is owned by a running Nvim process. Shows W325 "Ignoring swapfile…"
+" > message.
+" I have no idea why that is the behavior.
+autocmd! nvim.swapfile
+
 " Mappings
 """""""""""""""""""""""""""
 
