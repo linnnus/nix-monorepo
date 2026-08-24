@@ -6,6 +6,7 @@
   lib,
   coreutils,
   python3,
+  human-sleep,
 }: let
   writePythonScript = {
     name,
@@ -57,6 +58,28 @@
     runtimeInputs = [coreutils];
     text = ''
       exec date +%Y-%m-%d
+    '';
+  };
+
+  repeatedly = writeShellApplication {
+    name = "repeatedly";
+    runtimeInputs = [human-sleep];
+    text = ''
+      #!/bin/sh
+      set -o errexit -o nounset -o pipefail
+
+      if [ $# -lt 2 ]; then
+              echo >&2 "Usage: repeatedly <interval> <cmd> [<args>...]"
+              exit 1
+      fi
+
+      interval="$1"
+      shift
+
+      while true; do
+              "$@"
+              human-sleep "$interval"
+      done
     '';
   };
 

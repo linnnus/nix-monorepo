@@ -38,5 +38,5 @@ final: prev: rec {
 
   tagstudio-bin = prev.callPackage ../pkgs/tagstudio-bin {};
 
-  linus-utils = prev.callPackage ../pkgs/linus-utils {};
+  linus-utils = prev.callPackage ../pkgs/linus-utils {inherit human-sleep;};
 }
