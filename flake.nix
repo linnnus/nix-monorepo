@@ -42,6 +42,10 @@
       url = "git+https://git.ibsenware.org/mtg-higher-lower.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    strace-macos = {
+      url = "github:Mic92/strace-macos";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs = {
