@@ -20,6 +20,7 @@ in {
     ../rust
     ../svelte
     ../gleam
+    ../java
   ];
 
   home.packages = lib.mkIf isDarwin [
