@@ -97,31 +97,34 @@
       };
     };
 
-    nixosConfigurations = {
-      ahmed = nixpkgs.lib.nixosSystem {
-        inherit specialArgs;
+    nixosConfigurations = let
+      mkNixosSystem = {
+        system,
+        hostName,
+      }:
+        nixpkgs.lib.nixosSystem {
+          inherit specialArgs system;
+          modules =
+            [
+              # Modules from flakes
+              home-manager.nixosModules.home-manager
+              agenix.nixosModules.default
+              webhook-listener.nixosModules.default
+              # Basic host setup
+              {_module.args = args;}
+              {networking.hostName = hostName;}
+              (./hosts + "/${hostName}/configuration.nix")
+            ]
+            ++ builtins.attrValues (import ./modules/nixos);
+        };
+    in {
+      ahmed = mkNixosSystem {
         system = "x86_64-linux";
-        modules =
-          [
-            {_module.args = args;}
-            home-manager.nixosModules.home-manager
-            agenix.nixosModules.default
-            webhook-listener.nixosModules.default
-            ./hosts/ahmed/configuration.nix
-          ]
-          ++ builtins.attrValues (import ./modules/nixos);
+        hostName = "ahmed";
       };
-      ali = nixpkgs.lib.nixosSystem {
-        inherit specialArgs;
+      ali = mkNixosSystem {
         system = "x86_64-linux";
-        modules =
-          [
-            {_module.args = args;}
-            home-manager.nixosModules.home-manager
-            agenix.nixosModules.default
-            ./hosts/ali/configuration.nix
-          ]
-          ++ builtins.attrValues (import ./modules/nixos);
+        hostName = "ali";
       };
     };
 

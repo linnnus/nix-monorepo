@@ -29,9 +29,6 @@
   services.xserver.xkb.options = "caps:escape";
   console.useXkbConfig = true;
 
-  # Should match containing folder.
-  networking.hostName = "ali";
-
   time.timeZone = "Europe/Copenhagen";
 
   boot.loader.grub = {

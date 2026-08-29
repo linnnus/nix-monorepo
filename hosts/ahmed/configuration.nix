@@ -55,9 +55,6 @@
 
   boot.tmp.cleanOnBoot = true;
 
-  # The hostname should match the containing folder.
-  networking.hostName = "ahmed";
-
   # This host is located in Denmark.
   time.timeZone = "Europe/Copenhagen";
 
