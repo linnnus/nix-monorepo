@@ -33,6 +33,7 @@
         ../../shared/home-manager/iterm2
         ../../shared/home-manager/anki
         ../../shared/home-manager/tagstudio
+        ../../shared/home-manager/obsidian
         ./extra-utils.nix
         ./syncthing.nix
       ];

@@ -46,6 +46,10 @@
       url = "github:Mic92/strace-macos";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    obsidian-extensions = {
+      url = "github:karaolidis/nix-obsidian-extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
