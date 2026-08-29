@@ -27,6 +27,19 @@
           copyOwnershipFromParent = true;
           devices = ["ahmed" "boox-tablet"];
         };
+
+        "obsidian" = {
+          label = "Obsidian vault";
+          path = "~/Sync/obsidian";
+          devices = ["ahmed"];
+          ignorePatterns = [
+            # The `stignore` syntax is basically like `.gitignore`.
+            # See: https://obsidian.md/help/data-storage
+            # See: https://docs.syncthing.net/users/ignoring.html
+            "/.obsidian/workspace.json"
+            "/.obsidian/workspaces.json"
+          ];
+        };
       };
 
       devices = {

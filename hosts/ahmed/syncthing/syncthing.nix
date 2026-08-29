@@ -11,10 +11,16 @@
     settings = {
       folders = {
         "ebooks" = {
-          lable = "Ebooks";
+          label = "E-books";
           path = "~/Synced ebooks"; # Recall that `~syncthing` is `/var/lib/syntching`.
           copyOwnershipFromParent = true;
           devices = ["muhammed" "boox-tablet"];
+        };
+
+        "obsidian" = {
+          label = "Obsidian";
+          path = "~/Obsidian"; # Recall that `~syncthing` is `/var/lib/syntching`.
+          devices = ["muhammed"];
         };
       };
 
