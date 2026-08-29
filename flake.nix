@@ -50,6 +50,7 @@
       url = "github:karaolidis/nix-obsidian-extensions";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-linux-builder.url = "github:input-output-hk/nix-linux-builder";
   };
 
   outputs = {
@@ -59,6 +60,7 @@
     nix-darwin,
     agenix,
     webhook-listener,
+    nix-linux-builder,
     ...
   } @ inputs: let
     args = {
@@ -91,6 +93,7 @@
             {_module.args = args;}
             home-manager.darwinModules.home-manager
             agenix.darwinModules.default
+            nix-linux-builder.darwinModules.default
             ./hosts/muhammed/configuration.nix
           ]
           ++ builtins.attrValues (import ./modules/darwin);
