@@ -26,6 +26,7 @@
     ./wireguard-vpn
     ./syncthing
     ./mtg-higher-lower
+    ./calendar-scripts
   ];
 
   # Create the main user.
