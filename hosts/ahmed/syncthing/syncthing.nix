@@ -20,13 +20,14 @@
         "obsidian" = {
           label = "Obsidian";
           path = "~/Obsidian"; # Recall that `~syncthing` is `/var/lib/syntching`.
-          devices = ["muhammed"];
+          devices = ["muhammed" "iphone"];
         };
       };
 
       devices = {
         boox-tablet.id = "SFQMOCB-TPRTXLD-WDL3REL-2XINQDR-3PZQ5IT-KX4PGXX-2VJO3JZ-2K2XNQ3";
         muhammed.id = "ZLKZCO5-K3GX3S6-PTLB5B6-ETRBPQT-6ZCKHYV-FXQNDPI-CGYRSO4-NIRPQAY";
+        iphone.id = "EUXRCHL-WNE54DD-WK4GQED-TI3NC66-PHFITO7-MVEYLZE-34WBW6M-ZP37FAT";
       };
     };
   };
