@@ -38,6 +38,7 @@
             # See: https://docs.syncthing.net/users/ignoring.html
             "/.obsidian/workspace.json"
             "/.obsidian/workspaces.json"
+            "/.obsidian/workspace-mobile.json"
           ];
         };
       };
