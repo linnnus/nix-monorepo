@@ -5,7 +5,6 @@
 
     defaultSettings = {
       communityPlugins = with pkgs.obsidianPlugins; [
-        obsidian-latex-suite
       ];
     };
 
