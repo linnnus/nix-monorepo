@@ -148,6 +148,8 @@ autocmd Filetype help nnoremap <buffer> gd <C-]>
 nnoremap <leader>n <cmd>cnext<cr>
 nnoremap <leader>p <cmd>cprev<cr>
 
+nnoremap <leader>m <cmd>wa\|make<cr>
+
 
 " Commands
 """""""""""""""""""""""""""
