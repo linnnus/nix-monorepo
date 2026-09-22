@@ -17,4 +17,7 @@ in {
       root = "${flakeInputs.mtg-higher-lower.packages.${pkgs.stdenv.hostPlatform.system}.site}";
     };
   };
+
+  # Register domain name.
+  services.cloudflare-dyndns.domains = [domain];
 }
