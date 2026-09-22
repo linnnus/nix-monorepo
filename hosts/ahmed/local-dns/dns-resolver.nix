@@ -32,8 +32,8 @@
         }
       '';
     in ''
-      ${generateServer metadata.hosts.ahmed.networks.rumpenettet.v4}
-      ${generateServer metadata.hosts.ahmed.networks.rumpevpn.v4}
+      ${generateServer metadata.hosts.ahmed.networks.ulvehulen.v4}
+      ${generateServer metadata.hosts.ahmed.networks.ulvevpn.v4}
     '';
   };
 

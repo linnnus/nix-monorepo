@@ -41,6 +41,6 @@
   };
 
   config = {
-    linus.local-dns.domain = "rumpenettet.${metadata.domains.personal}";
+    linus.local-dns.domain = "ulvehulen.${metadata.domains.personal}";
   };
 }

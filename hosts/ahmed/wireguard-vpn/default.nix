@@ -8,11 +8,11 @@
   metadata,
   ...
 }: let
-  wireguardInterface = "rumpevpn"; # wg0 is used for torrenting.
+  wireguardInterface = "ulvevpn"; # wg0 is used for torrenting.
 
   externalInterface = "enp0s31f6";
 
-  network = "rumpevpn";
+  network = "ulvevpn";
   network' = metadata.networks.${network};
 in {
   networking.wireguard.interfaces.${wireguardInterface} = {
@@ -32,7 +32,7 @@ in {
       {
         # Muhammed
         publicKey = metadata.hosts.muhammed.wireguard.pubkey;
-        allowedIPs = ["${metadata.hosts.muhammed.networks.rumpevpn.v4}/32"];
+        allowedIPs = ["${metadata.hosts.muhammed.networks.ulvevpn.v4}/32"];
       }
       {
         # iPhone
@@ -42,7 +42,7 @@ in {
       {
         # Ali
         publicKey = metadata.hosts.ali.wireguard.pubkey;
-        allowedIPs = ["${metadata.hosts.ali.networks.rumpevpn.v4}/32"];
+        allowedIPs = ["${metadata.hosts.ali.networks.ulvevpn.v4}/32"];
       }
     ];
   };

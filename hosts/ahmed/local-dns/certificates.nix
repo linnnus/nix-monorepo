@@ -1,5 +1,5 @@
 # Getting HTTPS to work for local domains is pretty hard. The approach I've
-# gone with is to request a wildcard domain for `*.rumpenettet.ibsenware.org`. We
+# gone with is to request a wildcard domain for `*.ulvehulen.ibsenware.org`. We
 # can do this because `ibsenware.org` is a public domain which we have control
 # over.
 #
@@ -8,7 +8,7 @@
 # `ibsenware.org`. This is how Lego (i.e. `security.acme`) proves domain ownership
 # when renewing the certificate.
 #
-# Any services running under `rumpenettet.local.onl` and use this certificate.
+# Any services running under `ulvehulen.local.onl` and use this certificate.
 # For NGINX that happens via `useACMEHost` and one of the options that enable
 # HTTPS.
 {
@@ -28,9 +28,9 @@
       # be under a different account, as defined by the account hash (which
       # includes email).
       #
-      # 1. `nginx.service` is ordered before `acme-rumpenettet.ibsenware.org.service`
+      # 1. `nginx.service` is ordered before `acme-ulvehulen.ibsenware.org.service`
       #    because NGINX hard crashes when certificates are missing.
-      # 2. `acme-rumpenettet.ibsenware.org.service` ordered before
+      # 2. `acme-ulvehulen.ibsenware.org.service` ordered before
       #    `acme-account-….target` because it is part of the account and not the
       #    chosen group leader.
       # 3. `acme-account-….target` is ordered after

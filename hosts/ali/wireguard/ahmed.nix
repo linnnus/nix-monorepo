@@ -5,10 +5,10 @@
 }: {
   networking.wg-quick.interfaces.wg0 = {
     # Use the address assigned for us in `hosts/ahmed/wireguard-vpn/default.nix`.
-    address = [metadata.hosts.ali.networks.rumpevpn.v4];
+    address = [metadata.hosts.ali.networks.ulvevpn.v4];
 
     # Use DNS server set up in `hosts/ahmed/local-dns/default.nix`.
-    dns = [metadata.hosts.ahmed.networks.rumpevpn.v4 "1.1.1.1"];
+    dns = [metadata.hosts.ahmed.networks.ulvevpn.v4 "1.1.1.1"];
 
     privateKeyFile = config.age.secrets.wireguard-key.path;
 

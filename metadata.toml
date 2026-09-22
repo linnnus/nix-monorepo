@@ -4,14 +4,14 @@
 personal = "ibsenware.org"
 personal_alt = "ulovlighacker.download"
 
-[hosts.ahmed.networks.rumpenettet]
-v4 = "192.168.68.222"
+[hosts.ahmed.networks.ulvehulen]
+v4 = "192.168.0.105"
 
-[hosts.ahmed.networks.rumpevpn]
+[hosts.ahmed.networks.ulvevpn]
 v4 = "10.100.0.1"
 
 [hosts.ahmed.networks.public]
-v4 = "77.33.188.139"
+v4 = "93.165.254.114"
 
 [hosts.ahmed.sshKeys]
 linus = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKTV0NShiJXtHKtOk1kG28xvcSXww5LQTfCDued/Yog0 linus@ahmed"
@@ -25,10 +25,10 @@ pubkey = "OyVax+rmBHEJsN3DmLAMEczO9mHwFDNb+D16cAV6TzM=" # Matches ./secrets/wire
 port = 50000
 v4 = "77.33.188.139" # This is technically dynamic. Should use DDNS.
 
-[hosts.muhammed.networks.rumpenettet]
-v4 = "192.168.68.111"
+[hosts.muhammed.networks.ulvehulen]
+v4 = "192.168.0.177"
 
-[hosts.muhammed.networks.rumpevpn]
+[hosts.muhammed.networks.ulvevpn]
 v4 = "10.100.0.2"
 
 [hosts.muhammed.sshKeys]
@@ -37,10 +37,10 @@ v4 = "10.100.0.2"
 [hosts.muhammed.wireguard]
 pubkey =  "l0HoOpGEkyxG3dTsJ3+zNItD6bQEkzymGvcsMLFOdmA="
 
-[hosts.ali.networks.rumpenettet]
+[hosts.ali.networks.ulvehulen]
 v4 = "192.168.68.173"
 
-[hosts.ali.networks.rumpevpn]
+[hosts.ali.networks.ulvevpn]
 v4 = "10.100.0.4"
 
 [hosts.ali.sshKeys]
@@ -50,13 +50,13 @@ linus = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMmjaik3g25rPFs1QD/Ig/tobACwHCDxkab
 [hosts.ali.wireguard]
 pubkey = "8kdSk5kBGcCzIe6wKxcumYLOv5SzOUYjf7w59FnLYU4="
 
-[networks.rumpenettet]
-v4 = "192.168.68.0"
+[networks.ulvehulen]
+v4 = "192.168.0.0"
 v4PrefixLength = 24
 # Instead of using CIDR-notation like everyone else DJB uses this weird syntax.
-v4Djb = "192.168.68"
+v4Djb = "192.168.0"
 
-[networks.rumpevpn]
+[networks.ulvevpn]
 v4 = "10.100.0.0"
 v4PrefixLength = 16
 v4Djb = "10.100"
