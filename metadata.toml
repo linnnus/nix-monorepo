@@ -11,7 +11,7 @@ v4 = "192.168.0.105"
 v4 = "10.100.0.1"
 
 [hosts.ahmed.networks.public]
-v4 = "93.165.254.114"
+v4 = "93.165.246.2" # This is guaranteed static by our ISP.
 
 [hosts.ahmed.sshKeys]
 linus = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKTV0NShiJXtHKtOk1kG28xvcSXww5LQTfCDued/Yog0 linus@ahmed"
@@ -23,7 +23,7 @@ remotebuilder = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOodiSwTcZcaZxqLyHjI2MGe1Cp
 [hosts.ahmed.wireguard]
 pubkey = "OyVax+rmBHEJsN3DmLAMEczO9mHwFDNb+D16cAV6TzM=" # Matches ./secrets/wireguard-vpn-key.age
 port = 50000
-v4 = "77.33.188.139" # This is technically dynamic. Should use DDNS.
+v4 = "93.165.246.2" # This is guaranteed static by our ISP.
 
 [hosts.muhammed.networks.ulvehulen]
 v4 = "192.168.0.177"
@@ -50,6 +50,7 @@ linus = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMmjaik3g25rPFs1QD/Ig/tobACwHCDxkab
 [hosts.ali.wireguard]
 pubkey = "8kdSk5kBGcCzIe6wKxcumYLOv5SzOUYjf7w59FnLYU4="
 
+# TODO: These networks should probably be split into a WAN address and a LAN address-allocation scheme.
 [networks.ulvehulen]
 v4 = "192.168.0.0"
 v4PrefixLength = 24
