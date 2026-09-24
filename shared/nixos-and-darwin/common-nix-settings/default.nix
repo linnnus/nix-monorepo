@@ -49,6 +49,7 @@
   # Add shell-utilities which are only relevant if Nix is enabled.
   environment.systemPackages = with pkgs; [
     # For running programs easily.
+    # FIXME: Add a shared nix-index database.
     nix-index # Also includes nix-locate
     flakeInputs.comma.packages.${system}.default
 
