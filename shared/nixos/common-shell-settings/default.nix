@@ -8,6 +8,10 @@
     ../../nixos-and-darwin/common-shell-settings
   ];
 
+  environment.systemPackages = with pkgs; [
+    lsof # This is included by default on MacOS.
+  ];
+
   # There is not nix-darwin equivalent to this NixOS option.
   # The default shell on MacOS is already ZSH.
   users.defaultUserShell = pkgs.zsh;
