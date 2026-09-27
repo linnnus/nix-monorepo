@@ -3,6 +3,7 @@
 {
   config,
   lib,
+  metadata,
   ...
 }: {
   services.nginx = {
@@ -16,9 +17,12 @@
     virtualHosts = lib.listToAttrs (map (subdomain: {
         name = "${subdomain}.${config.linus.local-dns.domain}";
         value = {
-          extraConfig = ''
-            allow 10.100.0.0/16;
-            allow 192.168.68.0/24;
+          extraConfig = let
+            # TODO: Handle IPv6.
+            allowNetwork = network: "allow ${network.v4}/${toString network.v4PrefixLength};";
+          in ''
+            ${allowNetwork metadata.networks.ulvevpn}
+            ${allowNetwork metadata.networks.ulvehulen}
             deny all;
           '';
         };
