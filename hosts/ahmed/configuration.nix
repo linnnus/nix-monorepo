@@ -27,6 +27,7 @@
     ./syncthing
     ./mtg-higher-lower
     ./calendar-scripts
+    ./home-assistant
   ];
 
   # Create the main user.
